@@ -16,5 +16,11 @@
 #leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
+        keys = {}
+        for i in range(len(nums)):
+            if target - nums[i] in keys:
+                return [keys[target - nums[i]], i]
+            if nums[i] not in keys:
+                keys[nums[i]] = i
         
 #leetcode submit region end(Prohibit modification and deletion)
