@@ -23,10 +23,11 @@
 # 
 # Related Topics 哈希表 双指针 字符串 Sliding Window
 
+# 使用滑动窗口
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
+    def lengthOfLongestSubstring(self, s):
         window = []
         max_len = 0
         for item in s:

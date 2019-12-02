@@ -29,16 +29,16 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+
 class Solution(object):
     def zigzagLevelOrder(self, root):
         """
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        res_temp = []
         res = []
         if root is None:
-            return res_temp
+            return res
 
         import collections
         queue = collections.deque()
@@ -52,12 +52,11 @@ class Solution(object):
                     queue.append(node.left)
                 if node.right is not None:
                     queue.append(node.right)
-            res_temp.append(level)
-        for i in range(res_temp):
+            res.append(level)
+
+        for i in range(len(res)):
             if i % 2 == 1:
-                res[i] = res_temp[i].reverse()
-            else:
-                res[i] = res_temp[i]
-        return res_temp
+                res[i].reverse()
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)
