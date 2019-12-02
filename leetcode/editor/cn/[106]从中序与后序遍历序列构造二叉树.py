@@ -40,7 +40,7 @@ class Solution(object):
         :type postorder: List[int]
         :rtype: TreeNode
         """
-        if (inorder == []): return None
+        if not inorder: return None
 
         i = inorder.index(postorder[-1])
         N = TreeNode(postorder[-1])

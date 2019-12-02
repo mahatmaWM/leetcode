@@ -22,4 +22,7 @@ class Solution:
             if nums[i] not in keys:
                 keys[nums[i]] = i
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().twoSum(nums=[2, 7, 11, 15], target=9))
