@@ -18,7 +18,7 @@
 # 输入: nums1 = [2,4], nums2 = [1,2,3,4].
 # 输出: [3,-1]
 # 解释:
-#     对于num1中的数字2，第二个数组中的下一个较大数字是3。
+#    对于num1中的数字2，第二个数组中的下一个较大数字是3。
 #    对于num1中的数字4，第二个数组中没有下一个更大的数字，因此输出 -1。
 # 
 #
@@ -30,12 +30,12 @@
 # 
 # Related Topics 栈
 
-# 解法：栈，递减栈。
-# 先求出nums2中所有元素的右边第一个较大数字的位置，并记录到map中。
-# 因为nums1是子数组，循环nums1中的元素，记录在map中值并返回。
+# 解法：递减栈。
 #
-# 求nums2中下一个较大元素时用递减栈，循环元素，当前元素大于栈顶元素时，就弹出栈顶元素，并记录栈顶元素下一个最大就是当前元素。
-# 然后继续比较栈顶元素，直到小于或等于栈顶元素。
+# 1、求出nums2中所有元素的右边第一个较大数字，并记录到right_bigger中。
+#   具体做法：用递减栈，遍历nums2，当当前元素i大于栈顶元素时，就弹出栈顶元素并记录栈顶元素下一个最大值为当前元素i。然后继续比较栈顶元素，直到小于或等于栈顶元素。
+#
+# 2、循环nums1中的元素，访问在right_bigger中的值。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -45,18 +45,17 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: List[int]
         """
-        d = {}
-        st = []
+        right_bigger = {}
+        stack = []
         ans = []
 
-        for x in nums2:
-            while len(st) and st[-1] < x:
-                d[st.pop()] = x
-            st.append(x)
-        print(d)
-        print(st)
-        for x in nums1:
-            ans.append(d.get(x, -1))
+        for i in nums2:
+            while len(stack) and stack[-1] < i:
+                right_bigger[stack.pop()] = i
+            stack.append(i)
+
+        for i in nums1:
+            ans.append(right_bigger.get(i, -1))
 
         return ans
 
