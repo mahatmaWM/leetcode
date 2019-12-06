@@ -26,7 +26,9 @@
 # 
 # Related Topics 树 递归
 
-
+# 思路：
+# 根据二叉搜索树的性质，差的绝对值一定出现在根与左或者根与右孩子之间。
+# 这样中序遍历一下树，遍历过程中记录每两次访问节点的差值。
 
 #leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
@@ -42,5 +44,18 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        self.res = float("inf")
+        self.prev = None
+        self.in_order(root)
+        return self.res
+
+    def in_order(self, node):
+        if not node:
+            return
+        self.in_order(node.left)
+        if self.prev:
+            self.res = min(self.res, node.val - self.prev.val)
+        self.prev = node
+        self.in_order(node.right)
         
 #leetcode submit region end(Prohibit modification and deletion)

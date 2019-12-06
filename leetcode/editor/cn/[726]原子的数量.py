@@ -1,4 +1,4 @@
-#给定一个化学式formula（作为字符串），返回每种原子的数量。 
+# 给定一个化学式formula（作为字符串），返回每种原子的数量。
 #
 # 原子总是以一个大写字母开始，接着跟随0个或任意个小写字母，表示原子的名字。 
 #
@@ -13,31 +13,31 @@
 # 示例 1: 
 #
 # 
-#输入: 
-#formula = "H2O"
-#输出: "H2O"
-#解释: 
-#原子的数量是 {'H': 2, 'O': 1}。
+# 输入:
+# formula = "H2O"
+# 输出: "H2O"
+# 解释:
+# 原子的数量是 {'H': 2, 'O': 1}。
 # 
 #
 # 示例 2: 
 #
 # 
-#输入: 
-#formula = "Mg(OH)2"
-#输出: "H2MgO2"
-#解释: 
-#原子的数量是 {'H': 2, 'Mg': 1, 'O': 2}。
+# 输入:
+# formula = "Mg(OH)2"
+# 输出: "H2MgO2"
+# 解释:
+# 原子的数量是 {'H': 2, 'Mg': 1, 'O': 2}。
 # 
 #
 # 示例 3: 
 #
 # 
-#输入: 
-#formula = "K4(ON(SO3)2)2"
-#输出: "K4N2O14S4"
-#解释: 
-#原子的数量是 {'K': 4, 'N': 2, 'O': 14, 'S': 4}。
+# 输入:
+# formula = "K4(ON(SO3)2)2"
+# 输出: "K4N2O14S4"
+# 解释:
+# 原子的数量是 {'K': 4, 'N': 2, 'O': 14, 'S': 4}。
 # 
 #
 # 注意: 
@@ -50,13 +50,12 @@
 # Related Topics 栈 递归 哈希表
 
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def countOfAtoms(self, formula):
         """
         :type formula: str
         :rtype: str
         """
-        
-#leetcode submit region end(Prohibit modification and deletion)
+
+# leetcode submit region end(Prohibit modification and deletion)

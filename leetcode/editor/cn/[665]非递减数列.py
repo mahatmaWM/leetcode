@@ -21,11 +21,14 @@
 # 说明: n 的范围为 [1, 10,000]。 
 # Related Topics 数组
 
-# 思路，复制2个数组(a,b)出来，只要碰到 nums[i]>nums[i+1] 的情况，
-# 前一个数组（a）直接删除 nums[i] 再比较删除后的数组是否是已经排序好的（a 是不是等于 sorted(a) )，
-# 后一个数组（b）直接删除 nums[i+1] 再比较删除后的数组是否是已经排序好的（b 是不是等于 sorted(b) )，
-# 只要二者之间有一个是已经排序好的就返回 True 否则 返回 False。
-
+# 思路：
+# 找到i比i-1严格小的个数count，并记录i的位置。
+#
+# 如果个数为0，返回true；如果个数大于1，返回false；
+# 如果个数等于1，则再次判断，这时需要判断位置i位置什么位置：
+#   如果位于头尾，则只需要改位置i本身即可，返回true。
+#   如果位于中间，则比较是否i+1大于等于i-1
+#
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def checkPossibility(self, nums):
@@ -36,15 +39,26 @@ class Solution(object):
         if len(nums) <= 2:
             return True
 
-        import copy
-        a, b = copy.deepcopy(nums[:]), copy.deepcopy(nums[:])
-        for i in range(len(nums) - 1):
-            if a[i] > a[i + 1]:
-                del a[i]
-                del b[i + 1]
-        return (a == sorted(a)) or (b == sorted(b))
+        count = 0
+        result = []
+
+        for i in range(1, len(nums)):
+            if nums[i] < nums[i - 1]:
+                count += 1
+                result.append(i)
+        if count == 0:
+            return True
+        elif count > 1:
+            return False
+        else:
+            i = result[0]
+            if i == 1 or i == len(nums) - 1 or nums[i + 1] >= nums[i - 1] or \
+                    nums[i - 2] <= nums[i]:
+                return True
+            else:
+                return False
 
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':
-    print(Solution().checkPossibility(nums=[1,2,3]))
+    print(Solution().checkPossibility(nums=[1, 2, 3]))

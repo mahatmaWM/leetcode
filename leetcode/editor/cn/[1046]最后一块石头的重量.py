@@ -19,6 +19,7 @@
 # 
 # Related Topics 堆 贪心算法
 
+# 利用python的最小堆，每个石头的重量取负号存入。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -27,5 +28,12 @@ class Solution(object):
         :type stones: List[int]
         :rtype: int
         """
+        A = [-x for x in stones]
+        import heapq
+        heapq.heapify(A)
+        while len(A) > 1:
+            x, y = -heapq.heappop(A), -heapq.heappop(A)
+            heapq.heappush(A, -abs(x - y))
+        return -A[0]
 
 # leetcode submit region end(Prohibit modification and deletion)
