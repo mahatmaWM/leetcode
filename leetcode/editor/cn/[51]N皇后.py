@@ -27,12 +27,12 @@
 # Related Topics 回溯算法
 
 # 解题思路：
-# 递归回溯，也可以叫做对决策树的深度优先搜索（dfs）。
-# N皇后问题有个技巧的关键在于棋盘的表示方法，这里使用一个数组就可以表达了。比如board=[1, 3, 0, 2]，
+# 递归回溯，也可以叫做对解空间树的深度优先搜索（dfs）
+#
+# N皇后问题有个技巧在于棋盘的表示方法，这里使用一个数组就可以表达了。比如board=[1, 3, 0, 2]，
 # 这是4皇后问题的一个解，意思是：在第0行，皇后放在第1列；在第1行，皇后放在第3列；在第2行，皇后放在第0列；在第3行，皇后放在第2列。
 #
-# 这道题提供一个递归解法。
-# check函数用来检查在第k行，皇后是否可以放置在第j列。
+# check函数用来检查深度为第k行时，皇后是否可以放置在第j列。
 #   board[i] - j == 0 表示第i行的皇后也放在j列。
 #   k - i == abs(board[i] - j) 表示(k,j)(i,board[i])两个皇后可以对角线相遇。
 
@@ -43,25 +43,26 @@ class Solution(object):
         :type n: int
         :rtype: List[List[str]]
         """
+
         def check(k, j):
             for i in range(k):
-                if board[i] - j == 0 or k - i == abs(board[i] - j):
+                if board[i] == j or k - i == abs(board[i] - j):
                     return False
             return True
 
         def dfs(depth, value_list):
             if depth == n:
-                res.append(value_list)
+                self.res.append(value_list)
                 return
-            for i in range(n):
-                if check(depth, i):
-                    board[depth] = i
+            for j in range(n):
+                if check(depth, j):
+                    board[depth] = j
                     s = '.' * n
-                    dfs(depth + 1, value_list + [s[:i] + 'Q' + s[i + 1:]])
+                    dfs(depth + 1, value_list + [s[:j] + 'Q' + s[j + 1:]])
 
-        board = [-1 for i in range(n)]
-        res = []
+        board = [-1] * n
+        self.res = []
         dfs(0, [])
-        return res
+        return self.res
 
 # leetcode submit region end(Prohibit modification and deletion)

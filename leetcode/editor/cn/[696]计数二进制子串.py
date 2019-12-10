@@ -30,6 +30,14 @@
 # 
 # Related Topics 字符串
 
+# 解题思路：
+# 我们可以把一个字符串分组，来记录数字出现了多少次。
+# 比如 00111 我们可以分成groups=[2,3]，11110可以分成groups=[4,1]。
+# 这样当最后计数的时候，对每一个值取min(groups[i-1], groups[i])。
+#
+# 这是为什么呢？  
+# 试想groups=[2,3]的情况，要么是00111要么是11000，无论是哪一种情况都只有 0011 、01或是1100、10两个子串符合条件，也就是groups中相邻两数的最小值。
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -38,5 +46,16 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        groups = [1]
+        for i in range(1, len(s)):
+            if s[i] != s[i - 1]:
+                groups.append(1)
+            else:
+                groups[-1] += 1
+
+        ans = 0
+        for i in range(1, len(groups)):
+            ans += min(groups[i - 1], groups[i])
+        return ans
 
 # leetcode submit region end(Prohibit modification and deletion)

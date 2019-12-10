@@ -1,11 +1,11 @@
-#给定一个二叉树 
+# 给定一个二叉树
 #
 # struct Node {
 #  int val;
 #  Node *left;
 #  Node *right;
 #  Node *next;
-#} 
+# }
 #
 # 填充它的每个 next 指针，让这个指针指向其下一个右侧节点。如果找不到下一个右侧节点，则将 next 指针设置为 NULL。 
 #
@@ -27,8 +27,8 @@
 # 
 #
 # 输入：root = [1,2,3,4,5,null,7]
-#输出：[1,#,2,3,#,4,5,7,#]
-#解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。 
+# 输出：[1,#,2,3,#,4,5,7,#]
+# 解释：给定二叉树如图 A 所示，你的函数应该填充它的每个 next 指针，以指向其下一个右侧节点，如图 B 所示。
 #
 # 
 #
@@ -45,10 +45,9 @@
 # 
 # Related Topics 树 深度优先搜索
 
+# 层次遍历二叉树，然后把每层的节点连起来。注意左右子树是否为空的判断，以及跳出循环的判断。
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
-"""
+# leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a Node.
 class Node(object):
     def __init__(self, val=0, left=None, right=None, next=None):
@@ -56,7 +55,8 @@ class Node(object):
         self.left = left
         self.right = right
         self.next = next
-"""
+
+
 class Solution(object):
     def connect(self, root):
         """
@@ -69,11 +69,13 @@ class Solution(object):
                 current_level = []
                 while last_level:
                     temp_node = last_level.pop(0)
-                    current_level.append(temp_node.left)
-                    current_level.append(temp_node.right)
+                    if temp_node.left:
+                        current_level.append(temp_node.left)
+                    if temp_node.right:
+                        current_level.append(temp_node.right)
 
                 # meet leaf, break
-                if current_level[0] is None:
+                if len(current_level) == 0 or current_level[0] is None:
                     break
 
                 for i in range(len(current_level) - 1):
@@ -81,5 +83,14 @@ class Solution(object):
 
                 last_level = current_level
             return root
-        
-#leetcode submit region end(Prohibit modification and deletion)
+
+
+# leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    root = Node(1)
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.left.right = Node(5)
+    root.right.right = Node(7)
+    print(Solution().connect(root=root))

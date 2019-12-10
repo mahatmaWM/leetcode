@@ -31,8 +31,10 @@
 # 回溯解法：
 # 求解关键：找到重复的原因，对树进行剪枝。
 # 1、首先将数组排序，这一步很关键，是后面剪枝的基础；
-# 2、只处理第 1 次遇到的那个数，举个具体的例子画个图。重点理解：
-#   i > 0 and nums[i] == nums[i - 1] and 之前那个数还没有使用，即 marked[i-1] == false，这时说明当前的i也不能用，continue
+#
+# 2、只处理第 1 次遇到的那个数。
+# 也就是说下面这种情况 i > 0 and nums[i] == nums[i - 1] and 之前那个数还没有使用，即 marked[i-1] == false 时，
+# 第二个数字不取，说明当前的i也不能用，continue
 
 # https://www.jianshu.com/p/e987b8cc1fd7
 # 注意参数：
@@ -59,7 +61,8 @@ class Solution(object):
     def backtrack(self, nums, pre, used, res):
         if len(pre) == len(nums):
             # must deep copy
-            res.append(pre.copy())
+            import copy
+            res.append(copy.deepcopy(pre))
             return
         for i in range(len(nums)):
             if not used[i]:

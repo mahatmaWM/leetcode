@@ -55,5 +55,6 @@ class Solution(object):
             node = stack.pop()
             res.append(node.val)
             node = node.right
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)

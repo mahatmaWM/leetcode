@@ -21,5 +21,11 @@ class Solution(object):
         :type b: int
         :rtype: int
         """
+        if b == 0:
+            return a
+        else:
+            return self.getSum(a ^ b, (a & b) << 1)
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().getSum(a = -2, b = 3))

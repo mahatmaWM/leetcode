@@ -52,7 +52,6 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        # ?????
         if len(candidates) <= 0:
             return []
         candidates.sort()

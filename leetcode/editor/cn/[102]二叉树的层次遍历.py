@@ -46,15 +46,16 @@ class Solution(object):
         queue = collections.deque()
         queue.append(root)
         while queue:
-            level = []
-            for _ in range(len(queue)):
+            curr_level = []
+            queue_len = len(queue)
+            for _ in range(queue_len):
                 node = queue.popleft()
-                level.append(node.val)
+                curr_level.append(node.val)
                 if node.left is not None:
                     queue.append(node.left)
                 if node.right is not None:
                     queue.append(node.right)
-            retList.append(level)
+            retList.append(curr_level)
         return retList
 
 # leetcode submit region end(Prohibit modification and deletion)

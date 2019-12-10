@@ -1,4 +1,4 @@
-#在二叉树中，根节点位于深度 0 处，每个深度为 k 的节点的子节点位于深度 k+1 处。 
+# 在二叉树中，根节点位于深度 0 处，每个深度为 k 的节点的子节点位于深度 k+1 处。
 #
 # 如果二叉树的两个节点深度相同，但父节点不同，则它们是一对堂兄弟节点。 
 #
@@ -12,14 +12,14 @@
 # 
 #
 # 输入：root = [1,2,3,4], x = 4, y = 3
-#输出：false
+# 输出：false
 # 
 #
 # 示例 2： 
 # 
 #
 # 输入：root = [1,2,3,null,4,null,5], x = 5, y = 4
-#输出：true
+# 输出：true
 # 
 #
 # 示例 3： 
@@ -27,7 +27,7 @@
 # 
 #
 # 输入：root = [1,2,3,null,4], x = 2, y = 3
-#输出：false 
+# 输出：false
 #
 # 
 #
@@ -41,9 +41,9 @@
 # 
 # Related Topics 树 广度优先搜索
 
+# 层次遍历树，记录（父节点，当前节点）
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -59,5 +59,20 @@ class Solution(object):
         :type y: int
         :rtype: bool
         """
-        
-#leetcode submit region end(Prohibit modification and deletion)
+        queue = [(0, root)]
+        while queue:
+            curr_level = []
+            # range(len(queue)) 是上一层的队列长度
+            for _ in range(len(queue)):
+                father_val, node = queue.pop(0)
+                if node.val == x or node.val == y:
+                    curr_level.append((father_val, node.val))
+                if node.left:
+                    queue.append((node.val, node.left))
+                if node.right:
+                    queue.append((node.val, node.right))
+            if len(curr_level) == 2 and curr_level[0][0] != curr_level[1][0]:
+                return True
+        return False
+
+# leetcode submit region end(Prohibit modification and deletion)

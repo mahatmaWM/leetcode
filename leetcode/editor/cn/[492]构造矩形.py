@@ -1,4 +1,5 @@
-# 作为一位web开发者， 懂得怎样去规划一个页面的尺寸是很重要的。 现给定一个具体的矩形页面面积，你的任务是设计一个长度为 L 和宽度为 W 且满足以下要求的矩形的页面。要求：
+# 作为一位web开发者， 懂得怎样去规划一个页面的尺寸是很重要的。
+# 现给定一个具体的矩形页面面积，你的任务是设计一个长度为 L 和宽度为 W 且满足以下要求的矩形的页面。要求：
 #
 # 
 # 1. 你设计的矩形页面必须等于给定的目标面积。
@@ -27,6 +28,8 @@
 # 
 #
 
+# 思路：
+# 这种要求尽量接近的，就是要先开根号再做。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -35,5 +38,11 @@ class Solution(object):
         :type area: int
         :rtype: List[int]
         """
+        import math
+        middle = int(math.sqrt(area))
+        while middle > 0:
+            if area % middle == 0:
+                return [area / middle, middle]
+            middle -= 1
 
 # leetcode submit region end(Prohibit modification and deletion)

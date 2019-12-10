@@ -39,6 +39,10 @@
 # 
 # Related Topics 排序
 
+# 按照汽车所在位置逆序排序，然后计算每辆车到target位置的时间。
+# 这种遍历连续区间，且要比较连续元素大小的场景，都可以使用一个栈来保存最终结果。
+# 如果当前time比栈顶的时间小，说明当前车辆是可以追上前面那辆栈顶的车，可以合并为一个车队，否则当前车辆单独作为一个车队。
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -49,5 +53,18 @@ class Solution(object):
         :type speed: List[int]
         :rtype: int
         """
+        cars = [(pos, spe) for pos, spe in zip(position, speed)]
+        sorted_cars = sorted(cars, reverse=True)
+        times = [(target - pos) / spe for pos, spe in sorted_cars]
+        stack = []
+        for time in times:
+            if not stack:
+                stack.append(time)
+            else:
+                if time > stack[-1]:
+                    stack.append(time)
+        return len(stack)
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().carFleet(target = 10, position = [6,8], speed = [3,2]))
