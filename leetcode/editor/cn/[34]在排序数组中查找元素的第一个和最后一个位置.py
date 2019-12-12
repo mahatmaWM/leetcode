@@ -30,28 +30,28 @@ class Solution(object):
         """
         if not nums:
             return -1, -1
-        left, right = -1, -1
+        start, end = -1, -1
 
-        start, end = 0, len(nums) - 1
-        while start < end:
-            mid = (start + end) // 2
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (left + right) // 2
             if nums[mid] < target:
-                start = mid + 1
+                left = mid + 1
             else:
-                end = mid
-        if nums[start] == target:
-            left = start
+                right = mid
+        if nums[left] == target:
+            start = left
 
-        start, end = 0, len(nums) - 1
-        while start < end:
-            mid = (start + end + 1) // 2
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (left + right + 1) // 2
             if nums[mid] > target:
-                end = mid - 1
+                right = mid - 1
             else:
-                start = mid
-        if nums[end] == target:
-            right = end
+                left = mid
+        if nums[right] == target:
+            end = right
 
-        return left, right
+        return start, end
 
 # leetcode submit region end(Prohibit modification and deletion)
