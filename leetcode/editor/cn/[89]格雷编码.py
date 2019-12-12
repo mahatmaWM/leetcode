@@ -30,6 +30,11 @@
 # 
 # Related Topics 回溯算法
 
+# 思路，根据格雷码的递推性质：
+# 设n阶格雷码集合为G(n)，则G(n+1)阶格雷码为：
+# 1、给G(n)阶格雷码每个元素二进制形式前面添加 0，得到 G'(n)；
+# 2、设G(n)集合倒序（镜像）为 R(n)，给 R(n)每个元素二进制形式前面添加 1，得到 R'(n)；
+# 3、G(n+1) = G'(n) ∪ R'(n)，拼接两个集合即可得到下一阶格雷码。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -38,5 +43,11 @@ class Solution(object):
         :type n: int
         :rtype: List[int]
         """
+        res, head = [0], 1
+        for i in range(n):
+            for j in range(len(res) - 1, -1, -1):
+                res.append(head + res[j])
+            head <<= 1
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)

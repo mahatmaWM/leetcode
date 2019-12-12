@@ -16,7 +16,8 @@
 # ]
 # Related Topics 数组 回溯算法
 
-# https://blog.csdn.net/fuxuemingzhu/article/details/79785548#_34
+# 回溯算法，时间复杂度：O(n!)，解空间大小为n！
+# 先排序是为了剪枝，j > i and nums[j] == nums[j - 1] 跳过，此步为了去除重复的子集。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -25,20 +26,23 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+        n = len(nums)
         nums.sort()
-        res = []
+        self.res = []
 
-        def dfs(depth, start, valuelist):
-            if valuelist not in res:
-                res.append(valuelist)
-            if depth == len(nums):
+        def back_track(i, tmp):
+            self.res.append(tmp)
+            if i == n:
                 return
-            for i in range(start, len(nums)):
-                dfs(depth + 1, i + 1, valuelist + [nums[i]])
+            for j in range(i, n):
+                if j > i and nums[j] == nums[j - 1]:
+                    continue
+                back_track(j + 1, tmp + [nums[j]])
 
-        dfs(0, 0, [])
-        print(res)
-        return res
+        back_track(0, [])
+        return self.res
 
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().subsetsWithDup(nums=[1, 2, 2]))

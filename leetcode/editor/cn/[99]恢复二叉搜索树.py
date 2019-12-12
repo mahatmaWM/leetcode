@@ -47,12 +47,14 @@
 # 
 # Related Topics 树 深度优先搜索
 
-# 对于二次搜索树，如果进行中序遍历会形成一个从小到大的递增序列，可以储存中序遍历的结果，检测到数列中不符合要求的节点（因为是两个节点值交换，第一个错误节点会比下一个节点的值还大，第二个错误节点的值会比上一个节点的值还小，找到这两个节点，将其值交换）
-
-# [1, 2, 3, 4, 5, 6]  ==>  [1, 5, 3, 4, 2, 6]
-# 在中序遍历的过程中，用一个指针保存上个节点，那么当前节点值应该小于前一个节点的值。否则就存在乱序。
+# 思路:
+# 这道题难点,是找到那两个交换节点,把它交换过来就行了.如何找到这两个点呢？
+# 这里我们二叉树搜索树的中序遍历(中序遍历遍历元素是递增的)
+# 如上图示例1所示, 中序遍历顺序是 3 2 1，我们只要找到节点3和节点1交换顺序即可!
 #
-# 第一个乱序的数字是pre，第二个乱序的数字是root，所以用两个指针分别保存。
+# 这里我们有个规律发现这两个节点:
+# 第一个节点,是第一个按照中序遍历时候前一个节点大于后一个节点,我们选取前一个节点,这里指节点3;
+# 第二个节点,是在第一个节点找到之后, 后面出现前一个节点大于后一个节点，我们选择后一个节点，这里指节点1;
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
@@ -69,7 +71,7 @@ class Solution(object):
         :type root: TreeNode
         :rtype: None Do not return anything, modify root in-place instead.
         """
-        self.pre, self.first, self.second = None, None, None
+        self.pre_visit, self.first, self.second = None, None, None
         self.in_order(root)
         self.first.val, self.second.val = self.second.val, self.first.val
 
@@ -77,11 +79,12 @@ class Solution(object):
         if not node:
             return
         self.in_order(node.left)
-        if self.pre and self.pre.val > node.val:
+        # 先找到第一次出现逆序的first节点，再找到最后一次逆序的second节点
+        if self.pre_visit and self.pre_visit.val > node.val:
             if not self.first:
-                self.first = self.pre
+                self.first = self.pre_visit
             self.second = node
-        self.pre = node
+        self.pre_visit = node
         self.in_order(node.right)
 
 # leetcode submit region end(Prohibit modification and deletion)

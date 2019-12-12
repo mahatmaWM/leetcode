@@ -13,7 +13,7 @@
 # 输出: 2
 # 
 # Related Topics 位运算 数组 分治算法
-
+# 摩尔投票法的使用。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -22,10 +22,22 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if len(nums) == 0:
-            return None
-
-        return [ele for ele in set(nums) if nums.count(ele) > 0.5 * len(nums)][
-            0]
+        # 摩尔投票法
+        m = None
+        mcount = 0
+        for num in nums:
+            if num == m:
+                mcount += 1
+            elif not mcount:
+                m, mcount = num, 1
+            else:
+                mcount -= 1
+        # 再次找这个数字
+        mcount = 0
+        for num in nums:
+            if num == m:
+                mcount += 1
+        N = len(nums)
+        return m if mcount > N // 2 else 0
 
 # leetcode submit region end(Prohibit modification and deletion)

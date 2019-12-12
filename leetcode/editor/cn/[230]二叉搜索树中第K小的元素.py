@@ -29,6 +29,7 @@
 # 如果二叉搜索树经常被修改（插入/删除操作）并且你需要频繁地查找第 k 小的值，你将如何优化 kthSmallest 函数？
 # Related Topics 树 二分查找
 
+# 二叉搜索树的中序遍历为递增数组，如果用非递归的方式遍历二叉搜索树，那么第K次遍历到的数字就为结果。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
@@ -45,5 +46,18 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        stack = []
+        node = root
+        while node or stack:
+            # 从根节点开始，一直找左子树
+            while node:
+                stack.append(node)
+                node = node.left
+            # while结束表示当前节点node为空，即前一个节点没有左子树了
+            node = stack.pop()
+            k -= 1
+            if k == 0:
+                return node.val
+            node = node.right
 
 # leetcode submit region end(Prohibit modification and deletion)
