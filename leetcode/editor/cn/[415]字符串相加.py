@@ -23,8 +23,7 @@ class Solution(object):
         """
         import itertools
         res, jinwei = "", 0
-        for (x, y) in itertools.izip_longest(num1[::-1], num2[::-1],
-                                             fillvalue='0'):
+        for (x, y) in itertools.izip_longest(num1[::-1], num2[::-1], fillvalue='0'):
             s = (int(x) + int(y) + jinwei)
             d, jinwei = s % 10, s // 10
             res = str(d) + res

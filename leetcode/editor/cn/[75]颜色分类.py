@@ -19,6 +19,8 @@
 # 
 # Related Topics 排序 数组 双指针
 
+# 思路，三色荷兰国旗排序问题。
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -27,14 +29,23 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        from collections import Counter
-        count = Counter(nums)
-        for i in range(len(nums)):
-            if i < count[0]:
-                nums[i] = 0
-            elif i < count[0] + count[1]:
-                nums[i] = 1
+        # 对于所有 idx < p0 : nums[idx < p0] = 0
+        # curr是当前考虑元素的下标
+        p0 = curr = 0
+        # 对于所有 idx > p2 : nums[idx > p2] = 2
+        p2 = len(nums) - 1
+
+        while curr <= p2:
+            # 如果curr指向的元素为0，则把0放到前面的p0位置，同时curr p0均右移
+            if nums[curr] == 0:
+                nums[p0], nums[curr] = nums[curr], nums[p0]
+                p0 += 1
+                curr += 1
+            # 如果curr指向的元素为2，则把2放到后面p2指向的位置，同时p2左移
+            elif nums[curr] == 2:
+                nums[curr], nums[p2] = nums[p2], nums[curr]
+                p2 -= 1
             else:
-                nums[i] = 2
+                curr += 1
 
 # leetcode submit region end(Prohibit modification and deletion)

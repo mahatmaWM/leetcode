@@ -21,42 +21,44 @@ class Solution(object):
         union_find = dict([(item, item) for item in nums])
         # 这里是进行合并
         for item in nums:
-            # 这个数组主要是为了在查找记录下查找路径，然后找到最终的父节点， 其实也就是路径压缩
-            need_mod = [item]
-            # 这里的 item+1 和下面的parent + 1 都是为了 和一些单独的点进行合并
-            parent = item + 1
-            # 下面的这个 默认横线是防止序列中有 0 出现
-            pv = union_find.get(parent, "-")
+            # 记录当前遍历需要路径压缩的节点
+            need_union = [item]
 
-            # 当这个点和父节点一样的时候表示的就是还没进行过筛选 或者就是本身自己一个集合
-            # 当这个点的父节点和当前点不一样的时候有两种情况 要么是没有记录 要么是之前已经找到过了它最终父节点，也就是找到了它所属集合
-            while pv == parent:
-                need_mod.append(parent)
-                parent += 1
-                pv = union_find.get(parent, "-")
+            # 尝试去找 item+1 节点的父亲
+            # 由于外层有一个for循环，所以这里只需要找item+1即可（不用考虑item-1）
+            try_node = item + 1
+            try_node_parent = union_find.get(try_node, "-")
 
-            if pv == "-":
-                parent -= 1
+            # 当这个点和父节点一样的时候表示的就是还没进行过筛选 或者 就是本身自己一个集合
+            # 当这个点的父节点和当前点不一样的时候有两种情况：
+            #   1、要么是没有记录，则try_node-1
+            #   2、要么是之前已经找到过了它最终父节点，也就是找到了它所属集合
+            while try_node_parent == try_node:
+                need_union.append(try_node)
+                try_node += 1
+                try_node_parent = union_find.get(try_node, "-")
+
+            if try_node_parent == "-":
+                try_node -= 1
             else:
-                parent = pv
-            # 统一设置一下他们的父节点 也就是路径压缩
-            for tmp in need_mod:
-                union_find[tmp] = parent
-        # 这里是合并
+                try_node = try_node_parent
 
-        _min = -0xfffffff
-        cm = _min
-        cn = {}
-        # 这里是获取父节点最多出现的次数，和并查集没毛关系
-        for item in union_find:
-            k = union_find.get(item)
-            if not cn.get(k):
-                cn[k] = 1
-            else:
-                cn[k] += 1
-            cm = max(cm, cn[k])
-        # 这里是获取父节点最多出现的次数，和并查集没毛关系
+            # 统一设置他们的父节点 也就是路径压缩
+            for tmp in need_union:
+                union_find[tmp] = try_node
+            # print(union_find)
 
-        return max(cm, 0)  # 这里主要是为了防止空列表的出现
+        # 父节点出现次数最多的
+        import collections
+        dict1 = collections.defaultdict(int)
+        res = 0
+        for k, v in union_find.items():
+            dict1[v] += 1
+        for k, v in dict1.items():
+            res = max(res, v)
+        return res
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().longestConsecutive(nums=[100, 4, 200, 1, 3, 2]))

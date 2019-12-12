@@ -54,6 +54,7 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
+
     def compareVersion(self, version1, version2):
         """
         :type version1: str

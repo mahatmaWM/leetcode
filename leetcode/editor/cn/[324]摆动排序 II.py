@@ -17,10 +17,12 @@
 # 你能用 O(n) 时间复杂度和 / 或原地 O(1) 额外空间来实现吗？
 # Related Topics 排序
 
-# 思路
-# 0 2 4的位置放小的一半数字，1 3 5放大的一半数字，所以问题转化为将数组分为两部分A,B，A中每个元素都比B大，然后分别从AB中挑选元素即可。
-# 也就是找到数组的中间数，并且将nums数组
-
+# ==========================================================================================
+# 有序数组，这个问题就很好处理了。
+#
+# 思路：二分查找的方法找到第K大的元素，将左右两边的数字调整好，然后两个指针调整为摆动排序。
+# 其中：0 2 4的位置放小的一半数字，1 3 5放大的一半数字。
+# ==========================================================================================
 # 在有序数组lst中查找val值的位置，二分查找递归和循环的两种方式。
 # def binary_search_recursion(lst, val, start, end):
 #     if start > end:
@@ -44,61 +46,73 @@
 #         else:
 #             return mid
 #     return None
+# ==========================================================================================
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
-    # 循环二分查找第K大元素
-    def find_kth_largest(self, nums, k):
-        import random
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            pivot_idx = random.randint(left, right)
-            new_pivot_idx = self.partition_around_pivot(left, right, pivot_idx,
-                                                        nums)
-            if new_pivot_idx == k - 1:
-                return nums[new_pivot_idx]
-            elif new_pivot_idx > k - 1:
-                right = new_pivot_idx - 1
-            else:
-                left = new_pivot_idx + 1
-
-    # 在nums数组的[left，right]区间，挑选nums[pivot_idx]位置的数字，比其大的元素放在左边，
-    # 返回new_pivot_idx的值，也就是这个区间中第new_pivot_idx大的元素位置
-    def partition_around_pivot(self, left, right, pivot_idx, nums):
-        pivot_value = nums[pivot_idx]
-        new_pivot_idx = left
-        nums[pivot_idx], nums[right] = nums[right], nums[pivot_idx]
-        for i in range(left, right):
-            if nums[i] > pivot_value:
-                nums[i], nums[new_pivot_idx] = nums[new_pivot_idx], nums[i]
-                new_pivot_idx += 1
-        nums[right], nums[new_pivot_idx] = nums[new_pivot_idx], nums[right]
-        return new_pivot_idx
-
     def wiggleSort(self, nums):
         """
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
-        k = len(nums) // 2
-        self.find_kth_largest(nums, k)
+
+        # 返回索引下标i，i左边的数字都比num[p0]小，右边的都比它大
+        def partition(num, low, high):
+            # 选取low位置为pivot
+            pivot = num[low]
+            while low < high:
+                while low < high and num[high] >= pivot:
+                    high -= 1
+                num[low] = num[high]
+                while low < high and num[low] <= pivot:
+                    low += 1
+                num[high] = num[low]
+            num[low] = pivot
+            return low
+
+        def kth_smallest(num, low, high, k):
+            index = partition(num, low, high)
+            if index == k: return num[index]
+
+            if index < k:
+                return kth_smallest(num, index + 1, high, k)
+            else:
+                return kth_smallest(num, low, index - 1, k)
+
+        def median(arr, n):
+            return kth_smallest(arr, 0, n - 1, n // 2)
+
+        n = len(nums)
+        if n <= 1: return
+        mid = median(nums, n)
+        print(mid)
         print(nums)
-        print(nums[k])
-        # 根据奇数，偶数来确定right的位置
-        left, right = 0, len(nums) - 1 if len(nums) % 2 == 0 else len(nums) - 2
-        while left < right:
-            nums[left], nums[right] = nums[right], nums[left]
-            left += 2
-            right -= 2
+
+        # O(n)时间原地修改，类似三色荷兰国旗排序算法，但数组是全部奇数位下标和偶数位下标的拼接
+        # 这里的逻辑没有看懂？？
+        p0 = curr = 0
+        p2 = n - 1
+        n |= 1  # 取向上离n最近的奇数
+        while curr <= p2:
+            ii, jj, kk = map(lambda x: (x * 2 + 1) % n, [p0, curr, p2])
+            if nums[jj] > mid:
+                nums[jj], nums[ii] = nums[ii], nums[jj]
+                p0 += 1
+                curr += 1
+            elif nums[jj] < mid:
+                nums[jj], nums[kk] = nums[kk], nums[jj]
+                p2 -= 1
+            else:
+                curr += 1
 
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':
-    nums = [1, 3, 2, 2, 3, 1]
+    nums = [4,5,5,6]
     print(Solution().wiggleSort(nums=nums))
     print(nums)
-
-
-    # 测试结果: [1, 3, 2, 2, 1, 3]
-    [3, 3, 2, 2, 1, 1]
-    # 期望结果: [2, 3, 1, 3, 1, 2]
+    #
+    # [1, 3, 2, 2, 2, 1, 1, 3, 1, 1, 2]
+    # 测试结果: [3, 2, 1, 2, 1, 3, 1, 2, 1, 2, 1]
+    # 期望结果: [2, 3, 1, 3, 1, 2, 1, 2, 1, 2, 1]

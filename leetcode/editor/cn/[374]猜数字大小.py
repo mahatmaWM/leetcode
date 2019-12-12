@@ -34,7 +34,7 @@ class Solution(object):
                 return mid
             elif guess(mid) == -1:
                 left = mid + 1
-            else:
+            elif guess(mid) == 1:
                 right = mid - 1
 
 # leetcode submit region end(Prohibit modification and deletion)
