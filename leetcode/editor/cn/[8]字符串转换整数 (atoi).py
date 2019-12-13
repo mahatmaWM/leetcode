@@ -12,7 +12,8 @@
 #
 # 说明： 
 #
-# 假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−231, 231 − 1]。如果数值超过这个范围，请返回 INT_MAX (231 − 1) 或 INT_MIN (−231) 。 
+# 假设我们的环境只能存储 32 位大小的有符号整数，那么其数值范围为 [−231, 231 − 1]。
+# 如果数值超过这个范围，请返回 INT_MAX (231 − 1) 或 INT_MIN (−231) 。
 #
 # 示例 1: 
 #
@@ -71,9 +72,10 @@ class Solution(object):
         i = 1 if str[0] == '-' or str[0] == '+' else 0
         # 循环，直到无法强转成int，跳出循环
         while i < len(str):
-            if '0' <= str[i] <= '9':
-                res = 10* res + (str[i]-'0')
-            else:
+            try:
+                i += 1
+                res = int(str[:i])
+            except:
                 break
         # 如果数字超出范围，返回范围最大值
         if res < -2147483648:
@@ -82,6 +84,7 @@ class Solution(object):
             return 2147483647
         return res
 
+
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':
-    print(Solution().myAtoi(str="words and 987"))
+    print(Solution().myAtoi(str="987"))

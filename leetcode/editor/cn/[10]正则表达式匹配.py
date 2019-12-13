@@ -61,11 +61,53 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
+    # 递归实现版本
+    # 其实，如果不考虑正则的一般字符匹配，也可以很容易写出递归解法，以下这个正则递归版本只是在其基础上改进得到
     def isMatch(self, s, p):
         """
         :type s: str
         :type p: str
         :rtype: bool
         """
+        if not p:
+            return not s
+        # 判断s和p的第一位是否匹配成功，条件：s不能为空且p[0]==s[0] or "."
+        first = bool(s) and (p[0] == s[0] or p[0] == '.')
+
+        # 看子问题中是否有*号，准备递归
+        if len(p) >= 2 and p[1] == '*':
+            # 对应（字符+*）出现0次 或者 多次
+            return self.isMatch(s, p[2:]) or (first and self.isMatch(s[1:], p))
+        else:
+            return first and self.isMatch(s[1:], p[1:])
+
+    # 动态规划版本，在递归树的基础上添加了一个备忘录减少计算
+    def isMatch2(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        S = len(s)
+        P = len(p)
+        memo = {}
+
+        def dp(i, j):
+            if (i, j) in memo:
+                return memo[(i, j)]
+            if j == P:
+                return i == S
+            pre = i < S and p[j] in {s[i], "."}
+            if j <= P - 2 and p[j + 1] == "*":
+                tmp = dp(i, j + 2) or (pre and dp(i + 1, j))
+            else:
+                tmp = pre and dp(i + 1, j + 1)
+            memo[(i, j)] = tmp
+            return tmp
+
+        return dp(0, 0)
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().isMatch(s="aab", p="c*a*b"))
