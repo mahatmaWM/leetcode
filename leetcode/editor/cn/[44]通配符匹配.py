@@ -65,5 +65,16 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
+        if not p:
+            return not s
+        # 判断s和p的第一位是否匹配成功，条件：s不能为空且p[0]==s[0] or "."
+        first = bool(s) and (p[0] == s[0] or p[0] == '?')
+
+        # 看子问题中是否有*号，准备递归
+        if len(p) >= 2 and p[1] == '*':
+            # 对应（字符+*）出现0次 或者 多次
+            return self.isMatch(s, p[2:]) or (first and self.isMatch(s[1:], p))
+        else:
+            return first and self.isMatch(s[1:], p[1:])
 
 # leetcode submit region end(Prohibit modification and deletion)

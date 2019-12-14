@@ -14,10 +14,10 @@
 # 
 # Related Topics 字符串 动态规划
 
-# 当遍历到位置i时，
-# 1、检查位置i和目前回文的开始字符再往前移动一个，是否组成一个新的回文，新回文长度增加2。
-# 2、检查位置i加入到目前回文后，是否组成一个新的回文，新回文长度增加1。
-# 如果满足1，可以不用再看2了。
+# 动态规划思路：
+# 状态：mem[l,r]为真或假，代表了s[l:r+1]表示的字符串是不是回文串
+
+# 然后在暴力枚举的过程中，利用记录的mem信息+动态规划的思想，避免了很多不必要的判断。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -27,16 +27,26 @@ class Solution(object):
         :rtype: str
         """
         n = len(s)
-        maxl, start = 0, 0
-        for i in range(n):
-            if i - maxl >= 1 and \
-                    s[i - maxl - 1:i + 1] == s[i - maxl - 1:i + 1][::-1]:
-                start = i - maxl - 1
-                maxl += 2
-                continue
-            if i - maxl >= 0 and s[i - maxl:i + 1] == s[i - maxl:i + 1][::-1]:
-                start = i - maxl
-                maxl += 1
-        return s[start:start + maxl]
+        if n <= 1: return s
+
+        mem = [[False] * n for _ in range(n)]
+
+        longest_l = 1
+        res = s[0]
+
+        for right in range(1, n):
+            for left in range(right):
+                # 两个字符时 或者 由当前回文串可以继续延长回文
+                if s[left] == s[right] and \
+                        (right - left <= 2 or mem[left + 1][right - 1]):
+                    mem[left][right] = True
+                    cur_len = right - left + 1
+                    if cur_len > longest_l:
+                        longest_l = cur_len
+                        res = s[left:right + 1]
+        return res
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().longestPalindrome(s="babad"))

@@ -43,6 +43,9 @@
 # 
 # Related Topics 数组
 
+# 最方便的方法，先转置矩阵，然后来逆序（行列均可）输出即可。
+# 1、转置很方便，交换[j][i]和[i][j]位置即可。
+# 2、逆序输出reverse即可。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -51,5 +54,10 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: None Do not return anything, modify matrix in-place instead.
         """
+        for i in range(len(matrix)):
+            for j in range(i + 1, len(matrix)):
+                matrix[j][i], matrix[i][j] = matrix[i][j], matrix[j][i]
+        for i in matrix:
+            i.reverse()
 
 # leetcode submit region end(Prohibit modification and deletion)
