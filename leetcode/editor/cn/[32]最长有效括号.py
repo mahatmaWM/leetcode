@@ -15,6 +15,13 @@
 # 
 # Related Topics 字符串 动态规划
 
+# 动态规划的思路：
+# 1、定义dp[n]保存第i位置的最长有效括号长度。
+# 2、初始状态dp[0]=0
+# 3.1、如果第i位为（符号，则dp[i]=0
+# 3.2、如果为）符号，
+#     则要看上一位是否是（符号，若是则有dp[i] = dp[i - 2] + 2
+#     如果上一位为）符号
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

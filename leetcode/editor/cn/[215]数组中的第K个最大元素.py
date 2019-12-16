@@ -18,7 +18,10 @@
 
 # 求第K个最大元素的方法。
 # 1.排序算法，复杂度就是对应的排序算法复杂度。比如快速排序也就NlogN.
-# 2.使用堆的特性，前K小的数，建立最大堆，建立K大的堆，然后遍历数组中后面的所有数，当前数小于堆顶元素，则替换当前堆顶元素，维护堆的特性（logk的复杂度），这样遍历完数组，堆中的元素就是前K的最小元素。最大元素建立最小堆，同理即可。这种方法总的时间复杂度为nlogk，实际应用中时效率将非常高。
+
+# 2.python中默认小顶堆，建立K个尺寸的小顶堆，
+# 然后遍历数组中后面的所有数，当前数大于堆顶元素，则替换当前堆顶元素，维护堆的特性（logk的复杂度），这样遍历完数组，堆中的元素就是前K个最大元素。
+# 最大元素建立最小堆，同理即可。这种方法总的时间复杂度为nlogk，实际应用中时效率将非常高。
 # 3.利用快排的思想，每次确定第p个数的位置，这里只需要利用这里的特性，让左边小于第k个数，右边全部大于它，但是这里求取的一堆数据时无序的。时间复杂度0(N)。
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -30,6 +33,14 @@ class Solution(object):
         :rtype: int
         """
         import heapq
-        return heapq.nlargest(k, nums)[-1]
+        heap = nums[0:k]
+        heapq.heapify(heap)
+        for i in range(k, len(nums)):
+            if nums[i] > heap[0]:
+                heapq.heappushpop(heap, nums[i])
+        return heap[0]
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().findKthLargest(nums=[3, 2, 1, 5, 6, 4], k=2))

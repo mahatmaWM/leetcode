@@ -35,6 +35,7 @@ class Solution(object):
         left, right = 0, len(nums) - 1
         while left < right:
             mid = (left + right) // 2
+            # 因为查找开始位置，这里只能用小于，不能等于
             if nums[mid] < target:
                 left = mid + 1
             else:
@@ -45,6 +46,7 @@ class Solution(object):
         left, right = 0, len(nums) - 1
         while left < right:
             mid = (left + right + 1) // 2
+            # 因为是结束位置，只能用大于，不能等于
             if nums[mid] > target:
                 right = mid - 1
             else:

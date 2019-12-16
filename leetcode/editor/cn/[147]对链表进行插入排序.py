@@ -51,17 +51,20 @@ class Solution(object):
         """
         if not head or not head.next:
             return head
+        # dummy节点相当于是哨兵
         dummy = ListNode(0)
         dummy.next = head
+        # head指针一直移动到最后一个节点
         while head.next:
             if head.val <= head.next.val:
                 head = head.next
             else:
-                # find temp for insert
+                # 否则head.next指向的节点应该被插入到之前有序链表中
+                # 先把head.next节点断开，前后链表继续相连
                 temp = head.next
                 head.next = head.next.next
 
-                # find which node to put temp into
+                # 在前面dummy指向的有序链表中找到应该插入的位置q之后
                 q = dummy
                 while q.next and q.next.val < temp.val:
                     q = q.next
