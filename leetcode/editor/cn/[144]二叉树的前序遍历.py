@@ -16,12 +16,17 @@
 # Related Topics 栈 树
 
 # 递归版本：
+# 第一步定义递归函数
 # def preOrder(sellf, root):
+#     第二步的递归终止条件
 #     if root == None:
 #         return
+#     第二步处理当前节点
 #     print(root.val)
+#     第二步递归子问题
 #     self.preOrder(root.left)
 #     self.preOrder(root.right)
+#     这里只用到了递归的 递 阶段，没有 归 ，因为并没有把子问题返回的结果与当前阶段结果归起来处理。
 
 # 非递归版本：
 # 使用栈来实现
@@ -30,11 +35,11 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class Solution(object):
     def preorderTraversal(self, root):
@@ -48,10 +53,12 @@ class Solution(object):
         res = []
         node = root
         while node or stack:
+            # 类似递归中 递 的部分，一直处理完左边节点
             while node:
                 res.append(node.val)
                 stack.append(node)
                 node = node.left
+            # 回溯，然后指向右孩子
             node = stack.pop()
             node = node.right
 

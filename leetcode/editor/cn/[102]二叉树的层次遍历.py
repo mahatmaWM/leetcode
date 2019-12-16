@@ -47,8 +47,8 @@ class Solution(object):
         queue.append(root)
         while queue:
             curr_level = []
-            queue_len = len(queue)
-            for _ in range(queue_len):
+            curr_level_len = len(queue)
+            for _ in range(curr_level_len):
                 node = queue.popleft()
                 curr_level.append(node.val)
                 if node.left is not None:

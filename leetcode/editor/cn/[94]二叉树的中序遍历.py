@@ -47,7 +47,7 @@ class Solution(object):
         stack = []
         node = root
         while node or stack:
-            # 从根节点开始，一直找左子树
+            # 从根节点开始，一直找左边节点
             while node:
                 stack.append(node)
                 node = node.left

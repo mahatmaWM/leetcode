@@ -43,13 +43,12 @@ class Solution(object):
             if ln:
                 heap.append((ln.val, ln))
 
-        dummy = ListNode(0)
-        cur = dummy
+        dummy = curr = ListNode(0)
         heapq.heapify(heap)
         while heap:
             _, ln_index = heapq.heappop(heap)
-            cur.next = ln_index
-            cur = cur.next
+            curr.next = ln_index
+            curr = curr.next
             if ln_index.next:
                 heapq.heappush(heap, (ln_index.next.val, ln_index.next))
         return dummy.next

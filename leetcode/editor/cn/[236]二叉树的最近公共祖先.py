@@ -33,16 +33,15 @@
 # Related Topics 树
 
 # 整体思路：采用递归，逐层查找。
+
 # step1:设置递归结束条件
-# 如果，查找的子树为空时，即root == 0，需要结束递归，并返回None；
-# 如果，p为当前树的子节点，即root == p，那么p、q的最近邻共同祖先就是p本身，返回p；
-# 如果，q为当前树的子节点，即root == q，那么p、q的最近邻共同祖先就是q本身，返回q；
-# 综上所述：递归结束条件为：root == None or root == p or root == q，返回值都等于 root
+# 如果，查找的子树为空时，即node == None，需要结束递归，没有找到，并返回False；
+# 如果，p为当前树的子节点，即node == p，那么p、q的最近邻共同祖先就是p本身，记录祖先，返回True；
+# 如果，q为当前树的子节点，即node == q，那么p、q的最近邻共同祖先就是q本身，记录祖先，返回True；
+# 综上所述：递归结束条件为：root == None or root == p or root == q，返回
 #
 # step2:查找子树
-# 如果递归没有结束，就说明p和q都在子树之中，需要对子树进行查找。
-# 设置left、right用于存放返回值。left存放左子树的查找结果，right存放右子树查找结果。
-# 如果在左右子树中，分别查找到了p或者q，那么这时候的root节点就是p、q的最近邻共同祖先。
+# 分别在左右子树中找p q，如果左右都返回true，说明当前节点时祖先，如果只有一个为true，说明p q都在一个子树当中，也可以返回true。
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -55,6 +54,9 @@ class TreeNode(object):
 
 
 class Solution(object):
+    def __init__(self):
+        self.result = None
+
     def lowestCommonAncestor(self, root, p, q):
         """
         :type root: TreeNode
@@ -62,14 +64,25 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        if root is None or root == p or root == q:
-            return root
-        left = self.lowestCommonAncestor(root.left, p, q)
-        right = self.lowestCommonAncestor(root.right, p, q)
 
-        if (left is not None) and (right is not None):
-            return root
-        else:
-            return left if left is not None else right
+        def dfs(node):
+            if not node: return False
+            if node == p or node == q:
+                self.result = node
+                return True
+
+            left_result = dfs(node.left)
+            right_result = dfs(node.right)
+
+            # 左右分支都为True
+            if left_result and right_result:
+                self.result = node
+                return True
+
+            if left_result or right_result:
+                return True
+
+        dfs(root)
+        return self.result
 
 # leetcode submit region end(Prohibit modification and deletion)

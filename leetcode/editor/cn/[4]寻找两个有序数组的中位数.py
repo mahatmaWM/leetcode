@@ -21,23 +21,32 @@
 # 
 # Related Topics 数组 二分查找 分治算法
 
-# getKth方法比较重要，使用递归和二分法查找两个有序链表任意位置的元素，在递归时判断A[pa - 1] <= B[pb - 1]（A链表的前几个元素小于B链表的那些）所以可以删去A的前几个元素，并找到新链表k-pa（pb）个元素即可对应代码return self.getKth(A[pa:], B, pb)。
-# findMedianSortedArrays与findMedianSortedArrays2都可以寻找中位数，findMedianSortedArrays方法分了奇偶情况，而findMedianSortedArrays2分别找第 (m+n+1) / 2 个，和 (m+n+2) / 2 个，然后求其平均值即可，这对奇偶数均适用。
+# getKth方法比较重要，使用递归和二分法查找两个有序链表任意位置的元素，
+# 假设B更长
+# A[0:pa] A[pa:]
+# B[0:pb] B[pb:]
+# 在递归时判断A[pa - 1] <= B[pb - 1]则可以删去A的前几个元素A[0:pa]，并找到新链表第k-pa个元素即可，对应return self.getKth(A[pa:], B, pb)。
+# 否则去掉B的前pb个B[0:pb]，并找到新链表第pa个元素即可，对应return self.getKth(A, B[pb:], pa)
+# findMedianSortedArrays方法分了奇偶情况。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
 
+    # 找A B两个有序链表合在一起的第K个元素（合起来有序后的）
     def getKth(self, A, B, k):
         k = int(k)
         lenA = len(A)
         lenB = len(B)
+        # 假设B链表更长
         if lenA > lenB:
             return self.getKth(B, A, k)
+        # 递归的终止条件
         if lenA == 0:
             return B[k - 1]
         if k == 1:
             return min(A[0], B[0])
-        pa = int(min(k / 2, lenA))
+
+        pa = int(min(k // 2, lenA))
         pb = k - pa
         if A[pa - 1] <= B[pb - 1]:
             return self.getKth(A[pa:], B, pb)

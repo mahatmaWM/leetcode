@@ -10,20 +10,6 @@
 # Related Topics 链表
 
 
-# 迭代的方法，直接遍历链表反转。
-#
-# 递归的方法：
-# class Solution:
-#     def reverseList(self, head):
-#         return reverse(head)
-#
-#     def reverse(self, node, prev=None):
-#         if not node:
-#             return prev
-#         n = node.next
-#         node.next = prev
-#         return reverse(n, node)
-
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.
 class ListNode(object):
@@ -33,7 +19,7 @@ class ListNode(object):
 
 
 class Solution(object):
-    def reverseList(self, head):
+    def reverseList1(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
@@ -50,4 +36,34 @@ class Solution(object):
             dummy.next = tmp
         return dummy.next
 
+    def reverseList(self, head):
+        def reverse(node):
+            if not node.next:
+                return node
+            new_head = reverse(node.next)
+            # 把node放到已反转的子链表的尾部
+            tmp_node = node.next
+            tmp_node.next = node
+            node.next = None
+            return new_head
+
+        return reverse(head)
+
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    S = Solution()
+    l1 = ListNode(1)
+    l2 = ListNode(2)
+    l3 = ListNode(3)
+    l4 = ListNode(4)
+    l5 = ListNode(5)
+    head = l1
+    l1.next = l2
+    l2.next = l3
+    l3.next = l4
+    l4.next = l5
+    l5.next = None
+    head = S.reverseList(head)
+    while head:
+        print(head.val)
+        head = head.next

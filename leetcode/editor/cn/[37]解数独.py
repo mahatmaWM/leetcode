@@ -27,6 +27,7 @@
 # 
 # Related Topics 哈希表 回溯算法
 
+# set + 回溯
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -35,41 +36,56 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: None Do not return anything, modify board in-place instead.
         """
+        # 用来记录每行、每列、每个grid应该放置的数字
+        row = [set(range(1, 10)) for _ in range(9)]
+        col = [set(range(1, 10)) for _ in range(9)]
+        block = [set(range(1, 10)) for _ in range(9)]
 
-        # num是否可以放在pos_row, pos_col位置
-        def isAvailable(pos_row, pos_col, num):
-            if num in board[pos_row]:
-                return False
-            for i in range(9):
-                if board[i][pos_col] == num:
-                    return False
-            gird33 = []
-            row1 = pos_row // 3 * 3
-            row2 = (pos_row // 3 + 1) * 3
-            for i in range(row1, row2):
-                gird33 += board[i][row1:row2]
-            if num in gird33:
-                return False
-            return True
+        empty = []
 
-        def posTry(pos_row, pos_col):
-            if pos_row == 9 and pos_col == 0:
+        # 遍历一遍数独，去除已经出现的数字，并记录需要填补的空格
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] != '.':
+                    val = int(board[i][j])
+                    row[i].remove(val)
+                    col[j].remove(val)
+                    block[(i // 3) * 3 + j // 3].remove(val)
+                else:
+                    empty.append((i, j))
+
+        # 从空格列表中获取空格，一个一个的回溯放置数字
+        def backtrack(iter=0):
+            if iter == len(empty):
                 return True
-            if board[pos_row][pos_col] == '.':
-                for i in range(1, 10):
-                    if isAvailable(pos_row, pos_col, str(i)):
-                        board[pos_row][pos_col] = str(i)
-                        flag = posTry(pos_row + (pos_col + 1) // 9,
-                                      (pos_col + 1) % 9)
-                        # 如果下一个位置失败了，则回溯到当前位置
-                        if not flag:
-                            board[pos_row][pos_col] = '.'
-                        else:
-                            return True
-            else:
-                return posTry(pos_row + (pos_col + 1) // 9, (pos_col + 1) % 9)
+            i, j = empty[iter]
+            b = (i // 3) * 3 + j // 3
+            for val in row[i] & col[j] & block[b]:
+                row[i].remove(val)
+                col[j].remove(val)
+                block[b].remove(val)
+                board[i][j] = str(val)
+                if backtrack(iter + 1):
+                    return True
+                row[i].add(val)
+                col[j].add(val)
+                block[b].add(val)
+            return False
 
-        posTry(0, 0)
-        return board
+        backtrack()
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    board = [["5", "3", ".", ".", "7", ".", ".", ".", "."],
+             ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+             [".", "9", "8", ".", ".", ".", ".", "6", "."],
+             ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+             ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+             ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+             [".", "6", ".", ".", ".", ".", "2", "8", "."],
+             [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+             [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
+    print(Solution().solveSudoku(board=board))
+
+    print('\n'.join([' '.join(item) for item in board]))

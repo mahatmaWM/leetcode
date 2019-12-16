@@ -26,7 +26,7 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        head = cur = ListNode(-1)
+        dummy = cur = ListNode(-1)
         while l1 and l2:
             if l1.val < l2.val:
                 cur.next = l1
@@ -39,6 +39,6 @@ class Solution(object):
             cur.next = l1
         if l2:
             cur.next = l2
-        return head.next
+        return dummy.next
 
 # leetcode submit region end(Prohibit modification and deletion)
