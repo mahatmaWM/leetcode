@@ -36,6 +36,7 @@ class Solution(object):
             dummy.next = tmp
         return dummy.next
 
+    # 递归反转
     def reverseList(self, head):
         def reverse(node):
             if not node.next:
