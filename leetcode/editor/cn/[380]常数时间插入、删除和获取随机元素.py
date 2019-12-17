@@ -1,4 +1,4 @@
-#设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。 
+# 设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
 #
 # 
 # insert(val)：当元素 val 不存在时，向集合中插入该项。 
@@ -9,60 +9,80 @@
 # 示例 : 
 #
 # 
-#// 初始化一个空的集合。
-#RandomizedSet randomSet = new RandomizedSet();
+# // 初始化一个空的集合。
+# RandomizedSet randomSet = new RandomizedSet();
 #
-#// 向集合中插入 1 。返回 true 表示 1 被成功地插入。
-#randomSet.insert(1);
+# // 向集合中插入 1 。返回 true 表示 1 被成功地插入。
+# randomSet.insert(1);
 #
-#// 返回 false ，表示集合中不存在 2 。
-#randomSet.remove(2);
+# // 返回 false ，表示集合中不存在 2 。
+# randomSet.remove(2);
 #
-#// 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。
-#randomSet.insert(2);
+# // 向集合中插入 2 。返回 true 。集合现在包含 [1,2] 。
+# randomSet.insert(2);
 #
-#// getRandom 应随机返回 1 或 2 。
-#randomSet.getRandom();
+# // getRandom 应随机返回 1 或 2 。
+# randomSet.getRandom();
 #
-#// 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。
-#randomSet.remove(1);
+# // 从集合中移除 1 ，返回 true 。集合现在包含 [2] 。
+# randomSet.remove(1);
 #
-#// 2 已在集合中，所以返回 false 。
-#randomSet.insert(2);
+# // 2 已在集合中，所以返回 false 。
+# randomSet.insert(2);
 #
-#// 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
-#randomSet.getRandom();
+# // 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
+# randomSet.getRandom();
 # 
 # Related Topics 设计 数组 哈希表
 
 
+# 思路：插入和删除时需要O1时间，必须用hash，随机返回则可以用数组保存元素+random选取索引。
+# 插入时：用哈希表来判断是否已存在O(1)，数组末尾增加一个元素O(1)，哈希表记录｛值：索引｝O(1)
+# 删除时：用哈希表来定位O(1)，把数组最后一个元素取下来顶替被删除元素位置O(1)(虽然这一步是很有技巧，但是仔细想想list尾部操作是O1时间，而且删除位置又知道了，插入也是O1时间)，更新哈希表O(1)
+# 取随机数时：随机从数组里面挑一个O(1)
 
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 class RandomizedSet:
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        
+        self.hash = {}
+        self.list = []
 
     def insert(self, val: int) -> bool:
         """
         Inserts a value to the set. Returns true if the set did not already contain the specified element.
         """
-        
+        if val in self.hash:
+            return False
+        else:
+            self.hash[val] = len(self.list)
+            self.list.append(val)
+            return True
 
     def remove(self, val: int) -> bool:
         """
         Removes a value from the set. Returns true if the set contained the specified element.
         """
-        
+        if val in self.hash:
+            # 更新list最后一个元素在hash中的index指向为即将删除的元素val位置
+            self.hash[self.list[-1]] = self.hash[val]
+            # 更新list元素位置
+            self.list[self.hash.pop(val)] = self.list[-1]
+            # 删除list最后一个元素
+            self.list.pop()
+            return True
+        else:
+            return False
 
     def getRandom(self) -> int:
         """
         Get a random element from the set.
         """
-        
+        import random
+        return self.list[random.randint(0, len(self.list) - 1)]
 
 
 # Your RandomizedSet object will be instantiated and called as such:
@@ -70,4 +90,17 @@ class RandomizedSet:
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
-#leetcode submit region end(Prohibit modification and deletion)
+# leetcode submit region end(Prohibit modification and deletion)
+def main():
+    obj = RandomizedSet()
+    print(obj.insert(1))
+    print(obj.remove(2))
+    print(obj.getRandom())
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

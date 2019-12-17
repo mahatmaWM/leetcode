@@ -50,5 +50,49 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
+        word_set = set(wordList)
+        if endWord not in word_set:
+            return 0
+
+        import collections
+        word_dict = collections.defaultdict(list)
+        for word in word_set:
+            for index in range(len(word)):
+                new_word = word[:index] + "_" + word[index + 1:]
+                word_dict[new_word].append(word)
+
+        # 按层广度遍历
+        cur_word, next_word = [beginWord], []
+        # 定义从 beginWord 到 endWord 的最短转换序列的长度
+        depth = 1
+        while cur_word:
+            for word in cur_word:
+                if word == endWord:
+                    return depth
+                for index in range(len(word)):
+                    new_word = word[:index] + "_" + word[index + 1:]
+                    if new_word in word_dict:
+                        for w in word_dict[new_word]:
+                            if w not in next_word:
+                                next_word.append(w)
+                        del word_dict[new_word]
+            # 如果endWord未出现在当前层的cur_word单词集合中，则深度+1
+            depth += 1
+            cur_word = next_word
+            next_word = []
+        return 0
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().ladderLength(beginWord="hit", endWord="cog",
+                                  wordList=["hot", "dot", "dog", "lot", "log",
+                                            "cog"]))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))
