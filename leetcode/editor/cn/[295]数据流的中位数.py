@@ -29,17 +29,13 @@
 # 
 # Related Topics 堆 设计
 
-# 思路：
-# 使用两个堆，一个是小顶堆（保存后一半大小的数字），一个大顶堆（保存前一半大小的数字，或者多出的一个）。
+# 思路：本题的需求是要快速的找到中位数，
+# 使用两个堆，一个是小顶堆（保存后一半大小的数字，大的那部分），一个大顶堆（保存前一半大小的数字，小的那部分，或者多出的一个处理奇数的情况）。
 
 # 因为 Python 中的堆默认是小顶堆，所以要传入一个 tuple，用于比较的元素需是相反数，才能模拟出大顶堆的效果
 # 操作流程：先将新元素压入大顶堆，大顶堆顶弹出的元素在压入小顶堆；注意如果此时count为奇数，则将落单的元素放入大顶堆
 
-
 # leetcode submit region begin(Prohibit modification and deletion)
-
-
-
 class MedianFinder(object):
 
     def __init__(self):
@@ -73,6 +69,7 @@ class MedianFinder(object):
         else:
             return (self.min_heap[0] + self.max_heap[0][1]) / 2
 
+
 # Your MedianFinder object will be instantiated and called as such:
 # obj = MedianFinder()
 # obj.addNum(num)
@@ -92,4 +89,3 @@ if __name__ == '__main__':
     # findMedian() -> 1.5
     # addNum(3)
     # findMedian() -> 2
-

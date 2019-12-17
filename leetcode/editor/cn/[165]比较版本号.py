@@ -72,4 +72,4 @@ class Solution(object):
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':
-    print(Solution().compareVersion(version1="0.1", version2="1.1"))
+    print(Solution().compareVersion(version1 = "7.5.2.4", version2 = "7.5.3"))
