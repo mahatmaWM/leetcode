@@ -24,5 +24,13 @@ class Solution:
 
 
 # leetcode submit region end(Prohibit modification and deletion)
-if __name__ == '__main__':
+def main():
     print(Solution().twoSum(nums=[2, 7, 11, 15], target=9))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

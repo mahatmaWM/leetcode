@@ -1,4 +1,4 @@
-#n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。 
+# n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。
 #
 # 
 #
@@ -9,50 +9,63 @@
 # 示例: 
 #
 # 输入: 4
-#输出: 2
-#解释: 4 皇后问题存在如下两个不同的解法。
-#[
-# [".Q..",  // 解法 1
-#  "...Q",
-#  "Q...",
-#  "..Q."],
+# 输出: 2
+# 解释: 4 皇后问题存在如下两个不同的解法。
+# [
+#  [".Q..",  // 解法 1
+#   "...Q",
+#   "Q...",
+#   "..Q."],
 #
-# ["..Q.",  // 解法 2
-#  "Q...",
-#  "...Q",
-#  ".Q.."]
-#]
+#  ["..Q.",  // 解法 2
+#   "Q...",
+#   "...Q",
+#   ".Q.."]
+# ]
 # 
 # Related Topics 回溯算法
 
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def totalNQueens(self, n):
         """
         :type n: int
         :rtype: int
         """
+        board = [-1] * n
+        self.res = []
+
         def check(k, j):
             for i in range(k):
-                if board[i] - j == 0 or k - i == abs(board[i] - j):
+                if board[i] == j or k - i == abs(board[i] - j):
                     return False
             return True
 
-        def dfs(depth, value_list):
+        def backtrack(depth, tmp_list):
             if depth == n:
-                res.append(value_list)
+                self.res.append(tmp_list[:])
                 return
-            for i in range(n):
-                if check(depth, i):
-                    board[depth] = i
+            for j in range(n):
+                if check(depth, j):
+                    board[depth] = j
                     s = '.' * n
-                    dfs(depth + 1, value_list + [s[:i] + 'Q' + s[i + 1:]])
+                    tmp_list.append([s[:j] + 'Q' + s[j + 1:]])
+                    backtrack(depth + 1, tmp_list)
+                    tmp_list.pop()
 
-        board = [-1 for i in range(n)]
-        res = []
-        dfs(0, [])
-        return len(res)
-        
-#leetcode submit region end(Prohibit modification and deletion)
+        backtrack(0, [])
+        return len(self.res)
+
+
+# leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().totalNQueens(n=4))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

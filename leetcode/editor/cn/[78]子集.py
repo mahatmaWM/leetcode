@@ -45,3 +45,5 @@ class Solution(object):
         return self.res
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().subsets(nums = [1,2,3]))

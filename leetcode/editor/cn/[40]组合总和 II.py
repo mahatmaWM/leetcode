@@ -31,32 +31,42 @@
 # ]
 # Related Topics 数组 回溯算法
 
+# 条件：数组有重复数字，但每个数字只能被使用一次。
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
-    def dfs(self, candidates, sublist, target, index):
-        if target == 0:
-            self.res.append(sublist)
-            return
-        if target < 0:
-            return
-        for i in range(index, len(candidates)):
-            if i != index and candidates[i] == candidates[i - 1]:
-                continue
-            self.dfs(candidates, sublist + [candidates[i]],
-                     target - candidates[i], i + 1)
-
     def combinationSum2(self, candidates, target):
         """
         :type candidates: List[int]
         :type target: int
         :rtype: List[List[int]]
         """
-        if len(candidates) <= 0:
-            return []
         candidates.sort()
         self.res = []
-        self.dfs(candidates, [], target, 0)
+
+        def backtrack(start, candidates, tmp_sum, tmp_list):
+            # 终止条件
+            if tmp_sum < 0:
+                return
+            if tmp_sum == 0:
+                self.res.append(tmp_list[:])
+                return
+            else:
+                for i in range(start, len(candidates)):
+                    if tmp_sum < candidates[i]:
+                        continue
+                    if i > start and candidates[i] == candidates[i - 1]:
+                        continue
+                    # 因为每个数字不能重复使用，所以递归还可以从下一个元素开始
+                    tmp_list.append(candidates[i])
+                    backtrack(i + 1, candidates, tmp_sum - candidates[i], tmp_list)
+                    tmp_list.pop()
+
+        backtrack(0, candidates, target, [])
         return self.res
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().combinationSum2(candidates=[2, 5, 2, 1, 2], target=5))

@@ -23,16 +23,21 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        res = []
+        self.res = []
 
-        def dfs(t, cnt, tmp):
-            if cnt == 0:
-                res.append(tmp[:])
+        def backtrack(start, k, tmp):
+            if k == 0:
+                self.res.append(tmp[:])
 
-            for i in range(t + 1, n + 1):
-                dfs(i, cnt - 1, tmp + [i])
+            # 组合中一个数字只能出现一次，所以从下一位开始选i
+            for i in range(start + 1, n + 1):
+                tmp.append(i)
+                backtrack(i, k - 1, tmp)
+                tmp.pop()
 
-        dfs(0, k, [])
-        return res
+        backtrack(0, k, [])
+        return self.res
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().combine(n = 4, k = 2))

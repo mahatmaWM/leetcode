@@ -30,19 +30,29 @@ class Solution(object):
         nums.sort()
         self.res = []
 
-        def back_track(i, tmp):
-            self.res.append(tmp)
-            if i == n:
+        def back_track(start, tmp_res):
+            self.res.append(tmp_res[:])
+            if start == n:
                 return
-            for j in range(i, n):
-                if j > i and nums[j] == nums[j - 1]:
+            for j in range(start, n):
+                if j > start and nums[j] == nums[j - 1]:
                     continue
-                back_track(j + 1, tmp + [nums[j]])
+                tmp_res.append(nums[j])
+                back_track(j + 1, tmp_res)
+                tmp_res.pop()
 
         back_track(0, [])
         return self.res
 
 
 # leetcode submit region end(Prohibit modification and deletion)
-if __name__ == '__main__':
+def main():
     print(Solution().subsetsWithDup(nums=[1, 2, 2]))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

@@ -16,30 +16,37 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
-        res = []
+        self.res = []
         n = len(s)
 
-        # flag是需要找多少IP数字
-        # tmp是临时结果
-        # i是遍历到字符串s的位置
-        def backtrack(i, tmp, flag):
-            if i == n and flag == 0:
-                res.append(tmp[:-1])
+        def backtrack(start, tmp_res, k):
+            if start == n and k == 0:
+                self.res.append(tmp_res[:-1])
                 return
-            if flag < 0:
+            if k < 0:
                 return
 
-            # 当起始位置为i是，可以尝试[i, i+3)范围内的数字
-            for j in range(i, i + 3):
+            # 当起始位置为i时，可以尝试[i, i+3)范围内的数字
+            for j in range(start, start + 3):
                 if j < n:
-                    if i == j and s[j] == "0":
-                        backtrack(j + 1, tmp + s[j] + ".", flag - 1)
+                    if start == j and s[j] == "0":
+                        backtrack(j + 1, tmp_res + s[j] + ".", k - 1)
                         # 注意这里的break是必须的，不能去遍历012这种情况了
                         break
-                    if 0 < int(s[i:j + 1]) <= 255:
-                        backtrack(j + 1, tmp + s[i:j + 1] + ".", flag - 1)
+                    if 0 < int(s[start:j + 1]) <= 255:
+                        backtrack(j + 1, tmp_res + s[start:j + 1] + ".", k - 1)
 
         backtrack(0, "", 4)
-        return res
+        return self.res
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().restoreIpAddresses(s="25525511135"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

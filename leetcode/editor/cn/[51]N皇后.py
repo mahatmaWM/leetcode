@@ -43,6 +43,8 @@ class Solution(object):
         :type n: int
         :rtype: List[List[str]]
         """
+        board = [-1] * n
+        self.res = []
 
         def check(k, j):
             for i in range(k):
@@ -50,19 +52,30 @@ class Solution(object):
                     return False
             return True
 
-        def dfs(depth, value_list):
+        def backtrack(depth, tmp_list):
             if depth == n:
-                self.res.append(value_list)
+                self.res.append(tmp_list[:])
                 return
             for j in range(n):
                 if check(depth, j):
                     board[depth] = j
                     s = '.' * n
-                    dfs(depth + 1, value_list + [s[:j] + 'Q' + s[j + 1:]])
+                    tmp_list.append([s[:j] + 'Q' + s[j + 1:]])
+                    backtrack(depth + 1, tmp_list)
+                    tmp_list.pop()
 
-        board = [-1] * n
-        self.res = []
-        dfs(0, [])
+        backtrack(0, [])
         return self.res
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().solveNQueens(n=4))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

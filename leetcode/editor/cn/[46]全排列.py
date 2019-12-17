@@ -35,40 +35,26 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        results = []
-        use_dict = dict.fromkeys(nums, False)  # 初始化一个字典，保存数字是否使用过
+        self.results = []
+        memo = dict.fromkeys(nums, False)  # 保存数字是否使用过
 
-        def backtrack(results, choosed_nums, use_dict):
-            import copy
-            if len(choosed_nums) == len(nums):
-                # use deepcopy here!!!
-                results.append(copy.deepcopy(choosed_nums))
+        def backtrack(tmp_res, memo):
+            if len(tmp_res) == len(nums):
+                self.results.append(tmp_res[:])
                 return
 
             for x in nums:
-                if not use_dict[x]:
-                    use_dict[x] = True
-                    choosed_nums.append(x)
-                    backtrack(results, choosed_nums, use_dict)
-                    choosed_nums.pop(x)
-                    use_dict[x] = False
+                if not memo[x]:
+                    memo[x] = True
+                    tmp_res.append(x)
+                    backtrack(tmp_res, memo)
+                    tmp_res.pop()
+                    memo[x] = False
 
-        backtrack(results, [], use_dict)
-        return results
+        backtrack([], memo)
+        return self.results
 
-        # results = []
-        # len_n = len(nums)
-        #
-        # def backtrack(choosed_nums, left_nums):
-        #     if len(choosed_nums) == len_n:
-        #         results.append(choosed_nums)
-        #         return
-        #     for i in range(len(left_nums)):
-        #         x = choosed_nums.copy()
-        #         x.append(left_nums[i])
-        #         backtrack(x, left_nums[:i] + left_nums[i + 1:])
-        #
-        # backtrack([], nums)
-        # return results
 
 # leetcode submit region end(Prohibit modification and deletion)
+if __name__ == '__main__':
+    print(Solution().permute(nums=[1, 2, 3]))

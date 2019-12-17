@@ -16,6 +16,7 @@
 # 给定 word = "ABCB", 返回 false.
 # Related Topics 数组 回溯算法
 
+# 暴力搜索，找表格的每一个位置，是单词的第一个字母则开始暴力搜索。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
