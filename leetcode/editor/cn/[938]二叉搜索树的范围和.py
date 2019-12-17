@@ -26,6 +26,7 @@
 # 
 # Related Topics 树 递归
 
+# 思路：
 # 前序遍历树，根据节点的值来决定是否继续左、右子树的遍历。
 
 # leetcode submit region begin(Prohibit modification and deletion)

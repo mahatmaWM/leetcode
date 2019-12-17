@@ -18,6 +18,7 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
+    # 动态规划，空间复杂度为On
     def maxSubArray(self, nums):
         """
         :type nums: List[int]
@@ -32,8 +33,19 @@ class Solution(object):
             res = max(dp[i], res)
         return res
 
-    # 分治法
+    # 动态规划，空间复杂度为O1，不需要保存整个dp数组，只需要pre_max, cur_max就可以了
     def maxSubArray2(self, nums):
+        n = len(nums)
+        pre_max = nums[0]
+        res = nums[0]
+        for i in range(1, n):
+            cur_max = max(pre_max + nums[i], nums[i])
+            res = max(cur_max, res)
+            pre_max = cur_max
+        return res
+
+    # 分治法
+    def maxSubArray1(self, nums):
         n = len(nums)
         # 递归终止条件
         if n == 1:
@@ -60,4 +72,15 @@ class Solution(object):
         # 返回三个中的最大值
         return max(max_right, max_left, max_l + max_r)
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().maxSubArray1(nums=[-2, 1, -3, 4, -1, 2, 1, -5, 4]))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

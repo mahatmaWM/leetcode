@@ -35,10 +35,13 @@
 
 # 看了Topics知道这个是用栈来解决的题目，看了别人的解答才明白怎么回事。
 #
-# 使用一个栈作为辅助，遍历数字字符串，当当前的字符比栈最后的字符小的时候，说明要把栈的最后的这个字符删除掉。
-# 为什么呢？你想，把栈最后的字符删除掉，然后用现在的字符进行替换，是不是数字比以前的那种情况更小了？所以同样的道理，做一个while循环！一直找完。
-# 在每一个数字处理的时候，都要做一个循环，使得栈里面最后的数字比当前数字大的都弹出去。
-#
+# 使用一个递增栈（栈低到栈顶依次减少），
+
+# 为什么要用递增栈呢？举个栗子，当我们遍历数字字符串的时候，如果当前的字符比栈最后的字符（前一个位置的）小的时候，说明要把栈的最后的这个字符应该被删除掉，
+# 然后用现在的字符进行替换，是不是数字比以前的那种情况更小了？
+# 
+# 所以，做一个while循环！一直之前应该被删除的元素从栈中删完。
+# 
 # 最后，如果K还没用完，那要删除哪里的字符呢？毋庸置疑肯定是最后的字符，因为前面的字符都是小字符。
 
 
@@ -53,18 +56,18 @@ class Solution(object):
         if len(num) == k:
             return '0'
 
-        stack = []
+        increase_stack = []
         for n in num:
-            while stack and k and int(stack[-1]) > int(n):
-                stack.pop()
+            while increase_stack and k and int(increase_stack[-1]) > int(n):
+                increase_stack.pop()
                 k -= 1
-            stack.append(n)
+            increase_stack.append(n)
 
         while k:
-            stack.pop()
+            increase_stack.pop()
             k -= 1
-        if not stack:
+        if not increase_stack:
             return '0'
-        return str(int("".join(stack)))
+        return str(int("".join(increase_stack)))
 
 # leetcode submit region end(Prohibit modification and deletion)

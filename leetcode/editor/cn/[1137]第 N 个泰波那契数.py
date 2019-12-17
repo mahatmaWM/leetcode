@@ -42,6 +42,7 @@
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
+    # 递推解法
     def tribonacci(self, n):
         """
         :type n: int

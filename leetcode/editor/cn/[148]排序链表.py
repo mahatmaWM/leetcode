@@ -12,6 +12,8 @@
 # 输出: -1->0->3->4->5
 # Related Topics 排序 链表
 
+# 思路：
+#
 # 用归并排序的思想，将链表用快慢指针分成两半，然后两半排好序，最后归并。
 # 注意快慢指针把链表拆成等长两段的做法，设置一个dummy节点。
 
@@ -29,11 +31,11 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        # null or one node
+        # 空 或者 只有一个节点
         if head is None or head.next is None:
             return head
 
-        # split two linklist
+        # 等分为两段 a a 或者 a a+1 两段
         dummy = ListNode(0)
         dummy.next = head
         slow, fast = dummy, head
@@ -43,19 +45,18 @@ class Solution(object):
         head1, head2 = head, slow.next
         slow.next = None
 
-        # sort two sub linklist
+        # 字段链表排序
         tmp1, tmp2 = self.sortList(head1), self.sortList(head2)
 
-        # merge two sort linklist
+        # 有序链表排序
         ans = ListNode(0)
         p = ans
         while tmp1 and tmp2:
             if tmp1.val < tmp2.val:
-                p.next = tmp1
-                tmp1, p = tmp1.next, p.next
+                p.next, tmp1 = tmp1, tmp1.next
             else:
-                p.next = tmp2
-                tmp2, p = tmp2.next, p.next
+                p.next, tmp2 = tmp2, tmp2.next
+            p = p.next
         if tmp1:
             p.next = tmp1
         if tmp2:
@@ -77,4 +78,7 @@ if __name__ == '__main__':
     l4.next = l5
     l5.next = None
 
-    print(Solution().sortList(head))
+    head = Solution().sortList(head)
+    while head:
+        print(head.val)
+        head = head.next

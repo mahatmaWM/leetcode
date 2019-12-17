@@ -19,7 +19,8 @@
 # 
 # Related Topics 排序 数组 双指针
 
-# 思路，三色荷兰国旗排序问题。
+# 思路：
+# 三色荷兰国旗排序问题。
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -29,6 +30,9 @@ class Solution(object):
         :type nums: List[int]
         :rtype: None Do not return anything, modify nums in-place instead.
         """
+
+        # 相当于使用3个指针
+
         # 对于所有 idx < p0 : nums[idx < p0] = 0
         # curr是当前考虑元素的下标
         p0 = curr = 0

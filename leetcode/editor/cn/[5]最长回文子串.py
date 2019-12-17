@@ -15,7 +15,7 @@
 # Related Topics 字符串 动态规划
 
 # 动态规划思路：
-# 状态：mem[l,r]为真或假，代表了s[l:r+1]表示的字符串是不是回文串
+# 状态：mem[l][r]为真或假，代表了s[l:r+1]表示的字符串是不是回文串，包含r。
 
 # 然后在暴力枚举的过程中，利用记录的mem信息+动态规划的思想，避免了很多不必要的判断。
 
@@ -27,7 +27,8 @@ class Solution(object):
         :rtype: str
         """
         n = len(s)
-        if n <= 1: return s
+        if n <= 1:
+            return s
 
         mem = [[False] * n for _ in range(n)]
 
@@ -48,5 +49,13 @@ class Solution(object):
 
 
 # leetcode submit region end(Prohibit modification and deletion)
-if __name__ == '__main__':
+def main():
     print(Solution().longestPalindrome(s="babad"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))
