@@ -39,6 +39,8 @@
 # Related Topics 深度优先搜索 广度优先搜索 图 拓扑排序
 
 
+# 思路：典型的拓扑排序，使用节点的入度来求解，入度为0的节点代表没有前置依赖。
+
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def findOrder(self, numCourses, prerequisites):
@@ -47,34 +49,29 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: List[int]
         """
-        # 入度数组，一开始全部为 0
         in_degrees = [0 for _ in range(numCourses)]
-
-        # 邻接表
-        adj = [set() for _ in range(numCourses)]
-
-        # 想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
-        # [0,1] 表示 1 在先，0 在后
-        # 注意：邻接表存放的是后继 successor 结点的集合
+        adj_list = [set() for _ in range(numCourses)]
         for second, first in prerequisites:
             in_degrees[second] += 1
-            adj[first].add(second)
-
+            adj_list[first].add(second)
+        # print(in_degrees)
         # 首先遍历一遍，把所有入度为 0 的结点加入队列
         res = []
-        queue = []
+        import collections
+        queue = collections.deque()
         for i in range(numCourses):
             if in_degrees[i] == 0:
                 queue.append(i)
+
+        # 从队列里面找入度为0的节点，不断更新后继节点的入度
         while queue:
-            top = queue.pop(0)
+            top = queue.pop()
             res.append(top)
-            for successor in adj[top]:
+            for successor in adj_list[top]:
                 in_degrees[successor] -= 1
                 if in_degrees[successor] == 0:
                     queue.append(successor)
-
-        return res
+        return res if len(res) == numCourses else []
 
 
 # leetcode submit region end(Prohibit modification and deletion)
