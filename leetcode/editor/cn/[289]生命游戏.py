@@ -1,7 +1,8 @@
 # 根据百度百科，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在1970年发明的细胞自动机。
 #
 # 给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。
-# 每个细胞具有一个初始状态 live（1）即为活细胞， 或 dead（0）即为死细胞。每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：
+# 每个细胞具有一个初始状态 live（1）即为活细胞， 或 dead（0）即为死细胞。
+# 每个细胞与其八个相邻位置（水平，垂直，对角线）的细胞都遵循以下四条生存定律：
 #
 # 
 # 如果活细胞周围八个位置的活细胞数少于两个，则该位置活细胞死亡； 
@@ -33,10 +34,20 @@
 # 进阶: 
 #
 # 
-# 你可以使用原地算法解决本题吗？请注意，面板上所有格子需要同时被更新：你不能先更新某些格子，然后使用它们的更新后的值再更新其他格子。 
+# 你可以使用原地算法解决本题吗？
+# 请注意，面板上所有格子需要同时被更新：你不能先更新某些格子，然后使用它们的更新后的值再更新其他格子。
 # 本题中，我们使用二维数组来表示面板。原则上，面板是无限的，但当活细胞侵占了面板边界时会造成问题。你将如何解决这些问题？ 
 # 
 # Related Topics 数组
+
+# 思路
+# 第一次遍历，对于每个位置，计算周围的细胞数目，保存
+# 第二次遍历，根据当前位置细胞状态和周围细胞数目，设置最终细胞状态
+# 这里有个问题，如何原地存储细胞数目信息？
+#
+# 用当前位置数字的最后一位储存原来是否有细胞（0，1）
+# 将周围细胞数目的值，左移一位
+# 将这两个值做按位或运算
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -46,5 +57,44 @@ class Solution(object):
         :type board: List[List[int]]
         :rtype: None Do not return anything, modify board in-place instead.
         """
+
+        # 计算x y位置的细胞周围活细胞数目
+        def count_cell(x, y):
+            points = [
+                (x - 1, y - 1),
+                (x - 1, y),
+                (x - 1, y + 1),
+                (x, y - 1),
+                (x, y + 1),
+                (x + 1, y - 1),
+                (x + 1, y),
+                (x + 1, y + 1),
+            ]
+            return sum((board[i][j] & 1) for i, j in points if
+                       0 <= i < max_x and 0 <= j < max_y)
+
+        if not board:
+            return board
+
+        max_x, max_y = len(board), len(board[0])
+
+        # 计算周围细胞数目，并储存
+        for i in range(max_x):
+            for j in range(max_y):
+                count = count_cell(i, j)
+                count <<= 1
+                board[i][j] |= count
+
+        for i in range(max_x):
+            for j in range(max_y):
+                count = board[i][j] >> 1  # 右移一位，取出周围细胞数目
+                board[i][j] &= 1  # 重新设置原先细胞状态
+                if board[i][j] == 1:
+                    if count < 2 or count > 3:
+                        board[i][j] = 0
+                else:
+                    if count == 3:
+                        board[i][j] = 1
+        return board
 
 # leetcode submit region end(Prohibit modification and deletion)

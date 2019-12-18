@@ -43,14 +43,91 @@
 # 
 # Related Topics 动态规划 回溯算法
 
+# 思路：标准的回溯解法（但是回溯会超时，需添加剪枝，太多状态都不合法）
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
-    def wordBreak(self, s, wordDict):
+    # 这个回溯会超时，还没有想到怎么剪枝
+    def wordBreak0(self, s, wordDict):
         """
         :type s: str
         :type wordDict: List[str]
         :rtype: List[str]
         """
+        self.res = list([])
+        length = set([len(w) for w in set(wordDict)])
+        def backtrack(s, start, word_dict, tmp_list):
+            if start == len(s):
+                self.res.append(' '.join(tmp_list[:]))
+            for end in range(start, len(s) + 1):
+                if end-start not in length:
+                    continue
+                tmp_str = s[start:end]
+                if tmp_str in word_dict:
+                    tmp_list.append(tmp_str)
+                    backtrack(s, end, word_dict, tmp_list)
+                    tmp_list.pop()
+
+        backtrack(s, 0, wordDict, [])
+        return self.res
+
+    # 递归写法
+    def wordBreak1(self, s, wordDict):
+        def dfs(s, start, word_dict):
+            res = list([])
+            if start == len(s):
+                res.append('')
+            for end in range(start + 1, len(s) + 1):
+                tmp_str = s[start:end]
+                if tmp_str in word_dict:
+                    right_res = dfs(s, end, word_dict)
+                    for item in right_res:
+                        res.append(tmp_str + ' ' + item)
+            return res
+
+        res = dfs(s, 0, wordDict)
+        return res
+
+    # 递归 + 备忘录
+    def wordBreak(self, s, wordDict):
+        import collections
+        self.memo = collections.defaultdict(list)
+
+        def dfs(s, start, word_dict):
+            if start in self.memo:
+                return self.memo[start]
+            res = list([])
+            if start == len(s):
+                res.append('')
+            for end in range(start + 1, len(s) + 1):
+                tmp_str = s[start:end]
+                if tmp_str in word_dict:
+                    right_res = dfs(s, end, word_dict)
+                    for item in right_res:
+                        res.append(tmp_str + ' ' + item)
+            self.memo[start] = res
+            return res
+
+        res = dfs(s, 0, wordDict)
+        # return res
+        return [item.rstrip() for item in res]
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    s = "pineapplepenapple"
+    wordDict = ["apple", "pen", "applepen", "pine",
+                "pineapple"]
+
+    # s = 'a'
+    # wordDict=['a']
+
+    print(Solution().wordBreak(s=s, wordDict=wordDict))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

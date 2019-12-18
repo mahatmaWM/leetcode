@@ -31,6 +31,8 @@
 
 # 时间复杂度：O(n^{2})
 
+# 其实就是left right两个指针蛮力搜索字符串，当发现[left right]在字典中，且之前的切分合法，则right也可以作为一个切分点。
+
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def wordBreak(self, s, wordDict):
@@ -43,9 +45,22 @@ class Solution(object):
         dp = [False] * (n + 1)
         dp[0] = True
         for left in range(n):
+            if not dp[left]:
+                continue
             for right in range(left + 1, n + 1):
                 if dp[left] and s[left:right] in wordDict:
                     dp[right] = True
         return dp[-1]
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().wordBreak(s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))
