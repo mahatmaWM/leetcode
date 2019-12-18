@@ -19,6 +19,7 @@
 # 
 # Related Topics 设计 字典树
 
+# 嵌套使用dict创建简单的trie树结构。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Trie(object):
@@ -27,27 +28,43 @@ class Trie(object):
         """
         Initialize your data structure here.
         """
+        self.lookup = {}
 
-    def insert(self, word):
+    def insert(self, word: str) -> None:
         """
         Inserts a word into the trie.
-        :type word: str
-        :rtype: None
         """
+        tree = self.lookup
+        for a in word:
+            if a not in tree:
+                tree[a] = {}
+            tree = tree[a]
+        # 单词结束标志
+        tree["#"] = "#"
 
-    def search(self, word):
+    def search(self, word: str) -> bool:
         """
         Returns if the word is in the trie.
-        :type word: str
-        :rtype: bool
         """
+        tree = self.lookup
+        for a in word:
+            if a not in tree:
+                return False
+            tree = tree[a]
+        if "#" in tree:
+            return True
+        return False
 
-    def startsWith(self, prefix):
+    def startsWith(self, prefix: str) -> bool:
         """
         Returns if there is any word in the trie that starts with the given prefix.
-        :type prefix: str
-        :rtype: bool
         """
+        tree = self.lookup
+        for a in prefix:
+            if a not in tree:
+                return False
+            tree = tree[a]
+        return True
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()

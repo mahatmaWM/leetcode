@@ -1,29 +1,28 @@
-#给定一个嵌套的整型列表。设计一个迭代器，使其能够遍历这个整型列表中的所有整数。 
+# 给定一个嵌套的整型列表。设计一个迭代器，使其能够遍历这个整型列表中的所有整数。
 #
 # 列表中的项或者为一个整数，或者是另一个列表。 
 #
 # 示例 1: 
 #
 # 输入: [[1,1],2,[1,1]]
-#输出: [1,1,2,1,1]
-#解释: 通过重复调用 next 直到 hasNext 返回false，next 返回的元素的顺序应该是: [1,1,2,1,1]。 
+# 输出: [1,1,2,1,1]
+# 解释: 通过重复调用 next 直到 hasNext 返回false，next 返回的元素的顺序应该是: [1,1,2,1,1]。
 #
 # 示例 2: 
 #
 # 输入: [1,[4,[6]]]
-#输出: [1,4,6]
-#解释: 通过重复调用 next 直到 hasNext 返回false，next 返回的元素的顺序应该是: [1,4,6]。
+# 输出: [1,4,6]
+# 解释: 通过重复调用 next 直到 hasNext 返回false，next 返回的元素的顺序应该是: [1,4,6]。
 # 
 # Related Topics 栈 设计
 
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 # """
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
 # """
-#class NestedInteger:
+# class NestedInteger:
 #    def isInteger(self) -> bool:
 #        """
 #        @return True if this NestedInteger holds a single integer, rather than a nested list.
@@ -43,15 +42,30 @@
 
 class NestedIterator:
     def __init__(self, nestedList: [NestedInteger]):
-        
-    
+        # 递归遍历列表或者元素
+        def build_generator(nestedList):
+            for i in nestedList:
+                if i.isInteger():
+                    yield i.getInteger()
+                else:
+                    i = i.getList()
+                    for j in build_generator(i):
+                        yield j
+
+        self.g = build_generator(nestedList)
+        self.v = None
+
     def next(self) -> int:
-        
-    
+        return self.v
+
     def hasNext(self) -> bool:
-         
+        try:
+            self.v = next(self.g)
+            return True
+        except:
+            return False
 
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
 # while i.hasNext(): v.append(i.next())
-#leetcode submit region end(Prohibit modification and deletion)
+# leetcode submit region end(Prohibit modification and deletion)

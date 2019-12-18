@@ -16,6 +16,8 @@
 # 
 # Related Topics 动态规划
 
+# 动态规划，使用curr_sum[i]保存从0到i的累积和。则 sumrange(i,j) = curr_sum[j]-curr_sum[i-1
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class NumArray(object):
@@ -24,6 +26,12 @@ class NumArray(object):
         """
         :type nums: List[int]
         """
+        self.n = len(nums)
+
+        self.curr_sum = [0] * self.n
+        self.curr_sum[0] = nums[0]
+        for i in range(1, self.n):
+            self.curr_sum[i] = self.curr_sum[i - 1] + nums[i]
 
     def sumRange(self, i, j):
         """
@@ -31,8 +39,24 @@ class NumArray(object):
         :type j: int
         :rtype: int
         """
+        if i == 0:
+            return self.curr_sum[j]
+        else:
+            return self.curr_sum[j] - self.curr_sum[i - 1]
 
 # Your NumArray object will be instantiated and called as such:
 # obj = NumArray(nums)
 # param_1 = obj.sumRange(i,j)
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    nums = [-2, 0, 3, -5, 2, -1]
+    obj = NumArray(nums)
+    print(obj.sumRange(1,3))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

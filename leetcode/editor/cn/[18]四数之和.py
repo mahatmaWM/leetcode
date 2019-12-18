@@ -35,10 +35,8 @@ class Solution(object):
                 while left < right:
                     sum_4 = nums[i] + nums[j] + nums[left] + nums[right]
                     if sum_4 == target:
-                        if [nums[i], nums[j], nums[left],
-                            nums[right]] not in console:
-                            console.append(
-                                [nums[i], nums[j], nums[left], nums[right]])
+                        if [nums[i], nums[j], nums[left], nums[right]] not in console:
+                            console.append([nums[i], nums[j], nums[left], nums[right]])
                         left += 1
                         right -= 1
 
