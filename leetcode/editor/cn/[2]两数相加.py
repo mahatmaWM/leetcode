@@ -1,4 +1,5 @@
-# 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+# 给出两个 非空 的链表用来表示两个非负的整数。
+# 其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
 #
 # 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。 
 #
@@ -12,6 +13,8 @@
 # 
 # Related Topics 链表 数学
 
+# 思路：
+# 直接遍历两个链表，注意进位与dummy假节点。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.
@@ -23,19 +26,21 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1, l2):
-        jinwei = 0
-        head = node = ListNode('#')
+        carry = 0
+        dummy = node = ListNode('#')
         while l1 or l2:
             val1 = l1.val if l1 else 0
             val2 = l2.val if l2 else 0
-            jinwei, rem = divmod(jinwei + val1 + val2, 10)
+            carry, rem = divmod(carry + val1 + val2, 10)
+
             node.next = ListNode(rem)
             node = node.next
+
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
-        if jinwei:
-            node.next = ListNode(jinwei)
+        if carry:
+            node.next = ListNode(carry)
 
-        return head.next
+        return dummy.next
 
 # leetcode submit region end(Prohibit modification and deletion)

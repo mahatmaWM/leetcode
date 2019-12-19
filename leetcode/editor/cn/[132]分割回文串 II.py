@@ -40,7 +40,7 @@ import functools
 
 class Solution:
     @functools.lru_cache(None)
-    def minCut(self, s: str) -> int:
+    def minCut1(self, s: str) -> int:
         if s == s[::-1]:
             return 0
         ans = float("inf")
@@ -49,7 +49,7 @@ class Solution:
                 ans = min(self.minCut(s[i:]) + 1, ans)
         return ans
 
-    def minCut1(self, s: str) -> int:
+    def minCut(self, s: str) -> int:
         n = len(s)
         min_cut = list(range(n))
         dp = [[False] * n for _ in range(n)]

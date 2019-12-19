@@ -16,6 +16,9 @@
 # 输出: [1,2,2,3,5,6]
 # Related Topics 数组 双指针
 
+# 思路：
+# nums1 保存最终结果，原位处理的话必然涉及到元素位置移动的操作，
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -27,14 +30,34 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-        while m > 0 and n > 0:
-            if nums1[m - 1] >= nums2[n - 1]:
-                nums1[m + n - 1] = nums1[m - 1]
-                m = m - 1
+        ptr_1, ptr_2, ptr_res = m - 1, n - 1, m + n - 1
+
+        while ptr_1 >= 0 and ptr_2 >= 0:
+            if nums1[ptr_1] >= nums2[ptr_2]:
+                nums1[ptr_res] = nums1[ptr_1]
+                ptr_1 -= 1
             else:
-                nums1[m + n - 1] = nums2[n - 1]
-                n = n - 1
-        if n > 0:
-            nums1[:n] = nums2[:n]
+                nums1[ptr_res] = nums2[ptr_2]
+                ptr_2 -= 1
+            ptr_res -= 1
+        # if ptr_2 > 0:
+        #     nums1[:ptr_2] = nums2[:ptr_2]
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    nums1 = [1, 2, 3, 0, 0, 0]
+    m = 3
+    nums2 = [2, 5, 6]
+    n = 3
+
+    print(Solution().merge(nums1, m, nums2, n))
+    print(nums1)
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

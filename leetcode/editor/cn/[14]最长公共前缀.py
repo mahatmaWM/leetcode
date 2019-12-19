@@ -20,6 +20,7 @@
 # 所有输入只包含小写字母 a-z 。 
 # Related Topics 字符串
 
+# 思路：
 # 依次比较strs中的字符串，找到最长的前缀，直到比较完所有的字符串。
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -29,7 +30,7 @@ class Solution(object):
         :type strs: List[str]
         :rtype: str
         """
-        if strs == []:
+        if not strs:
             return ''
 
         prefix = strs[0]
@@ -37,6 +38,7 @@ class Solution(object):
             if not prefix:
                 return ''
             else:
+                # 缩小前缀继续和第i个元素找
                 while prefix not in strs[i][:len(prefix)] and len(prefix) > 0:
                     prefix = prefix[:len(prefix) - 1]
         return prefix

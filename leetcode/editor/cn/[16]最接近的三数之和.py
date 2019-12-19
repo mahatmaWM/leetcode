@@ -6,8 +6,8 @@
 # 
 # Related Topics 数组 双指针
 
-# 1、数组排序
-# 2、遍历数组，对于当前位置i，使用两个指针left&right来判断三数字的和，根据和来移动左右指针。
+# 思路：
+# 先数组排序，再遍历数组，对于当前位置i，使用两个指针left&right来判断三数字的和，根据和来移动左右指针，并更新结果。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -19,21 +19,21 @@ class Solution(object):
         """
         nums.sort()
         res = sum(nums[:3])
-        lennums = len(nums)
+        n = len(nums)
 
-        for i in range(lennums):
-            left = i + 1
-            right = lennums - 1
+        for i in range(n):
+            left, right = i + 1, n - 1
             while left < right:
-                sumthree = nums[i] + nums[left] + nums[right]
-                if abs(sumthree - target) < abs(res - target):
-                    res = sumthree
-                if sumthree < target:
+                sum_3 = nums[i] + nums[left] + nums[right]
+                if abs(sum_3 - target) < abs(res - target):
+                    res = sum_3
+
+                if sum_3 < target:
                     left += 1
-                elif sumthree > target:
+                elif sum_3 > target:
                     right -= 1
                 else:
-                    return sumthree
+                    return sum_3
         return res
 
 # leetcode submit region end(Prohibit modification and deletion)

@@ -20,7 +20,10 @@
 # 输出: -1
 # Related Topics 数组 二分查找
 
-# 把中位数标记出来。
+# 思路：
+# 标准的二分查找做一定的改动即可。
+#
+# 第一步，把中位数标记出来。
 # 如果中位数比左边大，说明左边是递增的，断点在右边：
 #     如果target在左边递增的区间，就在左边查找；
 #     否则，在右边查找
@@ -38,27 +41,28 @@ class Solution(object):
         """
         left, right = 0, len(nums) - 1
         while left <= right:
-            if nums[left] == target:
-                return left
-            if nums[right] == target:
-                return right
+            # if nums[left] == target:
+            #     return left
+            # if nums[right] == target:
+            #     return right
 
-            m = (left + right) // 2
-            mid = nums[m]
-            if mid == target:
-                return m
-            if mid > nums[left]:
-                if nums[left] < target < nums[m]:
-                    right = m - 1
+            mid_index = (left + right) // 2
+            mid_val = nums[mid_index]
+            if mid_val == target:
+                return mid_index
+            if mid_val > nums[left]:
+                if nums[left] < target < nums[mid_index]:
+                    right = mid_index - 1
                 else:
-                    left = m + 1
+                    left = mid_index + 1
             else:
-                if nums[m] < target < nums[right]:
-                    left = m + 1
+                if nums[mid_index] < target < nums[right]:
+                    left = mid_index + 1
                 else:
-                    right = m - 1
-        else:
-            return -1
+                    right = mid_index - 1
+        return -1 if nums[left] != target else left
+        # else:
+        #     return -1
 
 
 # leetcode submit region end(Prohibit modification and deletion)

@@ -7,9 +7,9 @@
 # 
 # Related Topics 链表
 
-# 直接遍历两个链表，合并在一起即可。
-# cur、l1、l2三个指针。
-# 构造一个dummy的头结点。
+# 思路：
+# 遍历两个链表，合并在一起即可。
+# cur、l1、l2三个指针，构造一个dummy的头结点。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.

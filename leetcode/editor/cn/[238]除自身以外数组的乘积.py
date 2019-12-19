@@ -21,11 +21,14 @@ class Solution(object):
         :rtype: List[int]
         """
         res = [0] * len(nums)
+
+        # 左边的乘积
         tmp = 1
         for i in range(len(nums)):
             res[i] = tmp
             tmp *= nums[i]
 
+        # 右边的乘积
         tmp = 1
         for i in range(len(nums) - 1, -1, -1):
             res[i] *= tmp

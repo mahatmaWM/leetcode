@@ -25,7 +25,7 @@
 # return e
 
 # 回溯解法：
-# use_dict保留数字使用情况，choosed_nums
+# 标准的回溯套路 + 备忘录
 
 
 # leetcode submit region begin(Prohibit modification and deletion)

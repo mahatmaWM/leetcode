@@ -23,6 +23,7 @@
 # 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231, 231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。 
 # Related Topics 数学
 
+# 思路：
 # 直接反转数字，注意符号与数字合法性判断
 
 # leetcode submit region begin(Prohibit modification and deletion)

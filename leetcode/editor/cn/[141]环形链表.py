@@ -38,8 +38,7 @@
 # 你能用 O(1)（即，常量）内存解决此问题吗？ 
 # Related Topics 链表 双指针
 
-# 思路：
-# 使用快慢指针。
+# 思路：判断是否有环使用快慢指针。
 # 如果有环则一定会相遇；否则快指针会走到最后一个节点出错。
 
 # leetcode submit region begin(Prohibit modification and deletion)

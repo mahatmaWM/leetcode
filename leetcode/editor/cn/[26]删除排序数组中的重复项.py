@@ -38,7 +38,8 @@
 # 
 # Related Topics 数组 双指针
 
-# 双指针直接遍历数组
+# 思路：
+# 这种需要在原位操作的，都是left,right 双指针直接遍历数组。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

@@ -1,4 +1,4 @@
-#给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。 
+# 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
 #
 # 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。” 
 #
@@ -11,15 +11,15 @@
 # 示例 1: 
 #
 # 输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 8
-#输出: 6 
-#解释: 节点 2 和节点 8 的最近公共祖先是 6。
+# 输出: 6
+# 解释: 节点 2 和节点 8 的最近公共祖先是 6。
 # 
 #
 # 示例 2: 
 #
 # 输入: root = [6,2,8,0,4,7,9,null,null,3,5], p = 2, q = 4
-#输出: 2
-#解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。 
+# 输出: 2
+# 解释: 节点 2 和节点 4 的最近公共祖先是 2, 因为根据定义最近公共祖先节点可以为节点本身。
 #
 # 
 #
@@ -31,9 +31,9 @@
 # 
 # Related Topics 树
 
+# 思路：利用二叉搜索的性质，只需要在左子树或者右子树中递归找即可。
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -49,5 +49,20 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
-        
-#leetcode submit region end(Prohibit modification and deletion)
+        if not root:
+            return None
+        if p and q:
+            a = min(p.val, q.val)
+            b = max(p.val, q.val)
+            if a == root.val or b == root.val:
+                return root
+            if a < root.val < b:
+                return root
+            elif b < root.val:
+                return self.lowestCommonAncestor(root.left, p, q)
+            elif a > root.val:
+                return self.lowestCommonAncestor(root.right, p, q)
+            elif a == b:
+                return p
+
+# leetcode submit region end(Prohibit modification and deletion)

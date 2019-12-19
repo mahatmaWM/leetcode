@@ -27,6 +27,8 @@
 # 输出: 28
 # Related Topics 数组 动态规划
 
+# 思路：
+# 标准的动态规划，因为当前状态只需依赖上一次的状态，dp[i][j]可以做成pre cur两个一维数组做空间优化。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

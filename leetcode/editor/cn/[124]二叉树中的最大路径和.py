@@ -26,6 +26,9 @@
 # 输出: 42
 # Related Topics 树 深度优先搜索
 
+# 思路：
+# 对于node节点，其最大和路径是 左子树贡献自己的最大路径，右子树贡献自己的最大路径，结合node节点组成一条更大和的路径。
+# 但是要注意左右子树贡献的路径可能和为0，这时需要舍弃特殊处理。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
@@ -52,7 +55,9 @@ class Solution(object):
             # 注意node节点的左右孩子有可能会贡献一个负值，这时需要置为0
             left_gain = max(dfs(node.left), 0)
             right_gain = max(dfs(node.right), 0)
+
             self.max_sum = max(self.max_sum, node.val + left_gain + right_gain)
+
             return node.val + max(left_gain, right_gain)
 
         dfs(root)

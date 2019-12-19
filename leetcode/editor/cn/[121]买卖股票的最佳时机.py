@@ -20,6 +20,7 @@
 # 
 # Related Topics 数组 动态规划
 
+# 思路：遍历数组，对于位置i，与i之前最小的购入价格比较即可。
 # min_buy记录位置i左边的最小值。
 # profit为遍历到位置i时的最大收益。
 
@@ -33,11 +34,10 @@ class Solution(object):
         """
         if len(prices) < 2:
             return 0
-        profit = 0
-        min_buy = prices[0]
+        max_profit, pre_min_buy = 0, prices[0]
         for i in prices:
-            min_buy = min(i, min_buy)
-            profit = max(i - min_buy, profit)
-        return profit
+            pre_min_buy = min(i, pre_min_buy)
+            max_profit = max(i - pre_min_buy, max_profit)
+        return max_profit
 
 # leetcode submit region end(Prohibit modification and deletion)

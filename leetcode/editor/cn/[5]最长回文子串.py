@@ -16,7 +16,6 @@
 
 # 动态规划思路：
 # 状态：mem[l][r]为真或假，代表了s[l:r+1]表示的字符串是不是回文串，包含r。
-
 # 然后在暴力枚举的过程中，利用记录的mem信息+动态规划的思想，避免了很多不必要的判断。
 
 # leetcode submit region begin(Prohibit modification and deletion)
@@ -35,16 +34,16 @@ class Solution(object):
         longest_l = 1
         res = s[0]
 
-        for right in range(1, n):
-            for left in range(right):
-                # 两个字符时 或者 由当前回文串可以继续延长回文
-                if s[left] == s[right] and \
-                        (right - left <= 2 or mem[left + 1][right - 1]):
-                    mem[left][right] = True
-                    cur_len = right - left + 1
+        for end in range(1, n):
+            for start in range(end):
+                # 两个字符时 或者 根据当前的回文串继续延伸得到更长回文
+                if s[start] == s[end] and \
+                        (end - start <= 2 or mem[start + 1][end - 1]):
+                    mem[start][end] = True
+                    cur_len = end - start + 1
                     if cur_len > longest_l:
                         longest_l = cur_len
-                        res = s[left:right + 1]
+                        res = s[start:end + 1]
         return res
 
 

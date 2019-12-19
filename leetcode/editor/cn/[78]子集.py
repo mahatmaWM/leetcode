@@ -25,6 +25,9 @@
 #         output.append(output[j] + [nums[i]])
 # return output
 
+# 思路：
+# 标准回溯讨论
+
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def subsets(self, nums):
@@ -44,6 +47,7 @@ class Solution(object):
         backtrack(nums, [], 0)
         return self.res
 
+
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':
-    print(Solution().subsets(nums = [1,2,3]))
+    print(Solution().subsets(nums=[1, 2, 3]))

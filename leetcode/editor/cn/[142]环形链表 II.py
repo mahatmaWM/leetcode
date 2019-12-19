@@ -43,7 +43,8 @@
 # 思路：
 # 1、先使用快慢指针判断是否有环。
 # 2、判断一下退出while时，fast的状态，如果是最后一个节点，则无环。
-# 3、如果有环，则把一个指针指向head，然后再遍历两个指针，相遇的点则为最终点。（注意第一步时相遇的点不一定为环入口点）
+# 3、如果有环，则把一个指针指向head，然后再遍历两个指针，相遇的点则为最终点。
+# 注意第一步时相遇的点不一定为环入口点。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.

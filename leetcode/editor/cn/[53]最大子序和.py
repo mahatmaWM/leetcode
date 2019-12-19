@@ -12,13 +12,12 @@
 # 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。 
 # Related Topics 数组 分治算法 动态规划
 
-# 遍历数组
+# 思路：动态规划，空间复杂度为O(n)
 # 考虑状态转移方程，当前位置i的最大子序列和 dp[i] = max(dp[i - 1] + nums[i], nums[i])
 
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
-    # 动态规划，空间复杂度为On
     def maxSubArray(self, nums):
         """
         :type nums: List[int]

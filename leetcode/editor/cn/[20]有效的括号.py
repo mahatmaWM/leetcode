@@ -39,6 +39,7 @@
 # 输出: true
 # Related Topics 栈 字符串
 
+# 思路：
 # 使用栈，注意parentheses中每一对合法括号的定义
 
 
