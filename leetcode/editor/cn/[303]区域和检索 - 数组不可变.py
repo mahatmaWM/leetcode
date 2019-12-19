@@ -16,7 +16,9 @@
 # 
 # Related Topics 动态规划
 
-# 动态规划，使用curr_sum[i]保存从0到i的累积和。则 sumrange(i,j) = curr_sum[j]-curr_sum[i-1
+# 动态规划，使用curr_sum[i]保存从0到i的累积和。
+# 则 sumrange(i,j) = curr_sum[j]-curr_sum[i-1]
+# 此题测试用例有问题。。。。
 
 
 # leetcode submit region begin(Prohibit modification and deletion)

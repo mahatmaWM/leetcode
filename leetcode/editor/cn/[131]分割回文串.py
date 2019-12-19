@@ -26,15 +26,18 @@ class Solution(object):
         if len(s) == 0: return []
 
         # 回溯的路径为start，选择列表为tmp_list
-        def backtrack(start, tmp_list=[]):
-            if start >= len(s):
-                self.res.append(tmp_list)
+        def backtrack(start, tmp_list):
+            if start == len(s):
+                self.res.append(tmp_list[:])
                 return
             for end in range(start + 1, len(s) + 1):
                 cur_str = s[start:end]
-                # 如果当前子串为回文串，则可以继续递归
+                # 如果当前子串为回文串，则可以继续递归并回溯
+                # 不是回文的被剪掉
                 if cur_str == cur_str[::-1]:
-                    backtrack(end, tmp_list + [cur_str])
+                    tmp_list.append(cur_str)
+                    backtrack(end, tmp_list)
+                    tmp_list.pop()
 
         backtrack(0, [])
         return self.res

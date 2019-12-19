@@ -54,13 +54,43 @@
 # Related Topics 字符串 动态规划
 
 
+# 递归的思路：
+# 终止条件，字符串是否相等，相等则是；判断字符串中字符是否一样，不是则不是
+# i 遍历 1至n-1 分割，每次都对比：
+# 有两种可能的分割:
+# s1左边对应s2左边，右s1边对应s2右边，或者交叉对比
+# 这里对应的思想就是，扰动发生在当前节点的左子树，或者 右子树，或者当前节点
+
+
 # leetcode submit region begin(Prohibit modification and deletion)
+import functools
+
+
 class Solution(object):
-    def isScramble(self, s1, s2):
-        """
-        :type s1: str
-        :type s2: str
-        :rtype: bool
-        """
+    @functools.lru_cache(None)
+    def isScramble(self, s1: str, s2: str) -> bool:
+        if s1 == s2:
+            return True
+        if sorted(s1) != sorted(s2):
+            return False
+        for i in range(1, len(s1)):
+            if self.isScramble(s1[:i], s2[:i]) or \
+                    self.isScramble(s1[i:], s2[i:]):
+                return True
+            if self.isScramble(s1[:i], s2[i:]) and \
+                    self.isScramble(s1[i:], s2[:i]):
+                return True
+        return False
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().isScramble(s1="abcde", s2="caebd"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

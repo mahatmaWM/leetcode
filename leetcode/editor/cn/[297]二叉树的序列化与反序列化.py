@@ -41,19 +41,21 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
+        self.res = []
 
-        def helper1(root, string):
+        def helper1(root):
             """ a recursive helper function for the serialize() function."""
             # check base case
             if root is None:
-                string += 'None,'
+                self.res.append('#')
+                return
             else:
-                string += str(root.val) + ','
-                string = helper1(root.left, string)
-                string = helper1(root.right, string)
-            return string
+                self.res.append(str(root.val))
+                helper1(root.left)
+                helper1(root.right)
 
-        return helper1(root, '')
+        helper1(root)
+        return ','.join(self.res)
 
     def deserialize(self, data: str) -> TreeNode:
         """Decodes your encoded data to tree.
@@ -61,21 +63,38 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
+        d = iter(data.split(","))
 
-        def helper2(str_list):
-            if str_list[0] == 'None':
-                str_list.pop(0)
-                return None
-            root = TreeNode(str_list[0])
-            str_list.pop(0)
-            root.left = helper2(str_list)
-            root.right = helper2(str_list)
-            return root
+        def helper2():
+            tmp = next(d)
+            # print(tmp)
+            if tmp == "#":
+                return
+            node = TreeNode(int(tmp))
+            node.left = helper2()
+            node.right = helper2()
+            return node
 
-        root = helper2(data.split(','))
-        return root
+        return helper2()
 
 # Your Codec object will be instantiated and called as such:
 # codec = Codec()
 # codec.deserialize(codec.serialize(root))
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    root = TreeNode(1)
+    root.left = TreeNode(2)
+    root.right = TreeNode(3)
+    root.right.left = TreeNode(4)
+    root.right.right = TreeNode(5)
+    codec = Codec()
+    print(codec.serialize(root))
+    codec.deserialize(codec.serialize(root))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))
