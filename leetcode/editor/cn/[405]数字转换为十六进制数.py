@@ -1,4 +1,5 @@
-#给定一个整数，编写一个算法将这个数转换为十六进制数。对于负整数，我们通常使用 补码运算 方法。 
+# 给定一个整数，编写一个算法将这个数转换为十六进制数。
+# 对于负整数，我们通常使用 补码运算 方法。
 #
 # 注意: 
 #
@@ -12,32 +13,37 @@
 # 示例 1： 
 #
 # 
-#输入:
-#26
+# 输入:
+# 26
 #
-#输出:
-#"1a"
+# 输出:
+# "1a"
 # 
 #
 # 示例 2： 
 #
 # 
-#输入:
-#-1
+# 输入:
+# -1
 #
-#输出:
-#"ffffffff"
+# 输出:
+# "ffffffff"
 # 
 # Related Topics 位运算
 
 
-
-#leetcode submit region begin(Prohibit modification and deletion)
+# leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def toHex(self, num):
         """
         :type num: int
         :rtype: str
         """
-        
-#leetcode submit region end(Prohibit modification and deletion)
+        # 获取数字i的补码表示
+        def intToBin32(i):
+            return (bin(((1 << 32) - 1) & i)[2:]).zfill(32)
+        # 将补码表示转化为int数字
+        def bin32ToInt(s):
+            return int(s[1:], 2) - int(s[0]) * (1 << 31)
+
+# leetcode submit region end(Prohibit modification and deletion)

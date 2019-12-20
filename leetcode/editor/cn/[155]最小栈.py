@@ -25,8 +25,8 @@
 
 # 2、另外存储cur_min元素的栈，最小栈即可，这样可以优化掉一些空间。
 
-# 3、还有一种比较巧的办法是使用一个数字来保存当前栈的最小值，而且栈里面不能保存元素，要保存元素与最小值的差值。见MinStack实现
-# https://www.cnblogs.com/byrhuangqiang/p/4682354.html
+# 3、还有一种比较巧的办法是使用一个数字来保存当前栈的最小值，而且栈里面不能保存元素，要保存元素与最小值的差值。
+# 见MinStack实现 https://www.cnblogs.com/byrhuangqiang/p/4682354.html
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class MinStack(object):

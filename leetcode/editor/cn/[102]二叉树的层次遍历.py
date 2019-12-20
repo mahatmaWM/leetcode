@@ -3,7 +3,7 @@
 # 例如: 
 # 给定二叉树: [3,9,20,null,null,15,7],
 #
-#     3
+#    3
 #   / \
 #  9  20
 #    /  \
@@ -33,6 +33,7 @@ class TreeNode(object):
 
 
 class Solution(object):
+    # 借助队列deque的非递归层次遍历
     def levelOrder(self, root):
         """
         :type root: TreeNode
@@ -57,5 +58,24 @@ class Solution(object):
                     queue.append(node.right)
             retList.append(curr_level)
         return retList
+
+    # 递归的方式实现层次遍历
+    def levelOrder1(self, root):
+        def helper(node, level):
+            # 如果递归到一个新的层时
+            if len(levels) == level:
+                levels.append([])
+
+            levels[level].append(node.val)
+            if node.left:
+                helper(node.left, level + 1)
+            if node.right:
+                helper(node.right, level + 1)
+
+        levels = []
+        if not root:
+            return levels
+        helper(root, 0)
+        return levels
 
 # leetcode submit region end(Prohibit modification and deletion)

@@ -56,6 +56,22 @@
 # 输入: false
 # Related Topics 贪心算法 字符串 动态规划 回溯算法
 
+# dp[i][j]代表：s[0 i] 是否与 p[0 j] 匹配
+
+# 初始化:
+# dp[0][0]:什么都没有,所以为true
+# 第一行dp[0][j],换句话说,s为空,与p匹配,所以只要p开始为*才为true
+# 第一列dp[i][0],当然全部为False
+#
+# 转移方程:
+# 如果(s[i] == p[j] || p[j] == "?") && dp[i-1][j-1] ,有dp[i][j] = true
+# 如果p[j] == "*" && (dp[i-1][j] = true || dp[i][j-1] = true) 有dp[i][j] = true
+#
+# ​ note:
+# ​ dp[i][j-1],表示*代表是空字符,例如ab,ab*
+# ​ dp[i-1][j],表示*代表非空任何字符,例如abcd,ab*
+
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -65,16 +81,21 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
-        if not p:
-            return not s
-        # 判断s和p的第一位是否匹配成功，条件：s不能为空且p[0]==s[0] or "."
-        first = bool(s) and (p[0] == s[0] or p[0] == '?')
+        sn = len(s)
+        pn = len(p)
+        dp = [[False] * (pn + 1) for _ in range(sn + 1)]
+        # 初始化dp，如果p的开始位为*号，则全为true
+        dp[0][0] = True
+        for j in range(1, pn + 1):
+            if p[j - 1] == "*":
+                dp[0][j] = dp[0][j - 1]
 
-        # 看子问题中是否有*号，准备递归
-        if len(p) >= 2 and p[1] == '*':
-            # 对应（字符+*）出现0次 或者 多次
-            return self.isMatch(s, p[2:]) or (first and self.isMatch(s[1:], p))
-        else:
-            return first and self.isMatch(s[1:], p[1:])
+        for i in range(1, sn + 1):
+            for j in range(1, pn + 1):
+                if s[i - 1] == p[j - 1] or p[j - 1] == "?":
+                    dp[i][j] = dp[i - 1][j - 1]
+                elif p[j - 1] == "*":
+                    dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
+        return dp[-1][-1]
 
 # leetcode submit region end(Prohibit modification and deletion)
