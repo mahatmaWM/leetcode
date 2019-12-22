@@ -21,11 +21,36 @@
 # Related Topics 位运算 动态规划
 
 
+# 动态规划思路：
+# dp[i]为数字i的二进制表示中1的个数。
+#
+# 奇数的二进制中1的个数=它上一位偶数的二进制中1的个数+1。
+# 偶数的二进制中1的个数=这个偶数除以2后的数二进制1的个数。
+
+
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
 
 
 class Solution:
     def countBits(self, num: int) -> List[int]:
+        dp = [0] * (num + 1)
+        for i in range(1, num + 1):
+            if i % 2 == 1:
+                dp[i] = dp[i - 1] + 1
+            else:
+                dp[i] = dp[i // 2]
+        return dp
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().countBits(num=5))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

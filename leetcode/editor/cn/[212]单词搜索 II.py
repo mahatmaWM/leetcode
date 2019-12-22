@@ -34,7 +34,7 @@
 # 2 对board进行深度优先搜索
 # dfs三个核心部分：
 # 1 新的字符不在搜索范围内，退出
-# 2 新的字符在搜索范围内，且该字符与之前的字符串为words中的一个word,加入结果集，并将word结束标志置0，放置重复搜索
+# 2 新的字符在搜索范围内，且该字符与之前的字符串为words中的一个word，加入结果集，并将word结束标志置0，放置重复搜索
 # 3 按深度优先递归搜索
 
 # leetcode submit region begin(Prohibit modification and deletion)

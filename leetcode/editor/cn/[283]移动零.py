@@ -13,6 +13,8 @@
 # 
 # Related Topics 数组 双指针
 
+# 思路：
+# 原位操作都是双指针
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

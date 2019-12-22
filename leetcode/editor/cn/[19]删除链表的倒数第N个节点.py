@@ -16,7 +16,7 @@
 # 你能尝试使用一趟扫描实现吗？ 
 # Related Topics 链表 双指针
 
-# 间隔长度为n的前后指针
+# 思路：间隔长度为n的前后指针遍历链表即可。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.

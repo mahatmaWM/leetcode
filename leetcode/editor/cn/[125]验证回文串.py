@@ -25,12 +25,13 @@ class Solution(object):
         """
         left, right = 0, len(s) - 1
         while left < right:
-            if not s[left].isalnum():
+            while not s[left].isalnum() or not s[left].isalpha():
                 left += 1
-                continue
-            if not s[right].isalnum():
+                # 防止一个字母都没有的情况
+                if left == len(s):
+                    return False
+            while not s[right].isalnum() or not s[right].isalpha():
                 right -= 1
-                continue
 
             if s[left].lower() != s[right].lower():
                 return False
@@ -39,4 +40,15 @@ class Solution(object):
                 right -= 1
         return True
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().isPalindrome(s=".,"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

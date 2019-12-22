@@ -30,36 +30,39 @@
 # 
 # Related Topics 字符串
 
+# 思路：
 # count函数中使用二维数组来记录数字出现的个数
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
-    def count(self, snum):
-        num_count = []
-        before = ""
-        for s in snum:
-            if s != before:
-                num_count.append(["1" + s])
-                before = s
-            else:
-                # print(num_count[-1][0][0])
-                num_count[-1] = [str(int(num_count[-1][0][0]) + 1) + s]
-        res = ""
-        for n in num_count:
-            res = res + n[0]
-        return res
-
     def countAndSay(self, n):
         """
         :type n: int
         :rtype: str
         """
+
+        def count(snum):
+            num_count = []
+            before = ""
+            for s in snum:
+                if s != before:
+                    num_count.append(["1" + s])
+                    before = s
+                else:
+                    # print(num_count[-1][0][0])
+                    num_count[-1] = [str(int(num_count[-1][0][0]) + 1) + s]
+            res = ""
+            for n in num_count:
+                res = res + n[0]
+            return res
+
         i = 1
         snum = "1"
         while i < n:
-            snum = self.count(snum)
+            snum = count(snum)
             i += 1
         return snum
+
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':

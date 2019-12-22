@@ -18,7 +18,8 @@
 # 
 #
 
-# 思路：涉及到随机打乱，类似洗牌算法，通过生成随机数字的索引，来交换数组中的元素，达到打乱的目的。
+# 思路：
+# 涉及到随机打乱，类似洗牌算法，通过生成随机数字的索引，来交换数组中的元素，达到打乱的目的。
 # 这里重置需要注意python的特性，[:]或者deepcopy避免引用带来的问题。
 
 # leetcode submit region begin(Prohibit modification and deletion)

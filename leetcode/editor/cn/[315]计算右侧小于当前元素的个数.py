@@ -18,7 +18,8 @@
 
 # 思路：
 # 逆序遍历数组，并维持已遍历数字的有序，然后对于新元素，二分查找到对应的位置
-# 注意bisect模块的使用 bisect_left
+# 注意bisect模块的使用 bisect_left。
+# 单调栈一般用于找左右比其大或小的第一个元素位置，而本题目是找比其小的元素个数。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

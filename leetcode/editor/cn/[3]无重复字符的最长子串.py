@@ -23,7 +23,7 @@
 # 
 # Related Topics 哈希表 双指针 字符串 Sliding Window
 
-# 使用滑动窗口
+# 思路：使用滑动窗口
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
@@ -34,6 +34,7 @@ class Solution:
             if item not in window:
                 window.append(item)
             else:
+                # 发现重复元素，缩小窗口大小
                 i = window.index(item)
                 window = window[i + 1:]
                 window.append(item)

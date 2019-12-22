@@ -61,45 +61,6 @@ class Solution(object):
             res.append(root.val)
             self.in_order(root.right, res)
 
-    # def is_val(self, node):
-    #     if node is None:
-    #         return True
-    #     if node.left is not None and node.left.val >= node.val:
-    #         return False
-    #
-    #     if node.right is not None and node.right.val <= node.val:
-    #         return False
-    #
-    #     return self.is_val(node.left) and self.is_val(node.right)
-    #
-    # def isValidBST(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: bool
-    #     """
-    #     return True if root is None else self.is_val(root)
-
-    # def is_val(self, node, min_v, max_v):
-    #     if node is None:
-    #         return True
-    #     if node.left is not None:
-    #         if node.left.val >= node.val or node.left.val <= min_v:
-    #             return False
-    #
-    #     if node.right != None:
-    #         if node.right.val <= node.val or node.right.val >= max_v:
-    #             return False
-    #
-    #     return self.is_val(node.left, min_v, node.val) and self.is_val(
-    #         node.right, node.val, max_v)
-    #
-    # def isValidBST(self, root):
-    #     """
-    #     :type root: TreeNode
-    #     :rtype: bool
-    #     """
-    #     return True if root is None else self.is_val(root, -(2 ** 32), 2 ** 32)
-
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':

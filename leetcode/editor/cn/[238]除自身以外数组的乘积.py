@@ -11,6 +11,7 @@
 # 你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）
 # Related Topics 数组
 
+# 思路：
 # 考虑先正反两次遍历，一次遍历求每个数左侧的所有数的积，一次遍历求每个数右侧的所有数的积，最后两部分积相乘即得所求。
 
 # leetcode submit region begin(Prohibit modification and deletion)

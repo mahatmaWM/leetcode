@@ -34,8 +34,8 @@ class Solution:
     def oddEvenList(self, head: ListNode) -> ListNode:
         if not head or not head.next:
             return head
-        pre, cur = head, head.next
 
+        pre, cur = head, head.next
         while cur and cur.next:
             tmp = pre.next
 

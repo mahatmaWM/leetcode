@@ -22,7 +22,8 @@
 # 
 # Related Topics 数学 二分查找
 
-# 思路：这道题换句话说：除数能减去多少个被除数。
+# 思路：
+# 这道题换句话说，就是除数能减去多少个被除数。
 # 但是除数如果太小，则容易超时，这是要考虑除数的不断倍增。
 
 # leetcode submit region begin(Prohibit modification and deletion)

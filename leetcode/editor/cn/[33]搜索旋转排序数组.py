@@ -21,15 +21,8 @@
 # Related Topics 数组 二分查找
 
 # 思路：
-# 标准的二分查找做一定的改动即可。
-#
-# 第一步，把中位数标记出来。
-# 如果中位数比左边大，说明左边是递增的，断点在右边：
-#     如果target在左边递增的区间，就在左边查找；
-#     否则，在右边查找
-# 如果中位数比左边小，说明右边是递增的，断点在左边：
-#     如果target在右边的递增区间，就在右边查找；
-#     否则，在左边查找。
+# 第一步找到旋转点，左右两边都分别是升序的，然后左右两边分别二分查找即可。
+# 寻找旋转点也可以借鉴二分查找的思路。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -39,36 +32,53 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            # if nums[left] == target:
-            #     return left
-            # if nums[right] == target:
-            #     return right
 
-            mid_index = (left + right) // 2
-            mid_val = nums[mid_index]
-            if mid_val == target:
-                return mid_index
-            if mid_val > nums[left]:
-                if nums[left] < target < nums[mid_index]:
-                    right = mid_index - 1
+        def find_rotate_index(left, right):
+            if nums[left] < nums[right]:
+                return 0
+            while left <= right:
+                pivot = (left + right) // 2
+                if nums[pivot] > nums[pivot + 1]:
+                    return pivot + 1
                 else:
-                    left = mid_index + 1
+                    if nums[pivot] < nums[left]:
+                        right = pivot - 1
+                    else:
+                        left = pivot + 1
+
+        def b_search(left, right):
+            while left <= right:
+                pivot = (left + right) // 2
+                if nums[pivot] == target:
+                    return pivot
+                elif target < nums[pivot]:
+                    right = pivot - 1
+                else:
+                    left = pivot + 1
+            return -1
+
+        # 数组为空或者只有一个元素
+        if not nums:
+            return -1
+        n = len(nums)
+        if n == 1:
+            return 0 if nums[0] == target else -1
+
+        rotate_index = find_rotate_index(0, n - 1)
+        if rotate_index == 0:
+            return b_search(0, n - 1)
+        else:
+            # 决定在旋转点左边找还是右边找
+            if nums[0] <= target:
+                return b_search(0, rotate_index - 1)
             else:
-                if nums[mid_index] < target < nums[right]:
-                    left = mid_index + 1
-                else:
-                    right = mid_index - 1
-        return -1 if nums[left] != target else left
-        # else:
-        #     return -1
+                return b_search(rotate_index, n - 1)
 
 
 # leetcode submit region end(Prohibit modification and deletion)
 def main():
     s = Solution()
-    print(s.search(nums=[4, 5, 6, 7, 0, 1, 2], target=0))
+    print(s.search(nums=[4, 5, 6, 7, 0, 1, 2], target=3))
 
 
 if __name__ == "__main__":

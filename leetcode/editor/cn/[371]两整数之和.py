@@ -12,6 +12,9 @@
 # 输出: 1
 # Related Topics 位运算
 
+# 思路：
+# 使用位运算求和
+
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     def getSum(self, a, b):

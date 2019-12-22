@@ -23,13 +23,15 @@
 # 
 # Related Topics 数组 双指针 二分查找
 
+# 思路：
 # 如果可以使用额外空间，那么用hash计数是最简单的，但是这里不能用额外空间，所以只能用比较，而且暴力比较复杂度为O(n2)
 # 既然遍历是不能避免的，那么另外的只能借助二分查找了。
-# 思路，二分查找。
+#
+# 二分查找。
 # 已知所有数字的范围是1----n，就可以把left设为1，right设为n，mid设为left和right的中间值，
 # 每次循环，用count记录一下有多少个小于等于mid的值，
-# 如果count <= mid，就代表重复的数字应该不会落在mid左侧的区间内，于是更新left；
-# 反之， 就更新right。
+# 如果count <= mid，就代表重复的数字应该不会落在mid左侧的区间内，于是更新left；反之就更新right。
+# 这种方法相当于二分猜数字，然后判断该数字是否满足条件。
 
 
 # leetcode submit region begin(Prohibit modification and deletion)

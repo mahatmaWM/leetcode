@@ -32,7 +32,8 @@
 # 
 # Related Topics 树
 
-# 整体思路：dfs遍历树，查找是否出现p或者q节点，在dfs的过程中更新祖先节点。
+# 整体思路：
+# dfs遍历树，查找是否出现p或者q节点，在dfs的过程中更新祖先节点。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.

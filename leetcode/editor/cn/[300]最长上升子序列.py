@@ -16,21 +16,21 @@
 # 进阶: 你能将算法的时间复杂度降低到 O(n log n) 吗? 
 # Related Topics 二分查找 动态规划
 
-# 思路一：动态规划，复杂度为On2。
-# 我们index位置的函数值，由index之前的max(f(j)) (j < index)决定，并且nums[index] > nums[j]。
+# 思路一：
+# 动态规划，复杂度为On2。
+# 我们要计算索引i位置的最大值dp[i]，其由i之前位置的max(dp[j]) (j < i)决定，并且nums[i] > nums[j]。
 # 为什么呢？因为一旦之前序列的最后一个值nums[j]大于现在即将变为整个序列最后一个元素的nums[index]，整个序列不再保持上升趋势。
-# 转移方程为：f(i) = 1 + max(f(j) if nums[i] > nums[j]) 且(i > j)
+# 转移方程为：dp[i] = 1 + max(dp[j]) 当 nums[i] > nums[j] and i > j
 # 这个方法设计i，j两次数组遍历。
 
-# 思路二：二分查找 Onlogn。
-# 我们建立一个临时数组tmp（用于存放一组最长上升子列），首先将nums[0]插入其中，然后遍历nums[1:]
+# 思路二：
+# 有点像贪心 + 二分查找，总体约O(NlogN)。
+# 假设有一个临时数组tmp（用于存放当前找到的最长上升子列），首先将nums[0]插入其中，然后遍历数组nums[1:]。
 #
-# 如果遍历到的元素val <= tmp[0]，我们更新tmp[0]=val（也就是遍历到的元素比最长上升子序列中的最小元素小，我们通过贪心的策略，当然是越小越好，所以替换之前元素）
-# 如果tmp[0] < val <= tmp[-1]，我们通过二分搜索法找到第一个>=val的元素位置，然后用val替换掉它（和上面的做法相同）
-# 如果tmp[-1] < val，我们更新tmp.append(val)（也就是新加入的元素比最长上升子序列中的最后一个元素大，那么必然构成解）
-#
-# 题目中的例子为例，我们建立一个tmp=[10]。
+# 如果val > tmp[-1]，新元素 比 当前最长上升子序列中的最后一个元素大，那么必然构成解。
+# 如果val <= tmp[-1]，那么在tmp中找到第一个 >=val 的元素，然后用val替换掉它。由于tmp是有序的，这里可以用二分搜索。
 
+# 题目中的例子[10,9,2,5,3,7,101,18] 为例，我们建立一个tmp=[10]。
 # 然后发现10 < 9，所以 tmp:[9]
 # 然后考虑9 < 2，所以 tmp:[2]
 # 然后考虑2 < 5，所以 tmp:[2 5]
@@ -52,15 +52,13 @@ class Solution(object):
             return 0
 
         len_nums = len(nums)
-        mem = [1] * len_nums
+        dp = [1] * len_nums
         result = 1
         for i in range(1, len_nums):
             for j in range(i):
                 if nums[j] < nums[i]:
-                    mem[i] = max(mem[i], 1 + mem[j])
-
-            result = max(result, mem[i])
-
+                    dp[i] = max(dp[i], 1 + dp[j])
+            result = max(result, dp[i])
         return result
 
     def lengthOfLIS1(self, nums):

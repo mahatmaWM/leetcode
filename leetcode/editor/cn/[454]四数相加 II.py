@@ -22,7 +22,8 @@
 # 
 # Related Topics 哈希表 二分查找
 
-# 哈希表记录和，On2复杂度。
+# 思路：
+# 哈希表记录两数字之和，On2复杂度。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List

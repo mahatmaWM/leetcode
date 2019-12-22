@@ -58,11 +58,17 @@
 # 输出: false
 # Related Topics 字符串 动态规划 回溯算法
 
+# 思路1：
+# 递归字符串对比。
+#
+# 思路2：
+# 动态规划版本。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
     # 递归实现版本
-    # 其实，如果不考虑正则的一般字符匹配，也可以很容易写出递归解法，以下这个正则递归版本只是在其基础上改进得到
+    # 如果不考虑有正则的情况，仅仅比较两个字符串是否相等，很容易写出递归解法。
+    # 以下正则递归版本只是在其基础上改进得到
     def isMatch(self, s, p):
         """
         :type s: str

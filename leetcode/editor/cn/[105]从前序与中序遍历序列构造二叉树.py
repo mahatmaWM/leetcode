@@ -17,6 +17,7 @@
 #   15   7 
 # Related Topics 树 深度优先搜索 数组
 
+# 思路：
 # 首先根据前序遍历的定义可以知道，preorder这个数组的第一个元素preorder[0]一定是root。
 # 再根据中序遍历的定义，在inorder这个数组里，root前面的元素都属于root的左子树，root后面的元素都属于右子树，从这一步得到了left_inorder和right_inorder，
 # 接下来我们只需要把root在inorder里的位置index = inorder.index(preorder[0])查找出来，就可以知道其左子树和右子树的长度，

@@ -14,6 +14,7 @@
 # 尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。
 # Related Topics 字符串 回溯算法
 
+# 思路：标准的回溯做法
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -22,25 +23,37 @@ class Solution(object):
         :type digits: str
         :rtype: List[str]
         """
-        if digits == "":
-            return []
-        dict1 = {}
-        dict1[2] = "abc"
-        dict1[3] = "def"
-        dict1[4] = "ghi"
-        dict1[5] = "jkl"
-        dict1[6] = "mno"
-        dict1[7] = "pqrs"
-        dict1[8] = "tuv"
-        dict1[9] = "wxyz"
+        self.output = []
+        phone = {'2': ['a', 'b', 'c'],
+                 '3': ['d', 'e', 'f'],
+                 '4': ['g', 'h', 'i'],
+                 '5': ['j', 'k', 'l'],
+                 '6': ['m', 'n', 'o'],
+                 '7': ['p', 'q', 'r', 's'],
+                 '8': ['t', 'u', 'v'],
+                 '9': ['w', 'x', 'y', 'z']}
 
-        res = [""]
-        for d in digits:
-            res1 = []
-            for t in res:
-                for s in dict1[int(d)]:
-                    res1.append(t + s)
-            res = res1
-        return res
+        def backtrack(tmp_res, next_digits):
+            if len(next_digits) == 0:
+                self.output.append(tmp_res)
+            else:
+                for letter in phone[next_digits[0]]:
+                    backtrack(tmp_res + letter, next_digits[1:])
+
+        if not digits:
+            return []
+
+        backtrack("", digits)
+        return self.output
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().letterCombinations(digits="23"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

@@ -34,8 +34,13 @@
 # 你能在线性时间复杂度内解决此题吗？ 
 # Related Topics 堆 Sliding Window
 
-# 思路，使用双向队列(队列中始终保存有窗口内最大元素的索引，常数时间可以获取到)
-# 这和单调栈很类似
+# 思路：
+# 使用双向队列来表示窗口，队列中的元素保持从大到小排序。
+# 当窗口右移的时候
+# 1、判断移除去的最左端元素是否是最大的元素。
+# 2、如队列的元素需要和队列中的元素保持有序。（这和单调栈很类似，叫单调队列）
+#
+# 队列中的最大元素的索引始终为队首元素。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -52,16 +57,12 @@ class Solution(object):
         if k == 1:
             return nums
 
-        # 队列存储元素的索引位置
         import collections
         deq = collections.deque()
 
         def push_index_to_dq(index):
-            # 窗口右移，去掉左边移除窗口的位置
             if deq and deq[0] == index - k:
                 deq.popleft()
-
-            # 窗口右移时，去掉deq中小于新元素的那些位置索引，始终保证队列中保存的最大元素的索引位置
             while deq and nums[index] > nums[deq[-1]]:
                 deq.pop()
             deq.append(index)
@@ -70,15 +71,14 @@ class Solution(object):
         max_idx = 0
         for i in range(k):
             push_index_to_dq(i)
-            print(i, deq)
+            # print(i, deq)
             if nums[i] > nums[max_idx]:
                 max_idx = i
         output = [nums[max_idx]]
 
-        # build output
         for i in range(k, n):
             push_index_to_dq(i)
-            print(i, deq)
+            # print(i, deq)
             output.append(nums[deq[0]])
         return output
 

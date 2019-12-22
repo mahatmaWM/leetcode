@@ -26,7 +26,7 @@
 # return output
 
 # 思路：
-# 标准回溯讨论
+# 标准回溯套路
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

@@ -19,12 +19,12 @@
 # Related Topics 堆 二分查找
 
 # 思路1：堆
-# 相当于N个有序列中查找第K小元素，维护一个大小为N的堆来决定每次应该从哪个序列中获取元素，堆里保存(num, row, col)元组。
+# 相当于N（行）个有序列中查找第K小元素，维护一个大小为N的堆来决定每次应该从哪个序列中获取元素，堆里保存(num, row, col)元组。
 # 复杂度 有序列表建堆是O(min(k,N)) + k*O(log(min(k,N)))，实现见kthSmallest1
 
 # 思路2：二分查找 NlogN
 # 特点：这里粗看和74题类似，但是74是Z字形严格有序，这题不一定，所以不能按展开成一维有序，照位置索引二分查找元素的思路做。
-# 常见的二分查找是在有序列中，二分索引的办法来查找元素，这里是采用二分begin end数值的方法来查找，类似二分猜数字。见kthSmallest
+# 常见的二分查找是在有序列中，二分索引的办法来查找元素，这里是采用二分begin end元素值的方法来查找，类似二分猜数字。见kthSmallest
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

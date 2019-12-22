@@ -30,5 +30,44 @@ from typing import List
 
 class Solution:
     def leastInterval(self, tasks: List[str], n: int) -> int:
+        import queue
+        import collections
+        counter = collections.Counter(tasks)
+        pq = queue.PriorityQueue(len(counter))
+        for k, v in counter.items():
+            # print(k,v)
+            pq.put((-v, k))
+        # print(pq)
+        res = 0
+        while not pq.empty():
+            i = 0
+            tmp_list = []
+            while i <= n:
+                if not pq.empty():
+                    item = pq.get()
+                    print(item)
+                    if item[0] < -1:
+                        tmp_list.append((item[0] + 1, item[1]))
+                res += 1
+                if pq.empty() and not tmp_list:
+                    break
+                i += 1
+            for item in tmp_list:
+                pq.put(item)
+        return res
+        # print(pq.get())
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().leastInterval(
+        tasks=["A", "A", "A", "A", "A", "A", "B", "C", "D", "E", "F", "G"],
+        n=2))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

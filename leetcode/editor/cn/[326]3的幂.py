@@ -25,6 +25,7 @@
 # 你能不使用循环或者递归来完成本题吗？
 # Related Topics 数学
 
+# 思路：
 # 整数范围内最大的3的幂次，即 3^19=1162261467，所以如果这个数字能被n整除，则n是3的幂
 
 # leetcode submit region begin(Prohibit modification and deletion)

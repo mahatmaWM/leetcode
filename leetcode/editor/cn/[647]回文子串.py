@@ -25,9 +25,34 @@
 # 
 # Related Topics 字符串 动态规划
 
+# 思路见5题，加上一个计数即可。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def countSubstrings(self, s: str) -> int:
+        n = len(s)
+        if n <= 1:
+            return 1
+
+        res = 0
+        mem = [[False] * n for _ in range(n)]
+        for end in range(n):
+            for start in range(end + 1):
+                if s[start] == s[end] and \
+                        (end - start <= 1 or mem[start + 1][end - 1]):
+                    mem[start][end] = True
+                    res += 1
+        return res
+
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().countSubstrings(s="abc"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))
