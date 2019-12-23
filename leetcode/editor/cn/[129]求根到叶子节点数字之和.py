@@ -34,7 +34,9 @@
 # 因此，数字总和 = 495 + 491 + 40 = 1026.
 # Related Topics 树 深度优先搜索
 
-# 思路，深度优先搜索树，当访问到某一个节点时，需要把当前得到的数字传递给左右子节点。
+# 思路，深度优先搜索树，
+# 当访问到某一个节点时，需要把当前得到的数字传递给左右子节点。
+# 直到访问到叶子节点一个数字结束。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for a binary tree node.
@@ -53,17 +55,17 @@ class Solution(object):
         """
         self.res = 0
 
-        def curr_num(node, pre_num):
+        def dfs(node, pre_num):
             if node is None:
                 return
             pre_num = pre_num * 10 + node.val
             if node.left is None and node.right is None:
                 self.res += pre_num
                 return
-            curr_num(node.left, pre_num)
-            curr_num(node.right, pre_num)
+            dfs(node.left, pre_num)
+            dfs(node.right, pre_num)
 
-        curr_num(root, 0)
+        dfs(root, 0)
 
         return self.res
 

@@ -23,22 +23,38 @@
 # 
 # Related Topics 哈希表 双指针 字符串 Sliding Window
 
-# 思路：使用滑动窗口
+# 思路：
+# 使用left right 指针模拟滑动窗口，窗口中的元素使用set保存可以快速查找。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def lengthOfLongestSubstring(self, s):
-        window = []
-        max_len = 0
-        for item in s:
-            if item not in window:
-                window.append(item)
-            else:
-                # 发现重复元素，缩小窗口大小
-                i = window.index(item)
-                window = window[i + 1:]
-                window.append(item)
-            max_len = max(max_len, len(window))
+        if not s:
+            return 0
+
+        window = set()
+        max_len, cur_len = 0, 0
+        left = 0
+        for right in range(len(s)):
+            while s[right] in window:
+                window.remove(s[left])
+                left += 1
+                cur_len -= 1
+
+            cur_len += 1
+            max_len = max(max_len, cur_len)
+            window.add(s[right])
         return max_len
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().lengthOfLongestSubstring(s="abcabcbb"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

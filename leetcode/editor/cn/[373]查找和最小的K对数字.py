@@ -28,14 +28,15 @@
 # 
 # Related Topics 堆
 
-# 最小堆。
+# 暴力思路：
+# sorted([[x, y] for x, y in itertools.product(nums1, nums2)], key=lambda x:x[0] + x[1])[:k]
+
+
+# 思路：最小堆。
 # 把所有的点对加入到最小堆，然后输出前k个。
 # 但没有利用到“两个数组都有序”这个条件，就算数组无序，也可以利用这个方法。
-# 要利用有序这个条件，可以借助mergesort的思路，pair的第一个元素至多包含了nums1数组的前k个元素，k以后的可以不用考虑。
-# 所以，这形成了k个list，每一个list都包含了nums2的元素。每一次取所有list中的最小值，然后该list下一个元素入队。
-
-# leetcode submit region begin(Prohibit modification and deletion)
-from heapq import heappush, heappop
+#
+# 要利用有序这个条件，那么可以nums1 nums2逐次移动，贪心先找到k个元素。
 
 
 class Solution(object):
@@ -46,26 +47,24 @@ class Solution(object):
         :type k: int
         :rtype: List[List[int]]
         """
-        pairs = []
-        if len(nums1) > len(nums2):
-            tmp = self.kSmallestPairs(nums2, nums1, k)
-            for pair in tmp:
-                pairs.append([pair[1], pair[0]])
-            return pairs
-
-        min_heap = []
-
-        def push(i, j):
-            if i < len(nums1) and j < len(nums2):
-                heappush(min_heap, [nums1[i] + nums2[j], i, j])
-
-        push(0, 0)
-        while min_heap and len(pairs) < k:
-            _, i, j = heappop(min_heap)  # j 由上一次pop出来的数字产生
-            pairs.append([nums1[i], nums2[j]])
-            push(i, j + 1)  # j=j+1,   只会越来越大，不会浪费时间
-            if j == 0:
-                push(i + 1, 0)  # at most queue min(n, m) space
-        return pairs
+        import heapq
+        res = []
+        queue = []
+        if not nums1 or not nums2:
+            return []
+        heapq.heappush(queue, (nums1[0] + nums2[0], (0, 0)))
+        # 防止重复加入
+        visited = {(0, 0)}
+        while queue and len(res) < k:
+            _, (i, j) = heapq.heappop(queue)
+            res.append((nums1[i], nums2[j]))
+            # 每次nums1 或者 nums2 移动
+            if i + 1 < len(nums1) and (i + 1, j) not in visited:
+                heapq.heappush(queue, (nums1[i + 1] + nums2[j], (i + 1, j)))
+                visited.add((i + 1, j))
+            if j + 1 < len(nums2) and (i, j + 1) not in visited:
+                heapq.heappush(queue, (nums1[i] + nums2[j + 1], (i, j + 1)))
+                visited.add((i, j + 1))
+        return res
 
 # leetcode submit region end(Prohibit modification and deletion)

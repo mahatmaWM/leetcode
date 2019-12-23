@@ -31,6 +31,8 @@
 # 
 # Related Topics 位运算
 
+# 思路：
+# 32位数，每次右移4位，移动8次。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
@@ -39,11 +41,13 @@ class Solution(object):
         :type num: int
         :rtype: str
         """
-        # 获取数字i的补码表示
-        def intToBin32(i):
-            return (bin(((1 << 32) - 1) & i)[2:]).zfill(32)
-        # 将补码表示转化为int数字
-        def bin32ToInt(s):
-            return int(s[1:], 2) - int(s[0]) * (1 << 31)
+        if num == 0:
+            return '0'
+
+        res = ''
+        for i in range(8):
+            res = '0123456789abcdef'[num & 15] + res
+            num >>= 4
+        return res.lstrip('0')
 
 # leetcode submit region end(Prohibit modification and deletion)

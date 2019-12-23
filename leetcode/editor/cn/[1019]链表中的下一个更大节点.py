@@ -1,6 +1,8 @@
 # 给出一个以头节点 head 作为第一个节点的链表。链表中的节点分别编号为：node_1, node_2, node_3, ... 。
 #
-# 每个节点都可能有下一个更大值（next larger value）：对于 node_i，如果其 next_larger(node_i) 是 node_j.val，那么就有 j > i 且 node_j.val > node_i.val，而 j 是可能的选项中最小的那个。如果不存在这样的 j，那么下一个更大值为 0 。 
+# 每个节点都可能有下一个更大值（next larger value）：
+# 对于 node_i，如果其 next_larger(node_i) 是 node_j.val，那么就有 j > i 且 node_j.val > node_i.val，而 j 是可能的选项中最小的那个。
+# 如果不存在这样的 j，那么下一个更大值为 0 。
 #
 # 返回整数答案数组 answer，其中 answer[i] = next_larger(node_{i+1}) 。 
 #
@@ -36,9 +38,11 @@
 # 
 # Related Topics 栈 链表
 
+# 思路：
 # 求右边第一个更大的数字，都可以用单调栈来解决。
 # stack用于存储节点的序号index和节点的值val
 # res用于存储每个节点下一个更大的节点的值
+
 # 遍历链表
 # 若stack为空，直接进栈
 # 若栈顶的val>当前节点的val，当前节点的序号和值进栈
@@ -58,13 +62,14 @@ class Solution(object):
         :type head: ListNode
         :rtype: List[int]
         """
-        res, stack, n = [], [], 0
+        res, stack, index = [], [], 0
         while head:
             while stack and stack[-1][1] < head.val:
                 res[stack.pop()[0]] = head.val
-            stack.append([n, head.val])
+            stack.append([index, head.val])
             res.append(0)
-            n += 1
+
+            index += 1
             head = head.next
         return res
 
