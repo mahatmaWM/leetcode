@@ -16,7 +16,8 @@
 # 你能尝试使用一趟扫描实现吗？ 
 # Related Topics 链表 双指针
 
-# 思路：间隔长度为n的前后指针遍历链表即可。
+# 思路：
+# 间隔长度为n的前后指针遍历链表即可。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 # Definition for singly-linked list.
@@ -35,14 +36,14 @@ class Solution(object):
         """
         dummy = ListNode(0)
         dummy.next = head
-        p1 = p2 = dummy
+        p_right = p_left = dummy
 
         for i in range(n):
-            p1 = p1.next
-        while p1.next:
-            p1 = p1.next
-            p2 = p2.next
-        p2.next = p2.next.next
+            p_right = p_right.next
+        while p_right.next:
+            p_right = p_right.next
+            p_left = p_left.next
+        p_left.next = p_left.next.next
         return dummy.next
 
 # leetcode submit region end(Prohibit modification and deletion)

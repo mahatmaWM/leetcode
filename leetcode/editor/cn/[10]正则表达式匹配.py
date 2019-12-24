@@ -69,14 +69,17 @@ class Solution(object):
     # 递归实现版本
     # 如果不考虑有正则的情况，仅仅比较两个字符串是否相等，很容易写出递归解法。
     # 以下正则递归版本只是在其基础上改进得到
+    def isMatch_0(self, s, p):
+        if not p: return not s
+        first = bool(s) and p[0] == s[0]
+        return first and self.isMatch_0(s[1:], p[1:])
     def isMatch(self, s, p):
         """
         :type s: str
         :type p: str
         :rtype: bool
         """
-        if not p:
-            return not s
+        if not p: return not s
         # 判断s和p的第一位是否匹配成功，条件：s不能为空且p[0]==s[0] or "."
         first = bool(s) and (p[0] == s[0] or p[0] == '.')
 
@@ -89,20 +92,13 @@ class Solution(object):
 
     # 动态规划版本，在递归树的基础上添加了一个备忘录减少计算
     def isMatch2(self, s, p):
-        """
-        :type s: str
-        :type p: str
-        :rtype: bool
-        """
         S = len(s)
         P = len(p)
         memo = {}
 
         def dp(i, j):
-            if (i, j) in memo:
-                return memo[(i, j)]
-            if j == P:
-                return i == S
+            if (i, j) in memo: return memo[(i, j)]
+            if j == P: return i == S
             pre = i < S and p[j] in {s[i], "."}
             if j <= P - 2 and p[j + 1] == "*":
                 tmp = dp(i, j + 2) or (pre and dp(i + 1, j))
@@ -116,4 +112,4 @@ class Solution(object):
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':
-    print(Solution().isMatch(s="aab", p="c*a*b"))
+    print(Solution().isMatch_0(s="aab", p="aab"))

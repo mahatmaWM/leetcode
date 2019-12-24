@@ -24,7 +24,8 @@
 # Related Topics 哈希表 双指针 字符串 Sliding Window
 
 # 思路：
-# 使用left right 指针模拟滑动窗口，窗口中的元素使用set保存可以快速查找。
+# 使用left right 指针模拟滑动窗口，窗口使用set可以快速查找。
+# 当right 插入滑动窗口时，不断检查window的合法性。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:

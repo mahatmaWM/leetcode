@@ -26,6 +26,7 @@
 # 假设B更长
 # A[0:pa] A[pa:]
 # B[0:pb] B[pb:]
+
 # 在递归时判断A[pa - 1] <= B[pb - 1]则可以删去A的前几个元素A[0:pa]，并找到新链表第k-pa个元素即可，对应return self.getKth(A[pa:], B, pb)。
 # 否则去掉B的前pb个B[0:pb]，并找到新链表第pa个元素即可，对应return self.getKth(A, B[pb:], pa)
 # findMedianSortedArrays方法分了奇偶情况。

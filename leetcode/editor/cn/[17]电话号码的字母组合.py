@@ -14,7 +14,8 @@
 # 尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。
 # Related Topics 字符串 回溯算法
 
-# 思路：标准的回溯做法
+# 思路：
+# 标准的回溯做法
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

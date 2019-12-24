@@ -27,6 +27,12 @@
 # 
 # Related Topics 排序 哈希表 双指针 二分查找
 
+# 思路：
+# 考虑到数组中元素可能重复，所以需要记录元素出现次数。
+#
+# 1、如果数组已经有序，那么就是求有序数组的交集问题，两个指针分别遍历数组即可。
+# 2、如果nums1比nums2小很多，那么用小的那个来做hash表，遍历长的nums2。
+# 3、
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):

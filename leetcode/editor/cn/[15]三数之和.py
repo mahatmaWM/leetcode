@@ -15,7 +15,7 @@
 
 # 思路：
 # 先数组排序，然后遍历数组，对于当前位置i，使用两个指针left&right来判断三数字的和，根据和来移动左右指针。
-# 这样的操作相当于从n三方变成n平方的复杂度。
+# 这样的操作相当于从n^3变成n^2的复杂度。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution(object):
