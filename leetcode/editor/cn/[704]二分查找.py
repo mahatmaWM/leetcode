@@ -35,17 +35,18 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        left, right = 0, len(nums) - 1
+        # 采用[left, right)
+        left, right = 0, len(nums)
         while left < right:
             mid = left + (right - left) // 2
             if nums[mid] == target:
                 return mid
             elif nums[mid] < target:
                 left = mid + 1
-            else:
-                right = mid - 1
+            elif nums[mid] > target:
+                right = mid
 
-        return left if nums[left] == target else -1
+        return -1
 
     def search1(self, nums, target):
         def digui_search(nums, start, end, target):

@@ -20,6 +20,9 @@
 # 输出: [""]
 # Related Topics 深度优先搜索 广度优先搜索
 
+# 思路：
+# 1、检查原始字符串中合法的左右括号数目。
+# 2、递归回溯，尝试删除与不删除每一个符号，构造合法结果。
 
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
@@ -28,7 +31,7 @@ from typing import List
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
         # 找字符串最长有效括号的长度
-        def longestVaildParentheses(s: str):
+        def longestVaildParentheses(s):
             res = 0
             stack = []
             for a in s:
@@ -52,6 +55,7 @@ class Solution:
                 if left_p == 0 and right_p == 0 and open == 0:
                     res.add(tmp)
                 return
+
             if s[0] == "(":
                 # 用 "("
                 helper(s[1:], left_p - 1, right_p, open + 1, tmp + "(")
@@ -71,4 +75,15 @@ class Solution:
         helper(s, l // 2, l // 2, 0, "")
         return list(res)
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().removeInvalidParentheses(s="(a)())()"))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

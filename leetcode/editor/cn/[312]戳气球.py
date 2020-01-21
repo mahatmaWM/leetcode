@@ -1,6 +1,8 @@
 # 有 n 个气球，编号为0 到 n-1，每个气球上都标有一个数字，这些数字存在数组 nums 中。
 #
-# 现在要求你戳破所有的气球。每当你戳破一个气球 i 时，你可以获得 nums[left] * nums[i] * nums[right] 个硬币。 这里的 left 和 right 代表和 i 相邻的两个气球的序号。注意当你戳破了气球 i 后，气球 left 和气球 right 就变成了相邻的气球。 
+# 现在要求你戳破所有的气球。每当你戳破一个气球 i 时，你可以获得 nums[left] * nums[i] * nums[right] 个硬币。
+# 这里的 left 和 right 代表和 i 相邻的两个气球的序号。
+# 注意当你戳破了气球 i 后，气球 left 和气球 right 就变成了相邻的气球。
 #
 # 求所能获得硬币的最大数量。 
 #
@@ -20,9 +22,51 @@
 # 
 # Related Topics 分治算法 动态规划
 
+# dp[i][j]表示第i至第j个元素这个区间能获得的最大硬币数，k表示在i,j这个区间内最后戳破的气球，状态转移方程dp[i][j]=max(dp[i][j],dp[i][k]+dp[k][j]+nums[i]*nums[k]*nums[j])
+
 
 # leetcode submit region begin(Prohibit modification and deletion)
+from typing import List
+
+
 class Solution:
     def maxCoins(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        n = len(nums)
+        dp = [[0] * n for _ in range(n)]
+        for k in range(2, n):
+            for i in range(n - k):
+                j = i + k
+                for t in range(i + 1, j):
+                    dp[i][j] = max(dp[i][j],
+                                   nums[i] * nums[t] * nums[j] +
+                                   dp[i][t] + dp[t][j])
+        return dp[0][n - 1]
+
+    # 递归的写法
+    def maxCoins1(self, nums: List[int]) -> int:
+        nums = [1] + nums + [1]
+        import functools
+        @functools.lru_cache(None)
+        def helper(left, right):
+            if left + 1 == right:
+                return 0
+            res = 0
+            for i in range(left + 1, right):
+                res = max(res, nums[left] * nums[i] * nums[right] +
+                          helper(left, i) + helper(i, right))
+            return res
+
+        return helper(0, len(nums) - 1)
 
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().maxCoins1(nums=[3,1,5,8]))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))

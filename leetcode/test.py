@@ -1,3 +1,5 @@
+import functools
+
 def quicksort(num, low, high):  # 快速排序
     if low < high:
         location = partition(num, low, high)

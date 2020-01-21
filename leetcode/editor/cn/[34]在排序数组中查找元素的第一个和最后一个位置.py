@@ -32,28 +32,43 @@ class Solution(object):
             return -1, -1
         start, end = -1, -1
 
-        left, right = 0, len(nums) - 1
+        # 采用[left, right)区间
+        left, right = 0, len(nums)
         while left < right:
             mid = (left + right) // 2
-            # 因为查找开始位置，这里只能用小于，不能等于
-            if nums[mid] < target:
+            if nums[mid] == target:
+                right = mid
+            elif nums[mid] < target:
                 left = mid + 1
-            else:
+            elif nums[mid] > target:
                 right = mid
         if nums[left] == target:
             start = left
 
-        left, right = 0, len(nums) - 1
+        left, right = 0, len(nums)
         while left < right:
-            mid = (left + right + 1) // 2
-            # 因为是结束位置，只能用大于，不能等于
-            if nums[mid] > target:
-                right = mid - 1
-            else:
-                left = mid
-        if nums[right] == target:
-            end = right
+            mid = (left + right) // 2
+            if nums[mid] == target:
+                left = mid + 1
+            elif nums[mid] > target:
+                right = mid
+            elif nums[mid] < target:
+                left = mid + 1
+        # right为开区间，所以要right-1
+        if nums[right - 1] == target:
+            end = right - 1
 
         return start, end
 
+
 # leetcode submit region end(Prohibit modification and deletion)
+def main():
+    print(Solution().searchRange(nums=[5, 7, 7, 8, 8, 10], target=8))
+
+
+if __name__ == "__main__":
+    import time
+
+    start = time.clock()
+    main()
+    print("%s sec" % (time.clock() - start))
