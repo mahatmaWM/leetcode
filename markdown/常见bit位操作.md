@@ -1,4 +1,25 @@
-[toc]
+<!-- TOC -->
+
+- [特殊数字的16进制与二级制对应关系](#%E7%89%B9%E6%AE%8A%E6%95%B0%E5%AD%97%E7%9A%8416%E8%BF%9B%E5%88%B6%E4%B8%8E%E4%BA%8C%E7%BA%A7%E5%88%B6%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB)
+- [二进制运算](#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BF%90%E7%AE%97)
+    - [、特殊的取余操作](#%E7%89%B9%E6%AE%8A%E7%9A%84%E5%8F%96%E4%BD%99%E6%93%8D%E4%BD%9C)
+    - [、给定数字的二进制表示中1出现的个数。](#%E7%BB%99%E5%AE%9A%E6%95%B0%E5%AD%97%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A8%E7%A4%BA%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%AA%E6%95%B0)
+    - [、将数字n的第bit位 置1](#%E5%B0%86%E6%95%B0%E5%AD%97n%E7%9A%84%E7%AC%ACbit%E4%BD%8D-%E7%BD%AE1)
+    - [、将数字n的第bit位 置0](#%E5%B0%86%E6%95%B0%E5%AD%97n%E7%9A%84%E7%AC%ACbit%E4%BD%8D-%E7%BD%AE0)
+    - [、数字n的第bit位是否为0](#%E6%95%B0%E5%AD%97n%E7%9A%84%E7%AC%ACbit%E4%BD%8D%E6%98%AF%E5%90%A6%E4%B8%BA0)
+    - [、删除从右边起第一个为1的bit（将该位的1置为0）](#%E5%88%A0%E9%99%A4%E4%BB%8E%E5%8F%B3%E8%BE%B9%E8%B5%B7%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%BA1%E7%9A%84bit%E5%B0%86%E8%AF%A5%E4%BD%8D%E7%9A%841%E7%BD%AE%E4%B8%BA0)
+    - [、判断一个数是否是2的幂次方。](#%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E6%95%B0%E6%98%AF%E5%90%A6%E6%98%AF2%E7%9A%84%E5%B9%82%E6%AC%A1%E6%96%B9)
+    - [、判断一个数是否是4的幂次方。](#%E5%88%A4%E6%96%AD%E4%B8%80%E4%B8%AA%E6%95%B0%E6%98%AF%E5%90%A6%E6%98%AF4%E7%9A%84%E5%B9%82%E6%AC%A1%E6%96%B9)
+    - [、计算2个数的和，递归方法。](#%E8%AE%A1%E7%AE%972%E4%B8%AA%E6%95%B0%E7%9A%84%E5%92%8C%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95)
+    - [、计算2个数的差，递归方法。](#%E8%AE%A1%E7%AE%972%E4%B8%AA%E6%95%B0%E7%9A%84%E5%B7%AE%E9%80%92%E5%BD%92%E6%96%B9%E6%B3%95)
+    - [、计算2个数的和，循环方法。](#%E8%AE%A1%E7%AE%972%E4%B8%AA%E6%95%B0%E7%9A%84%E5%92%8C%E5%BE%AA%E7%8E%AF%E6%96%B9%E6%B3%95)
+    - [、找到丢失的数字,与相同的数异或两次后为0。](#%E6%89%BE%E5%88%B0%E4%B8%A2%E5%A4%B1%E7%9A%84%E6%95%B0%E5%AD%97%E4%B8%8E%E7%9B%B8%E5%90%8C%E7%9A%84%E6%95%B0%E5%BC%82%E6%88%96%E4%B8%A4%E6%AC%A1%E5%90%8E%E4%B8%BA0)
+    - [、找到最高的一位数](#%E6%89%BE%E5%88%B0%E6%9C%80%E9%AB%98%E7%9A%84%E4%B8%80%E4%BD%8D%E6%95%B0)
+    - [、反转二进制位](#%E5%8F%8D%E8%BD%AC%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D)
+    - [、找到从右边起，第一个为1的位，其余位置0](#%E6%89%BE%E5%88%B0%E4%BB%8E%E5%8F%B3%E8%BE%B9%E8%B5%B7%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%BA1%E7%9A%84%E4%BD%8D%E5%85%B6%E4%BD%99%E4%BD%8D%E7%BD%AE0)
+    - [、范围[m,n]之间所有数字与的结果。](#%E8%8C%83%E5%9B%B4mn%E4%B9%8B%E9%97%B4%E6%89%80%E6%9C%89%E6%95%B0%E5%AD%97%E4%B8%8E%E7%9A%84%E7%BB%93%E6%9E%9C)
+
+<!-- /TOC -->
 
 
 
@@ -16,7 +37,7 @@
 
 # 二进制运算
 
-## 1、特殊的取余操作
+## 、特殊的取余操作
 
 如果除数是2的幂次方，则等价于其除数减一的与操作。 
 
@@ -29,7 +50,7 @@ public static int getMod(int n, int m) {
 }
 ```
 
-## 2、给定数字的二进制表示中1出现的个数。
+## 、给定数字的二进制表示中1出现的个数。
 
 每次n&(n-1)操作都是将n最末尾的1反转为0，因此反转个数即为1的个数。
 
@@ -45,7 +66,7 @@ public static int count_one(int n) {
 }
 ```
 
-## 3、将数字n的第bit位 置1
+## 、将数字n的第bit位 置1
 
 ```c++
 public static int resetBit_1(int n, int bit) {
@@ -53,7 +74,7 @@ public static int resetBit_1(int n, int bit) {
 }
 ```
 
-## 4、将数字n的第bit位 置0
+## 、将数字n的第bit位 置0
 
 ```c++
 public static int resetBit_0(int n, int bit) {
@@ -61,7 +82,7 @@ public static int resetBit_0(int n, int bit) {
 }
 ```
 
-## 5、数字n的第bit位是否为0
+## 、数字n的第bit位是否为0
 
 ```c++
 public static boolean isBit0(int n, int bit) {
@@ -69,7 +90,7 @@ public static boolean isBit0(int n, int bit) {
 }
 ```
 
-## 6、删除从右边起第一个为1的bit（将该位的1置为0）
+## 、删除从右边起第一个为1的bit（将该位的1置为0）
 
 ```c++
 public static int resetLowBit1To0(int n) {
@@ -79,7 +100,7 @@ public static int resetLowBit1To0(int n) {
 
 
 
-## 7、判断一个数是否是2的幂次方。
+## 、判断一个数是否是2的幂次方。
 
 这个数用二进制数表示时，只有一位为1。
 
@@ -94,7 +115,7 @@ public static boolean isPower(int n) {
 
 
 
-## 8、判断一个数是否是4的幂次方。
+## 、判断一个数是否是4的幂次方。
 
 这个数用二进制数表示时，**只有一位为1并且只可能出现在偶数位置**。
 
@@ -106,7 +127,7 @@ public static boolean isPowerOfFour(int n) {
 
 
 
-## 9、计算2个数的和，递归方法。
+## 、计算2个数的和，递归方法。
 
 ```c++
 public static int getSum(int a, int b) {
@@ -116,7 +137,7 @@ public static int getSum(int a, int b) {
 
 
 
-## 10、计算2个数的差，递归方法。
+## 、计算2个数的差，递归方法。
 
 ```c++
 public static int getSubstract(int a, int b) {
@@ -126,7 +147,7 @@ public static int getSubstract(int a, int b) {
 
 
 
-## 11、计算2个数的和，循环方法。
+## 、计算2个数的和，循环方法。
 
 让我们以2+3为例来看一下： 0010（2），0011（3），首先看最右边的第一位，0+1为1，不进位，接着1+1=2，要进位。
 
@@ -162,7 +183,8 @@ public static int getSum(int a, int b) {
 return a;
 }
 ```
-## 12、找到丢失的数字,与相同的数异或两次后为0。
+
+## 、找到丢失的数字,与相同的数异或两次后为0。
 
 一个正常数组包括0,1,2,3,4,5…n-1，但是现在这个数组中少了一个数，求这个数是多少？
 
@@ -181,7 +203,7 @@ public static int missingNumber(int[] nums) {
 
 
 
-## 13、找到最高的一位数
+## 、找到最高的一位数
 
 ```c++
 public static int higestOneBit(int i) {
@@ -194,7 +216,7 @@ public static int higestOneBit(int i) {
 }
 ```
 
-## 14、反转二进制位
+## 、反转二进制位
 
 ```c++
 /**
@@ -237,7 +259,7 @@ public static int higestOneBit(int i) {
 
 
 
-## 15、找到从右边起，第一个为1的位，其余位置0
+## 、找到从右边起，第一个为1的位，其余位置0
 
 注：主要利用补码 = 反码 + 1
 
@@ -249,7 +271,7 @@ public static int getFirstOneFromRight(int n) {
 
 
 
-## 16、范围[m,n]之间所有数字与的结果。
+## 、范围[m,n]之间所有数字与的结果。
 
 多个数字相与，只要其中有一个数字为0结果就是0，而且，我们知道在数字递增的过程中，低位的数字总是在不断地变化，因此，我们只需要找到m与n相同的高位数字就行。
 
