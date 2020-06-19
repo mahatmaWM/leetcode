@@ -1,14 +1,29 @@
-# 设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
 #
-# 
-# insert(val)：当元素 val 不存在时，向集合中插入该项。 
-# remove(val)：元素 val 存在时，从集合中移除该项。 
-# getRandom：随机返回现有集合中的一项。每个元素应该有相同的概率被返回。 
-# 
+# @lc app=leetcode.cn id=380 lang=python3
 #
-# 示例 : 
+# [380] 常数时间插入、删除和获取随机元素
 #
-# 
+# https://leetcode-cn.com/problems/insert-delete-getrandom-o1/description/
+#
+# algorithms
+# Medium (48.56%)
+# Likes:    133
+# Dislikes: 0
+# Total Accepted:    13.1K
+# Total Submissions: 27K
+# Testcase Example:  '["RandomizedSet","insert","remove","insert","getRandom","remove","insert","getRandom"]\n' + '[[],[1],[2],[2],[],[1],[2],[]]'
+#
+# 设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
+#
+#
+# insert(val)：当元素 val 不存在时，向集合中插入该项。
+# remove(val)：元素 val 存在时，从集合中移除该项。
+# getRandom：随机返回现有集合中的一项。每个元素应该有相同的概率被返回。
+#
+#
+# 示例 :
+#
+#
 # // 初始化一个空的集合。
 # RandomizedSet randomSet = new RandomizedSet();
 #
@@ -32,19 +47,17 @@
 #
 # // 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
 # randomSet.getRandom();
-# 
-# Related Topics 设计 数组 哈希表
-
-
+#
+#
+#
 # 思路：
 # 插入和删除时需要O(1)时间，必须用hash，而随机返回则可以用数组保存元素+random选取索引。
 # 插入时：用哈希表来判断是否已存在O(1)，数组末尾增加一个元素O(1)，哈希表记录｛值：索引｝O(1)
 # 删除时：用哈希表来定位O(1)，把数组最后一个元素取下来顶替被删除元素位置O(1)(虽然这一步是很有技巧，但是仔细想想list尾部操作是O1时间，而且删除位置又知道了，插入也是O1时间)，更新哈希表O(1)
 # 取随机数时：随机从数组里面挑一个O(1)
 
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 class RandomizedSet:
-
     def __init__(self):
         """
         Initialize your data structure here.
@@ -86,12 +99,13 @@ class RandomizedSet:
         return self.list[random.randint(0, len(self.list) - 1)]
 
 
+
 # Your RandomizedSet object will be instantiated and called as such:
 # obj = RandomizedSet()
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
-# leetcode submit region end(Prohibit modification and deletion)
+
 def main():
     obj = RandomizedSet()
     print(obj.insert(1))
@@ -105,3 +119,6 @@ if __name__ == "__main__":
     start = time.clock()
     main()
     print("%s sec" % (time.clock() - start))
+
+# @lc code=end
+
