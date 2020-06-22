@@ -1,16 +1,31 @@
-# 合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
 #
-# 示例: 
+# @lc app=leetcode.cn id=23 lang=python3
+#
+# [23] 合并K个排序链表
+#
+# https://leetcode-cn.com/problems/merge-k-sorted-lists/description/
+#
+# algorithms
+# Hard (51.90%)
+# Likes:    717
+# Dislikes: 0
+# Total Accepted:    130.9K
+# Total Submissions: 252.3K
+# Testcase Example:  '[[1,4,5],[1,3,4],[2,6]]'
+#
+# 合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。
+#
+# 示例:
 #
 # 输入:
 # [
-#   1->4->5,
-#   1->3->4,
-#   2->6
+# 1->4->5,
+# 1->3->4,
+# 2->6
 # ]
 # 输出: 1->1->2->3->4->4->5->6
-# Related Topics 堆 链表 分治算法
-
+#
+#
 # 思路：
 # 本题可以使用最小堆结构进行代码实现。
 # 首先将每个list里面的第一个元素，也就是每个list的最小元素（因为list都是已排序），共K个指放入大小为K的堆中，将其维护成最小堆结构。
@@ -24,20 +39,15 @@
 # - heapq.heappop(a) 从最小堆中弹出最小的元素
 # - heapq.heappush(a,b) 向最小堆中压入新的元素
 
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 # Definition for singly-linked list.
-class ListNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
-
-class Solution(object):
-    def mergeKLists(self, lists):
-        """
-        :type lists: List[ListNode]
-        :rtype: ListNode
-        """
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
         import heapq
         heap = []
         for ln in lists:
@@ -53,5 +63,5 @@ class Solution(object):
             if ln_index.next:
                 heapq.heappush(heap, (ln_index.next.val, ln_index.next))
         return dummy.next
+# @lc code=end
 
-# leetcode submit region end(Prohibit modification and deletion)
