@@ -68,7 +68,7 @@ class Solution:
         for i in range(l):
             dp[i][i][0] = nums[i]
 
-        for i in range(l - 2, -1, -1):
+        for i in range(l - 1):
             for j in range(i + 1, l, 1):
                 left = nums[i] + dp[i + 1][j][1]
                 right = nums[j] + dp[i][j - 1][1]

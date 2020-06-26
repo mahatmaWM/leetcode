@@ -1,6 +1,6 @@
 # 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
 #
-# 示例: 
+# 示例:
 #
 # 输入: n = 4, k = 2
 # 输出:
@@ -25,6 +25,9 @@ class Solution(object):
         """
         self.res = []
 
+        # 路径：记录在 tmp 中
+        # 选择列表：start位置 到 n 之间的元素
+        # 结束条件：剩余k
         def backtrack(start, k, tmp):
             if k == 0:
                 self.res.append(tmp[:])

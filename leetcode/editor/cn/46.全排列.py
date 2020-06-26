@@ -1,6 +1,6 @@
 # 给定一个没有重复数字的序列，返回其所有可能的全排列。
 #
-# 示例: 
+# 示例:
 #
 # 输入: [1,2,3]
 # 输出:
@@ -38,6 +38,9 @@ class Solution(object):
         self.results = []
         memo = dict.fromkeys(nums, False)  # 保存数字是否使用过
 
+        # 路径：记录在 tmp_res 中
+        # 选择列表：nums 中不存在于 memo 的那些元素
+        # 结束条件：nums 中的元素全都在 tmp_res 中出现
         def backtrack(tmp_res, memo):
             if len(tmp_res) == len(nums):
                 self.results.append(tmp_res[:])

@@ -1,15 +1,15 @@
 # 给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
 #
-# candidates 中的每个数字在每个组合中只能使用一次。 
+# candidates 中的每个数字在每个组合中只能使用一次。
 #
-# 说明： 
+# 说明：
 #
-# 
-# 所有数字（包括目标数）都是正整数。 
-# 解集不能包含重复的组合。 
-# 
 #
-# 示例 1: 
+# 所有数字（包括目标数）都是正整数。
+# 解集不能包含重复的组合。
+#
+#
+# 示例 1:
 #
 # 输入: candidates = [10,1,2,7,6,1,5], target = 8,
 # 所求解集为:
@@ -19,9 +19,9 @@
 #  [2, 6],
 #  [1, 1, 6]
 # ]
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入: candidates = [2,5,2,1,2], target = 5,
 # 所求解集为:
@@ -45,6 +45,9 @@ class Solution(object):
         candidates.sort()
         self.res = []
 
+        # 路径：记录在 tmp_list 中
+        # 选择列表：start 和 candidates 之间的元素
+        # 结束条件：left_sum
         def backtrack(start, candidates, tmp_sum, tmp_list):
             # 终止条件
             if tmp_sum < 0:
@@ -56,6 +59,7 @@ class Solution(object):
                 for i in range(start, len(candidates)):
                     if tmp_sum < candidates[i]:
                         continue
+                    # 前一个相同的元素已经被选中
                     if i > start and candidates[i] == candidates[i - 1]:
                         continue
                     # 因为每个数字不能重复使用，所以递归还可以从下一个元素开始
