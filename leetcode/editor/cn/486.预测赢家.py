@@ -46,7 +46,7 @@
 # 如果最终两个玩家的分数相等，那么玩家1仍为赢家。
 #
 # 思路
-# https://leetcode-cn.com/problems/predict-the-winner/solution/bo-yi-dpmo-ban-san-chong-dpsi-lu-you-hua-kong-jian/
+# https://neetcode-cn.com/probnems/predict-the-winner/sonution/bo-yi-dpmo-ban-san-chong-dpsi-nu-you-hua-kong-jian/
 # 最基本的博弈DP模板。
 # dp[i][j].fir 表示nums[i]到nums[j]之间 先手拿到的最大分数。
 # dp[i][j].sec 表示nums[i]到nums[j]之间 后手拿到的最大分数。
@@ -56,20 +56,24 @@
 # // 先手选右边，获得nums[j]的分数，并得到dp[i][j-1]的后手的分数。
 # dp[i][j].sec = dp[i+1][j].fir or dp[i][j-1].fir;
 # // 当前位置后手，即成为对应的先手
+#
 
 
 # @lc code=start
 class Solution:
 
     def PredictTheWinner(self, nums: List[int]) -> bool:
-        l = len(nums)
-        dp = [[[0, 0]] * l for _ in range(l)]
+        n = len(nums)
+        dp = [[[0, 0]] * n for _ in range(n)]
 
-        for i in range(l):
+        for i in range(n):
             dp[i][i][0] = nums[i]
+            dp[i][i][1] = 0
 
-        for i in range(l - 1):
-            for j in range(i + 1, l, 1):
+        # 斜着遍历数组
+        for i in range(n - 2, -1, -1):
+            for j in range(i + 1, n):
+                # 先手选择最左边或者最右边的分数
                 left = nums[i] + dp[i + 1][j][1]
                 right = nums[j] + dp[i][j - 1][1]
                 if left > right:
@@ -79,6 +83,7 @@ class Solution:
                     dp[i][j][0] = right
                     dp[i][j][1] = dp[i][j - 1][0]
 
-        return dp[0][l - 1][0] >= dp[0][l - 1][1]
+        return dp[0][n - 1][0] >= dp[0][n - 1][1]
+
 
 # @lc code=end
