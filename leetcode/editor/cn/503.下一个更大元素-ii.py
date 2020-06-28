@@ -30,6 +30,7 @@
 #
 # 与496类似，这里出现循环寻找的情况，所以数组我们可能遍历两次。
 
+
 # @lc code=start
 class Solution:
 
@@ -41,5 +42,6 @@ class Solution:
                 res[stack.pop()] = nums[i]
             stack.append(i)
         return res
+
 
 # @lc code=end
