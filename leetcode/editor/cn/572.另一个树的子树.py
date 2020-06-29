@@ -1,88 +1,93 @@
-# 给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。
-# s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
 #
-# 示例 1: 
+# @lc app=leetcode.cn id=572 lang=python3
+#
+# [572] 另一个树的子树
+#
+# https://leetcode-cn.com/problems/subtree-of-another-tree/description/
+#
+# algorithms
+# Easy (46.78%)
+# Likes:    296
+# Dislikes: 0
+# Total Accepted:    41.6K
+# Total Submissions: 89K
+# Testcase Example:  '[3,4,5,1,2]\n[4,1,2]'
+#
+# 给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s
+# 也可以看做它自身的一棵子树。
+#
+# 示例 1:
 # 给定的树 s:
 #
-# 
-#     3
-#    / \
-#   4   5
-#  / \
-# 1   2
-# 
 #
-# 给定的树 t： 
+# ⁠    3
+# ⁠   / \
+# ⁠  4   5
+# ⁠ / \
+# ⁠1   2
 #
-# 
-#   4 
-#  / \
-# 1   2
-# 
 #
-# 返回 true，因为 t 与 s 的一个子树拥有相同的结构和节点值。 
+# 给定的树 t：
 #
-# 示例 2: 
+#
+# ⁠  4
+# ⁠ / \
+# ⁠1   2
+#
+#
+# 返回 true，因为 t 与 s 的一个子树拥有相同的结构和节点值。
+#
+# 示例 2:
 # 给定的树 s：
 #
-# 
-#     3
-#    / \
-#   4   5
-#  / \
-# 1   2
-#    /
-#   0
-# 
 #
-# 给定的树 t： 
+# ⁠    3
+# ⁠   / \
+# ⁠  4   5
+# ⁠ / \
+# ⁠1   2
+# ⁠   /
+# ⁠  0
 #
-# 
-#   4
-#  / \
-# 1   2
-# 
 #
-# 返回 false。 
-# Related Topics 树
+# 给定的树 t：
+#
+#
+# ⁠  4
+# ⁠ / \
+# ⁠1   2
+#
+#
+# 返回 false。
+#
+#
 
-# 思路：
-# 判断一棵树是否是另一棵的子树，通过前序遍历的结果是否存在包含关系实现
 
-
-# # 这个函数把树序列化为一个元组
-# toTuple = lambda n: (n.val, toTup(n.left), toTup(n.right)) if n else None
-# # 把元组转化为字符串以方便比较
-# return str(toTuple(t)) in str(toTuple(s))
-
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
 
-class Solution(object):
-    def isSubtree(self, s, t):
-        """
-        :type s: TreeNode
-        :type t: TreeNode
-        :rtype: bool
-        """
+    def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
+        # 判定两棵树是否相同
+        def helper(a, b):
+            if not a and not b:
+                return True
+            elif (not a and b) or (not b and a):
+                return False
+            elif a.val != b.val:
+                return False
+            elif a.val == b.val:
+                return helper(a.left, b.left) and helper(a.right, b.right)
 
-        def pre_order(root, res):
-            if root:
-                res.append(str(root.val))
-                pre_order(root.left, res)
-                pre_order(root.right, res)
-            else:
-                res.append('#')
+        if not s: return False
+        # 若 s 和 t 对应的两棵树相同则返回True
+        if helper(s, t): return True
+        return helper(s.left, t) or helper(s.right, t)
 
-        s_list, t_list = [], []
-        pre_order(s, s_list)
-        pre_order(t, t_list)
-        # 将列表转为字符串进行比较，前端加“，”防止出现“2,#,#”in“12,#,#”中的情况
-        return ',' + ','.join(t_list) in ',' + ','.join(s_list)
 
-# leetcode submit region end(Prohibit modification and deletion)
+# @lc code=end

@@ -1,55 +1,77 @@
-# 给定一个所有节点为非负值的二叉搜索树，求树中任意两节点的差的绝对值的最小值。
 #
-# 示例 : 
+# @lc app=leetcode.cn id=530 lang=python3
 #
-# 
-# 输入:
+# [530] 二叉搜索树的最小绝对差
 #
-#   1
-#    \
-#     3
-#    /
-#   2
+# https://leetcode-cn.com/problems/minimum-absolute-difference-in-bst/description/
 #
-# 输出:
+# algorithms
+# Easy (57.17%)
+# Likes:    114
+# Dislikes: 0
+# Total Accepted:    16.7K
+# Total Submissions: 29.1K
+# Testcase Example:  '[1,null,3,2]'
+#
+# 给你一棵所有节点为非负值的二叉搜索树，请你计算树中任意两节点的差的绝对值的最小值。
+#
+#
+#
+# 示例：
+#
+# 输入：
+#
+# ⁠  1
+# ⁠   \
+# ⁠    3
+# ⁠   /
+# ⁠  2
+#
+# 输出：
 # 1
 #
-# 解释:
-# 最小绝对差为1，其中 2 和 1 的差的绝对值为 1（或者 2 和 3）。
-# 
+# 解释：
+# 最小绝对差为 1，其中 2 和 1 的差的绝对值为 1（或者 2 和 3）。
 #
-# 注意: 树中至少有2个节点。 
-# Related Topics 树
+#
+#
+#
+# 提示：
+#
+#
+# 树中至少有 2 个节点。
+# 本题与 783 https://leetcode-cn.com/problems/minimum-distance-between-bst-nodes/
+# 相同
+#
+#
+#
 
-# 二叉树的性质，左子树的值小于当前节点，而右子树的值大于当前节点。基于这个思路，可以先中序遍历二叉树，得到的数组即为升序排序，然后遍历一次数组既可以得到差值最小。
-
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def getMinimumDifference(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
-        if root is None:
-            return
-        values = []
-        values = self.inorder(root, values)
-        return min(
-            [abs(values[i + 1] - values[i]) for i in range(len(values) - 1)])
 
-    def inorder(self, root, values):
-        if root is None:
-            return
-        self.inorder(root.left, values)
-        values.append(root.val)
-        self.inorder(root.right, values)
-        return values
+class Solution:
 
-# leetcode submit region end(Prohibit modification and deletion)
+    def getMinimumDifference(self, root: TreeNode) -> int:
+        self.res, self.prev = float("inf"), float("-inf")
+
+        # 二叉搜索树中序遍历是严格有序的，在遍历的过程中记录每次current与previous的差值即可
+        def in_order(root):
+            if root is None: return
+
+            in_order(root.left)
+            self.res = min(self.res, abs(root.val - self.prev))
+            self.prev = root.val
+            in_order(root.right)
+            return
+
+        in_order(root)
+        return self.res
+
+
+# @lc code=end

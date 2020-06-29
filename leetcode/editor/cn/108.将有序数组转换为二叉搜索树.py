@@ -1,8 +1,8 @@
 # 将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。
 #
-# 本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。 
+# 本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。
 #
-# 示例: 
+# 示例:
 #
 # 给定有序数组: [-10,-3,0,5,9],
 #
@@ -13,7 +13,7 @@
 #   -3   9
 #   /   /
 # -10  5
-# 
+#
 # Related Topics 树 深度优先搜索
 
 # 思路：
@@ -33,8 +33,7 @@ class TreeNode:
 
 class Solution:
     def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
-        if not nums:
-            return None
+        if not nums: return None
         mid = len(nums) / 2
         root = TreeNode(nums[mid])
         root.left = self.sortedArrayToBST(nums[:mid])

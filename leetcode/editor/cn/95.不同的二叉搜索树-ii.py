@@ -51,6 +51,7 @@
 # 因为要输出二叉搜索树，所以需要构造树。
 # 依次选取每个节点作为根节点，组合其左边的树集合，右边的树集合。
 
+
 # @lc code=start
 # Definition for a binary tree node.
 # class TreeNode:
@@ -59,11 +60,13 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def generateTrees(self, n: int) -> List[TreeNode]:
-        if n == 0:
-            return []
 
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        if n == 0: return []
+
+        # 类似后续遍历方式, end取n+1
         def generate(start, end):
+            if start == end: return [None,]
             trees = []
             for root in range(start, end):
                 for left in generate(start, root):
@@ -72,10 +75,9 @@ class Solution:
                         node.left = left
                         node.right = right
                         trees.append(node)
-
             return trees
 
         return generate(1, n + 1)
 
-# @lc code=end
 
+# @lc code=end

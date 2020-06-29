@@ -1,8 +1,8 @@
 # 给定两个二叉树，编写一个函数来检验它们是否相同。
 #
-# 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。 
+# 如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
 #
-# 示例 1: 
+# 示例 1:
 #
 # 输入:      1         1
 #          / \       / \
@@ -12,7 +12,7 @@
 #
 # 输出: true
 #
-# 示例 2: 
+# 示例 2:
 #
 # 输入:     1          1
 #          /           \
@@ -21,9 +21,9 @@
 #        [1,2],     [1,null,2]
 #
 # 输出: false
-# 
 #
-# 示例 3: 
+#
+# 示例 3:
 #
 # 输入:      1         1
 #          / \       / \
@@ -32,7 +32,7 @@
 #        [1,2,1],   [1,1,2]
 #
 # 输出: false
-# 
+#
 # Related Topics 树 深度优先搜索
 
 # 1、返回条件，两个节点都为none，则返回真，否则返回假。
@@ -53,6 +53,7 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
+        # 类似先序遍历树，依次对比两个节点
         if p is None and q is None:
             return True
 
@@ -60,8 +61,7 @@ class Solution(object):
             return False
 
         if p.val == q.val:
-            return self.isSameTree(p.left, q.left) and self.isSameTree(
-                p.right, q.right)
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
         else:
             return False
 

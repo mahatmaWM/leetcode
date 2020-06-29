@@ -1,8 +1,8 @@
 # 计算给定二叉树的所有左叶子之和。
 #
-# 示例： 
+# 示例：
 #
-# 
+#
 #    3
 #   / \
 #  9  20
@@ -11,7 +11,7 @@
 #
 # 在这个二叉树中，有两个左叶子，分别是 9 和 15，所以返回 24
 #
-# 
+#
 # Related Topics 树
 
 # 前序遍历二叉树，遇到左叶子就计数（问题就变成如何判断左叶子）
@@ -33,8 +33,7 @@ class Solution(object):
         self.res = 0
 
         def traverse(node):
-            if not node:
-                return
+            if not node: return
             # 判断左叶子
             if node.left and node.left.left is None and node.left.right is None:
                 self.res += node.left.val

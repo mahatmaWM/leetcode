@@ -50,8 +50,6 @@
 #
 #
 # 注意: 您可以假设树（即给定的根节点）不为 NULL。
-# 思路：1、DFS遍历树，记录每次的树高，最大树高对应的节点即为树的最左节点。DFS深度递归遍历，时间O(n) 空间O(h)，h为数的高度
-#      2、BFS
 #
 
 # @lc code=start
@@ -63,12 +61,15 @@
 #         self.right = None
 
 
+# DFS遍历树，记录每次的树高，最大树高对应的节点即为树的最左节点。
+# DFS深度递归遍历，时间O(n) 空间O(h)，h为数的高度
 class Solution:
+
     def findBottomLeftValue(self, root: TreeNode) -> int:
         self.maxdepth, self.res = -1, 0
+
         def dfs(root, depth):
-            if not root:
-                return
+            if not root: return
             if depth > self.maxdepth:
                 self.maxdepth = depth
                 self.res = root.val
@@ -78,8 +79,11 @@ class Solution:
         dfs(root, 0)
         return self.res
 
-    # BFS广度循环遍历，时间O(n) 空间O(b)，b为树的宽度
-    def findBottomLeftValue_v1(self, root: TreeNode) -> int:
+
+# BFS广度循环遍历，时间O(n) 空间O(b)，b为树的宽度
+class Solution1:
+
+    def findBottomLeftValue(self, root: TreeNode) -> int:
         if not root: return []
         cur, res = [root], None
         while cur:

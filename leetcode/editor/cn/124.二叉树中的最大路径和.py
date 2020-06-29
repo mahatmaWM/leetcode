@@ -1,57 +1,64 @@
+#
+# @lc app=leetcode.cn id=124 lang=python3
+#
+# [124] 二叉树中的最大路径和
+#
+# https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/description/
+#
+# algorithms
+# Hard (40.48%)
+# Likes:    473
+# Dislikes: 0
+# Total Accepted:    42.2K
+# Total Submissions: 104.3K
+# Testcase Example:  '[1,2,3]'
+#
 # 给定一个非空二叉树，返回其最大路径和。
 #
-# 本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。
-# 该路径至少包含一个节点，且不一定经过根节点。
+# 本题中，路径被定义为一条从树中任意节点出发，达到任意节点的序列。该路径至少包含一个节点，且不一定经过根节点。
 #
-# 示例 1: 
+# 示例 1:
 #
 # 输入: [1,2,3]
 #
-#       1
-#      / \
-#     2   3
+# ⁠      1
+# ⁠     / \
+# ⁠    2   3
 #
 # 输出: 6
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入: [-10,9,20,null,null,15,7]
 #
-#    -10
-#    / \
-#   9  20
-#     /  \
-#    15   7
+# -10
+# / \
+# 9  20
+# /  \
+# 15   7
 #
 # 输出: 42
-# Related Topics 树 深度优先搜索
-
+#
 # 思路：
 # 对于node节点，其最大和路径是 左子树贡献自己的最大路径，右子树贡献自己的最大路径，结合node节点组成一条更大和的路径。
 # 但是要注意左右子树贡献的路径可能和为0，这时需要舍弃特殊处理。
 
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 # Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
-
-class Solution(object):
-    def maxPathSum(self, root):
-        """
-        :type root: TreeNode
-        :rtype: int
-        """
+class Solution:
+    def maxPathSum(self, root: TreeNode) -> int:
         self.max_sum = float('-inf')
 
         # 返回node节点所能贡献的最大路径和
         def dfs(node):
-            if not node:
-                return 0
+            if not node: return 0
 
             # 注意node节点的左右孩子有可能会贡献一个负值，这时需要置为0
             left_gain = max(dfs(node.left), 0)
@@ -63,11 +70,5 @@ class Solution(object):
 
         dfs(root)
         return self.max_sum
+# @lc code=end
 
-
-# leetcode submit region end(Prohibit modification and deletion)
-if __name__ == '__main__':
-    root = TreeNode(1)
-    root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    print(Solution().maxPathSum(root=root))
