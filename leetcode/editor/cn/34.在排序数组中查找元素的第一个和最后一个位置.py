@@ -1,74 +1,76 @@
+#
+# @lc app=leetcode.cn id=34 lang=python3
+#
+# [34] 在排序数组中查找元素的第一个和最后一个位置
+#
+# https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/
+#
+# algorithms
+# Medium (39.67%)
+# Likes:    462
+# Dislikes: 0
+# Total Accepted:    98.6K
+# Total Submissions: 248.5K
+# Testcase Example:  '[5,7,7,8,8,10]\n8'
+#
 # 给定一个按照升序排列的整数数组 nums，和一个目标值 target。找出给定目标值在数组中的开始位置和结束位置。
 #
-# 你的算法时间复杂度必须是 O(log n) 级别。 
+# 你的算法时间复杂度必须是 O(log n) 级别。
 #
-# 如果数组中不存在目标值，返回 [-1, -1]。 
+# 如果数组中不存在目标值，返回 [-1, -1]。
 #
-# 示例 1: 
+# 示例 1:
 #
 # 输入: nums = [5,7,7,8,8,10], target = 8
 # 输出: [3,4]
 #
-# 示例 2: 
+# 示例 2:
 #
 # 输入: nums = [5,7,7,8,8,10], target = 6
 # 输出: [-1,-1]
-# Related Topics 数组 二分查找
-
-# 数组已升序排序。
-# 1、使用二分查找寻找开始位置。
-# 2、使用二分查找寻找结束位置。
+#
+#
 
 
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def searchRange(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        if not nums:
-            return -1, -1
-        start, end = -1, -1
+# @lc code=start
+class Solution:
 
-        # 采用[left, right)区间
-        left, right = 0, len(nums)
-        while left < right:
-            mid = (left + right) // 2
-            if nums[mid] == target:
-                right = mid
-            elif nums[mid] < target:
-                left = mid + 1
-            elif nums[mid] > target:
-                right = mid
-        if nums[left] == target:
-            start = left
+    def searchRange(self, nums: List[int], target: int) -> List[int]:
+        # 采用[left, right]，这会影响left，right指针移动的方式
+        def binarySearchLow(left, right):
+            while left <= right:
+                mid = (left + right) // 2
+                # 找low，所以相等时收缩right指针
+                if nums[mid] == target:
+                    right = mid - 1
+                elif nums[mid] < target:
+                    left = mid + 1
+                elif nums[mid] > target:
+                    right = mid - 1
+            if left >= len(nums) or nums[left] != target:
+                return -1
+            else:
+                return left
 
-        left, right = 0, len(nums)
-        while left < right:
-            mid = (left + right) // 2
-            if nums[mid] == target:
-                left = mid + 1
-            elif nums[mid] > target:
-                right = mid
-            elif nums[mid] < target:
-                left = mid + 1
-        # right为开区间，所以要right-1
-        if nums[right - 1] == target:
-            end = right - 1
+        # 采用[left, right]，这会影响left，right指针移动的方式
+        def binarySearchHigh(left, right):
+            while left <= right:
+                mid = (left + right) // 2
+                # 找high，所以相等时放大left指针
+                if nums[mid] == target:
+                    left = mid + 1
+                elif nums[mid] < target:
+                    left = mid + 1
+                elif nums[mid] > target:
+                    right = mid - 1
+            if right < 0 or nums[right] != target:
+                return -1
+            else:
+                return right
 
-        return start, end
-
-
-# leetcode submit region end(Prohibit modification and deletion)
-def main():
-    print(Solution().searchRange(nums=[5, 7, 7, 8, 8, 10], target=8))
+        if not nums: return -1, -1
+        left, right = 0, len(nums) - 1
+        return binarySearchLow(left, right), binarySearchHigh(left, right)
 
 
-if __name__ == "__main__":
-    import time
-
-    start = time.clock()
-    main()
-    print("%s sec" % (time.clock() - start))
+# @lc code=end

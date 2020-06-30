@@ -30,8 +30,7 @@
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
     def lengthOfLongestSubstring(self, s):
-        if not s:
-            return 0
+        if not s: return 0
 
         window = set()
         max_len, cur_len = 0, 0
@@ -42,9 +41,9 @@ class Solution:
                 left += 1
                 cur_len -= 1
 
+            window.add(s[right])
             cur_len += 1
             max_len = max(max_len, cur_len)
-            window.add(s[right])
         return max_len
 
 

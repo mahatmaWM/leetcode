@@ -51,8 +51,8 @@
 # 1 <= k <= nums.length
 #
 # 思路：
-# 使用双向队列来表示窗口，队列中保存索引，其对应元素值保持从大到小排序。
-# 当窗口右移的时候，入队列的元素需要和队列中的元素保持有序。（这和单调栈很类似，叫单调队列）
+# 使用双向队列来表示窗口，队列中保存索引，其对应元素值保持从大到小排序。这和单调栈很类似，叫单调队列
+# 当窗口右移的时候，入队列的元素需要和队列中的元素保持有序。
 # 队列中的最大元素的索引始终为队首元素。
 #
 
@@ -83,8 +83,8 @@ class Solution:
             push_index_to_dq(i)
             if nums[i] > nums[max_idx]:
                 max_idx = i
-        output = [nums[max_idx]]
 
+        output = [nums[max_idx]]
         for i in range(k, n):
             push_index_to_dq(i)
             output.append(nums[deq[0]])

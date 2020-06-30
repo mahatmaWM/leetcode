@@ -50,7 +50,9 @@ class Solution(object):
                 if not memo[x]:
                     memo[x] = True
                     tmp_res.append(x)
+
                     backtrack(tmp_res, memo)
+
                     tmp_res.pop()
                     memo[x] = False
 

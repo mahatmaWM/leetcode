@@ -54,14 +54,14 @@ class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         from collections import defaultdict
         left = 0
-        # cur存放窗口中某个字符出现的次数
-        cur = defaultdict(int)
+        # window存放窗口中某个字符出现的次数
+        window = defaultdict(int)
         res = 0
         for right, val in enumerate(s):
-            cur[val] += 1
+            window[val] += 1
             # 找到目前最大字符个数,看该窗口是否多余翻转k个字符
-            while right - left + 1 - max(cur.values()) > k:
-                cur[s[left]] -= 1
+            while right - left + 1 - max(window.values()) > k:
+                window[s[left]] -= 1
                 left += 1
             res = max(res, right - left + 1)
         return res
