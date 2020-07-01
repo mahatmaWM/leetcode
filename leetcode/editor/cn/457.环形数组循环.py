@@ -61,49 +61,44 @@
 
 # @lc code=start
 from typing import List
-class Solution:
-    def circularArrayLoop(self, nums: List[int]) -> bool:
-        if not nums or len(nums) == 1:
-            return False
 
-        def find_next_index(nums, i):
+
+class Solution:
+    # 采用两个快慢指针，慢指针一次走一步，快指针一次走两步，如果两者相遇，说明存在环（注意排除死循环的情况）
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+        def nextIndex(i):
             next_step = i + nums[i]
             if next_step >= 0:
                 return next_step % len(nums)
             else:
                 return (len(nums) + next_step) % len(nums)
 
+        # 选择第i个点为起点，进行新一轮尝试
         for i in range(len(nums)):
+            # 遇到之前轮访问过的节点就结束本轮尝试（一定会失败的）
+            if nums[i] == 0: continue
             slow = i
-            fast = find_next_index(nums, i)
+            fast = nextIndex(i)
 
-
-
-            # 一个循环中的所有运动都必须沿着同一方向进行
-            # 保证快慢指针始终向着nums[i] 表示的同一个方向移动, > 0 始终右，反之始终左
-            while nums[i] * nums[slow] > 0 and nums[i] * nums[fast] > 0 and \
-                    nums[i] * nums[find_next_index(nums, fast)] > 0:
-
-
+            # 保证快慢指针始终向同一个方向移动
+            while nums[slow] * nums[fast] > 0 and nums[fast] * nums[nextIndex(fast)] > 0:
                 if slow == fast:
-                    return True
-                slow = find_next_index(nums, slow)
-                fast = find_next_index(nums, find_next_index(nums, fast))
-                print(slow)
-                print(fast)
+                    # slow == nextIndex(slow)说明进入一个局部圈死循环了
+                    if slow == nextIndex(slow):
+                        break
+                    else:
+                        return True
+                slow = nextIndex(slow)
+                fast = nextIndex(nextIndex(fast))
+
+            # 把本轮访问过的节点都置位0
+            val = nums[i]
+            while val * nums[i] > 0:
+                tmp = nextIndex(i)
+                nums[i] = 0
+                i = tmp
 
         return False
 
-# def main():
-#     print(Solution().circularArrayLoop(nums=[-1,2]))
-
-
-# if __name__ == "__main__":
-#     import time
-
-#     start = time.clock()
-#     main()
-#     print("%s sec" % (time.clock() - start))
 
 # @lc code=end
-
