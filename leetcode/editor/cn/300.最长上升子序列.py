@@ -48,17 +48,16 @@ class Solution:
         return max(dp)
 
 
-# 思路二：有点像贪心 + 二分查找，总体约O(NlogN)。
-#
-# 假设有一个临时数组tmp（用于存放当前找到的最长上升子列），首先将nums[0]插入其中
-# 然后遍历数组nums[1:]
-# 如果val > tmp[-1]，新元素 比 当前最长上升子序列中的最后一个元素大，那么必然构成解，直接加入tmp末尾。
-# 如果val <= tmp[-1]，那么在tmp中找到第一个 >=val 的元素，然后用val替换掉它。
-# 由于tmp是有序的，这一步可以用二分搜索。
-# 最后tmp中存放的就是最长上升子序列。
 class Solution1:
-
-    def lengthOfLIS(self, nums):
+    # 思路二：有点像贪心 + 二分查找，总体约O(NlogN)。
+    #
+    # 假设有一个临时数组tmp（用于存放当前找到的最长上升子列），首先将nums[0]插入其中
+    # 然后遍历数组nums[1:]
+    # 如果val > tmp[-1]，新元素 比 当前最长上升子序列中的最后一个元素大，那么必然构成解，直接加入tmp末尾。
+    # 如果val <= tmp[-1]，那么在tmp中找到第一个 >=val 的元素，然后用val替换掉它。
+    # 由于tmp是有序的，这一步可以用二分搜索。
+    # 最后tmp中存放的就是最长上升子序列。
+    def lengthOfLIS(self, nums: List[int]) -> int:
         import bisect
         mem = list()
         n = len(nums)

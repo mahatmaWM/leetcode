@@ -60,19 +60,24 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
+
     def isBalanced(self, root: TreeNode) -> bool:
+        # 后续遍历二叉树，当树平衡时，返回树高，否则返回-1
         def dfs(root):
             if not root: return 0
             left_depth = dfs(root.left)
-            if left_depth == -1: return -1
             right_depth = dfs(root.right)
-            if right_depth == -1: return -1
 
+            if left_depth == -1: return -1
+            if right_depth == -1: return -1
             if abs(left_depth - right_depth) <= 1:
                 return 1 + max(left_depth, right_depth)
             else:
                 return -1
-        return dfs(root) != -1
-# @lc code=end
 
+        return dfs(root) != -1
+
+
+# @lc code=end

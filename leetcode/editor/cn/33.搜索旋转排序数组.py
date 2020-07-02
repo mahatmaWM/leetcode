@@ -42,21 +42,25 @@ class Solution:
     # 思路，判断目标值是否在升序的子区间内，从而决定前后指针应该怎么移动
     def search(self, nums: List[int], target: int) -> int:
         if not nums: return -1
+        # 左右闭合的方式
         left, right = 0, len(nums) - 1
         while left < right:
-            mid = left + (right - left + 1) // 2
-            # 说明右边是升序的，旋转点在左边
+            mid = (right + left) // 2
+            # print('mid={}'.format(mid))
+            if nums[mid] == target: return mid
+            # 说明右边是升序的
             if nums[mid] < nums[right]:
                 # target在右边，下一次找区间[mid right]，否则找区间[left mid-1]
-                if nums[mid] <= target <= nums[right]:
-                    left = mid
+                if nums[mid] < target <= nums[right]:
+                    left = mid + 1
                 else:
                     right = mid - 1
-            else:
+            # 说明左边是升序的
+            elif nums[mid] > nums[right]:
                 if nums[left] <= target <= nums[mid - 1]:
                     right = mid - 1
                 else:
-                    left = mid
+                    left = mid + 1
         # while结束，left与right指向一起
         if nums[left] == target: return left
         return -1

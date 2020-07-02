@@ -56,7 +56,7 @@ class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
         self.max_sum = float('-inf')
 
-        # 返回node节点所能贡献的最大路径和
+        # 返回node节点所能贡献的最大路径和（node节点到叶子节点）
         def dfs(node):
             if not node: return 0
 

@@ -47,8 +47,7 @@
 class Solution:
     def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
         retList = []
-        if root is None:
-            return retList
+        if not root: return retList
 
         import collections
         queue = collections.deque()
