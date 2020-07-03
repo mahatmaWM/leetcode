@@ -87,12 +87,10 @@ class Solution:
     def printTree(self, root: TreeNode) -> List[List[str]]:
 
         def maxDepth(node):
-            if not node:
-                return 0
-            else:
-                left_height = maxDepth(node.left)
-                right_height = maxDepth(node.right)
-                return max(left_height, right_height) + 1
+            if not node: return 0
+            left_height = maxDepth(node.left)
+            right_height = maxDepth(node.right)
+            return max(left_height, right_height) + 1
 
         if not root: return [[""]]
         max_depth = maxDepth(root)

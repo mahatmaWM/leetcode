@@ -46,10 +46,12 @@
 #         self.left = None
 #         self.right = None
 
-class Solution:
+class Solution1:
+    # 广度优先遍历是以层为顺序，将某一层上的所有节点都搜索到了之后才向下一层搜索；
+    # 使用队列的性质来进行层次访问。
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
         res = []
-        if root is None: return res
+        if not root: return []
 
         import collections
         queue = collections.deque()
@@ -59,11 +61,26 @@ class Solution:
             for _ in range(len(queue)):
                 node = queue.popleft()
                 level.append(node.val)
-                if node.left is not None:
-                    queue.append(node.left)
-                if node.right is not None:
-                    queue.append(node.right)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
             res.append(level)
         return res
-# @lc code=end
 
+
+class Solution(object):
+
+    def levelOrder(self, root):
+        if not root: return []
+        self.levels = []
+
+        # 递归的方式实现层次遍历
+        def helper(node, level):
+            # 递归到新层
+            if len(self.levels) == level: self.levels.append([])
+            self.levels[level].append(node.val)
+            if node.left: helper(node.left, level + 1)
+            if node.right: helper(node.right, level + 1)
+
+        helper(root, 0)
+        return self.levels
+# @lc code=end

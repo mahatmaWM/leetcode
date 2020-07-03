@@ -46,23 +46,21 @@
 
 class Solution:
     def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
-        retList = []
-        if not root: return retList
+        if not root: return []
 
+        res = []
         import collections
         queue = collections.deque()
         queue.append(root)
         while queue:
-            curr_level = []
-            curr_level_len = len(queue)
-            for _ in range(curr_level_len):
+            level = []
+            for _ in range(len(queue)):
                 node = queue.popleft()
-                curr_level.append(node.val)
-                if node.left is not None:
-                    queue.append(node.left)
-                if node.right is not None:
-                    queue.append(node.right)
-            retList.append(curr_level)
-        return retList.reverse()
+                level.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            res.append(level)
+        res.reverse()
+        return res
 # @lc code=end
 

@@ -1,8 +1,24 @@
+#
+# @lc app=leetcode.cn id=235 lang=python3
+#
+# [235] 二叉搜索树的最近公共祖先
+#
+# https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-search-tree/description/
+#
+# algorithms
+# Easy (64.08%)
+# Likes:    309
+# Dislikes: 0
+# Total Accepted:    60K
+# Total Submissions: 93.7K
+# Testcase Example:  '[6,2,8,0,4,7,9,null,null,3,5]\n2\n8'
+#
 # 给定一个二叉搜索树, 找到该树中两个指定节点的最近公共祖先。
 #
-# 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大（一个节点也可以是它自己的祖先）。”
+# 百度百科中最近公共祖先的定义为：“对于有根树 T 的两个结点 p、q，最近公共祖先表示为一个结点 x，满足 x 是 p、q 的祖先且 x
+# 的深度尽可能大（一个节点也可以是它自己的祖先）。”
 #
-# 例如，给定如下二叉搜索树: root = [6,2,8,0,4,7,9,null,null,3,5]
+# 例如，给定如下二叉搜索树:  root = [6,2,8,0,4,7,9,null,null,3,5]
 #
 #
 #
@@ -29,40 +45,35 @@
 # 所有节点的值都是唯一的。
 # p、q 为不同节点且均存在于给定的二叉搜索树中。
 #
-# Related Topics 树
+#
+#
 
-# 思路：利用二叉搜索的性质，只需要在左子树或者右子树中递归找即可。
-
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def lowestCommonAncestor(self, root, p, q):
-        """
-        :type root: TreeNode
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: TreeNode
-        """
-        if not root:
-            return None
+
+class Solution:
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root: return None
         if p and q:
             a = min(p.val, q.val)
             b = max(p.val, q.val)
             if a == root.val or b == root.val: return root
-            
+
             if a < root.val < b:
                 return root
+            elif a == b:
+                return p
             elif b < root.val:
                 return self.lowestCommonAncestor(root.left, p, q)
             elif a > root.val:
                 return self.lowestCommonAncestor(root.right, p, q)
-            elif a == b:
-                return p
 
-# leetcode submit region end(Prohibit modification and deletion)
+
+# @lc code=end

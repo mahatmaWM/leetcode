@@ -92,8 +92,7 @@ class Solution:
             # 当前访问节点node，前一次访问的节点pre-visit
             # 先找到第一次出现逆序的first节点，再找到最后一次逆序的second节点
             if self.pre_visit and self.pre_visit.val > node.val:
-                if not self.first:
-                    self.first = self.pre_visit
+                if not self.first: self.first = self.pre_visit
                 self.second = node
             self.pre_visit = node
 

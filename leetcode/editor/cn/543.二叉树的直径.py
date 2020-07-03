@@ -54,10 +54,8 @@ class Solution:
             if not node: return 0
 
             left_depth, right_depth = 0, 0
-            if node.left:
-                left_depth = tree_depth(node.left)
-            if node.right:
-                right_depth = tree_depth(node.right)
+            if node.left: left_depth = tree_depth(node.left)
+            if node.right: right_depth = tree_depth(node.right)
             # 经过结点node的最长路径，等与它左子树的深度 + 右子树的深度
             self.max_path_length = max(self.max_path_length, left_depth + right_depth)
             return max(left_depth, right_depth) + 1

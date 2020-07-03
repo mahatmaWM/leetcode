@@ -66,16 +66,19 @@
 #         self.left = None
 #         self.right = None
 
-class Solution:
-    def getMin(self, root):
-        while(root.left):
-            root = root.left
-        return root
 
-    # 利用二叉搜索树左小右大的特点，当找到目标节点的时候，分只有一个孩子，或者两个孩子（两个孩子则使用右孩子的最小值）
+class Solution:
+
+    # 利用二叉搜索树左小右大的特点，当找到目标节点的时候，
+    # 分只有一个孩子，或者两个孩子（两个孩子则使用右孩子的最小值）
     def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
-        if not root:
-            return None
+
+        def getMin(node):
+            while (node.left):
+                node = node.left
+            return node
+
+        if not root: return None
         if root.val < key:
             root.right = self.deleteNode(root.right, key)
         elif root.val > key:
@@ -83,10 +86,10 @@ class Solution:
         else:
             if not root.left: return root.right
             if not root.right: return root.left
-            minValue = self.getMin(root.right)
+            minValue = getMin(root.right)
             root.val = minValue.val
             root.right = self.deleteNode(root.right, minValue.val)
         return root
 
-# @lc code=end
 
+# @lc code=end

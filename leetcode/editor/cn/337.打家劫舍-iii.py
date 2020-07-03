@@ -77,15 +77,15 @@ class Solution:
 
     def rob(self, root: TreeNode) -> int:
 
-        def dfs(root):
-            if not root:
-                return 0, 0
-            left_pair = dfs(root.left)
-            right_pair = dfs(root.right)
-            # 包含当前节点的最大值， 不包含当前节点的最大值
-            return root.val + left_pair[1] + right_pair[1], max(left_pair[0], left_pair[1]) + max(
-                right_pair[0], right_pair[1])
+        # 返回偷了node节点 和 不偷node节点 分别的最大值
+        def dfs(node):
+            if not node: return 0, 0
+            left_pair = dfs(node.left)
+            right_pair = dfs(node.right)
+            return node.val + left_pair[1] + right_pair[1], \
+                max(left_pair[0], left_pair[1]) + max(right_pair[0], right_pair[1])
 
         return max(dfs(root))
+
 
 # @lc code=end

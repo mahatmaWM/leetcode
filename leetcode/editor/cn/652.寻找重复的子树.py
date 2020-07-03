@@ -63,8 +63,7 @@ class Solution:
             if not node: return "#"
             serial = "{},{},{}".format(node.val, serialize(node.left), serialize(node.right))
             count[serial] += 1
-            if count[serial] == 2:
-                ans.append(node)
+            if count[serial] == 2: ans.append(node)
             return serial
 
         serialize(root)

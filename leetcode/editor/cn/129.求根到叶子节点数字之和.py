@@ -65,9 +65,9 @@ class Solution:
         self.res = 0
         # 前序遍历二叉树，
         def dfs(node, pre_num):
-            if node is None: return
+            if not node: return
             pre_num = pre_num * 10 + node.val
-            if node.left is None and node.right is None:
+            if not node.left and not node.right:
                 self.res += pre_num
                 return
             dfs(node.left, pre_num)

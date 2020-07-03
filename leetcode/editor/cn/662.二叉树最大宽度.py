@@ -93,20 +93,17 @@
 
 
 class Solution:
-
+    # 层次遍历，并记录节点在满二叉树中的索引，用于计算宽度
     def widthOfBinaryTree(self, root: TreeNode) -> int:
         if not root.left and not root.right: return 1
         cur, res = [(root, 1)], float('-inf')
         while cur:
             layer = []
             for node, pos in cur:
-                if node.left:
-                    layer.append((node.left, 2 * pos))
-                if node.right:
-                    layer.append((node.right, 2 * pos + 1))
-            # 此层有节点
-            if len(layer) > 0:
-                res = max(res, layer[-1][1] - layer[0][1] + 1)
+                if node.left: layer.append((node.left, 2 * pos))
+                if node.right: layer.append((node.right, 2 * pos + 1))
+            # 此层有节点，取一头一尾的节点计算宽度
+            if len(layer) > 0: res = max(res, layer[-1][1] - layer[0][1] + 1)
             cur = layer
         return res
 

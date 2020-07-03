@@ -50,10 +50,8 @@ class Solution:
             layer_max = float('-inf')
             for node in cur:
                 layer_max = max(layer_max, node.val)
-                if node.left:
-                    layer.append(node.left)
-                if node.right:
-                    layer.append(node.right)
+                if node.left: layer.append(node.left)
+                if node.right: layer.append(node.right)
             cur = layer
             res.append(layer_max)
         return res

@@ -89,10 +89,8 @@ class Solution1:
         while cur:
             layer, res = [], cur[0].val
             for node in cur:
-                if node.left:
-                    layer.append(node.left)
-                if node.right:
-                    layer.append(node.right)
+                if node.left: layer.append(node.left)
+                if node.right: layer.append(node.right)
             cur = layer
         return res
 

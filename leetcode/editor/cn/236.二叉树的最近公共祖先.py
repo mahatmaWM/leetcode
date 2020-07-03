@@ -58,8 +58,9 @@
 #         self.right = None
 
 class Solution:
-    result = None
+
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        self.result = None
         # 返回是否找到了p或者q节点
         def dfs(node):
             # 终止递归，到叶子节点或者已经找到时 return

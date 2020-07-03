@@ -53,7 +53,7 @@ class Solution:
         self.sum = 0
 
         # 二叉搜索树的特性，对于节点node，大于它的节点一定在右边
-        # 所以可以 右中左 的遍历方式，用一个变量记录累加和。
+        # 所以需要 右中左 的遍历方式，用一个变量记录累加和。
         def inorder(node):
             if not node: return
             inorder(node.right)

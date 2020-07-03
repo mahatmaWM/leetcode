@@ -53,15 +53,12 @@ class Solution:
         if not root: return res
 
         def dfs(node, target, path):
-            if not node:
-                return
+            if not node: return
             if sum(path) == target and not node.left and not node.right:
                 res.append(path)
                 return
-            if node.left:
-                dfs(node.left, target, path + [node.left.val])
-            if node.right:
-                dfs(node.right, target, path + [node.right.val])
+            if node.left: dfs(node.left, target, path + [node.left.val])
+            if node.right: dfs(node.right, target, path + [node.right.val])
 
         dfs(root, num, [root.val])
         return res

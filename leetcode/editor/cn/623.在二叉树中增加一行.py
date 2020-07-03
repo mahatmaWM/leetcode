@@ -94,7 +94,7 @@ class Solution:
 
     def addOneRow(self, root: TreeNode, v: int, d: int) -> TreeNode:
 
-        def insert(val, node, depth, n):
+        def insert(node, val, depth, n):
             if not node: return
             # 遍历到原树的n-1层时
             if depth == n - 1:
@@ -109,14 +109,14 @@ class Solution:
                 node.right = insert_node
                 node.right.right = tmp
             else:
-                insert(val, node.left, depth + 1, n)
-                insert(val, node.right, depth + 1, n)
+                insert(node.left, val, depth + 1, n)
+                insert(node.right, val, depth + 1, n)
 
         if d == 1:
             insert_node = TreeNode(v)
             insert_node.left = root
             return insert_node
-        insert(v, root, 1, d)
+        insert(root, v, 1, d)
         return root
 
 
