@@ -34,11 +34,6 @@
 # 向右旋转 3 步: 0->1->2->NULL
 # 向右旋转 4 步: 2->0->1->NULL
 #
-## 思路：
-# 1、链表为空或者只有一个节点时，直接返回。
-# 2、找到列表长度。
-# 3、找到应该断开的节点。
-# 4、重新连接链表。
 
 # @lc code=start
 # Definition for singly-linked list.
@@ -47,22 +42,28 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
+    # 思路：
+    # 1、链表为空或者只有一个节点时，直接返回。
+    # 2、找到列表长度。
+    # 3、找到应该断开的节点。
+    # 4、重新连接链表。
     def rotateRight(self, head: ListNode, k: int) -> ListNode:
-        if not head or not head.next:
-            return head
+        if not head or not head.next: return head
 
         list_length = 1
         node = head
         while node.next:
             node = node.next
             list_length += 1
+
+        # 记录尾巴节点
         tail = node
 
         # 找到应该断开的节点
         k = list_length - k % list_length
-        if k == list_length:
-            return head
+        if k == list_length: return head
         node = head
         list_length = 1
         while list_length < k:
@@ -70,9 +71,10 @@ class Solution:
             list_length += 1
 
         # 重新连接链表
-        ret = node.next
+        new_head = node.next
         tail.next = head
         node.next = None
-        return ret
-# @lc code=end
+        return new_head
 
+
+# @lc code=end

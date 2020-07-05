@@ -31,8 +31,6 @@
 # 你能尝试使用一趟扫描实现吗？
 #
 #
-# 思路：间隔长度为n的前后指针遍历链表即可。
-
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode:
@@ -41,6 +39,7 @@
 #         self.next = None
 
 class Solution:
+    # 思路：间隔长度为n的前后指针遍历链表即可。
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
         dummy = ListNode(0)
         dummy.next = head
@@ -48,6 +47,7 @@ class Solution:
 
         for i in range(n):
             p_right = p_right.next
+
         while p_right.next:
             p_right = p_right.next
             p_left = p_left.next

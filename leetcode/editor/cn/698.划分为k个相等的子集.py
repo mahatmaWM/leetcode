@@ -32,38 +32,36 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
 
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        # 不能被整除一定不行
         target, rem = divmod(sum(nums), k)
-        if rem:
-            return False
+        if rem: return False
 
-        # 回溯
-        def search(groups):
-            if not nums:
-                return True
-            v = nums.pop()
-            # 尝试将v放入groups的每一个集合中
-            for i, group in enumerate(groups):
-                if group + v <= target:
-                    groups[i] += v
-                    if search(groups):
-                        return True
-                    groups[i] -= v
-                if not group:
-                    break
-            nums.append(v)
-            return False
-
+        # 排序数组，处理特殊情况
         nums.sort()
-        if nums[-1] > target:
-            return False
+        if nums[-1] > target: return False
         while nums and nums[-1] == target:
             nums.pop()
             k -= 1
 
+        # 递归
+        def search(groups):
+            if not nums: return True
+            v = nums.pop()
+            # 尝试将v放入groups的每一个集合中
+            for group_i, group_v in enumerate(groups):
+                if group_v + v <= target:
+                    groups[group_i] += v
+                    if search(groups): return True
+                    groups[group_i] -= v
+            nums.append(v)
+            return False
+
         return search([0] * k)
+
 
 # @lc code=end

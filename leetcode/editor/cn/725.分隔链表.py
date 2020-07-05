@@ -68,31 +68,34 @@
 #         self.val = x
 #         self.next = None
 
-class Solution:
-    def splitListToParts(self, root: ListNode, k: int) -> List[ListNode]:
-        # get length of linked list
-        length = 0
-        cur = root
-        while cur:
-            length += 1
-            cur = cur.next
 
-        min_length = length//k
-        carry = length%k
+class Solution:
+
+    def splitListToParts(self, root: ListNode, k: int) -> List[ListNode]:
+
+        def listLen(node):
+            length = 0
+            while node:
+                length += 1
+                node = node.next
+            return length
+
+        # 获取链表长度，并判断能否被整除（意味着前面的carry个分割是否可以多一个元素）
+        length = listLen(root)
+        min_length = length // k
+        carry = length % k
 
         res = [None] * k
-
         i = 0
         while root:
             res[i] = root
             # 检查前面的列表是否要多加一个元素
-            for _ in range(min_length+(i < carry and carry != 0)):
+            for _ in range(min_length + (i < carry and carry != 0)):
                 last = root
                 root = root.next
-
             last.next = None
             i += 1
         return res
 
-# @lc code=end
 
+# @lc code=end

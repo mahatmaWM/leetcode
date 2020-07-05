@@ -51,8 +51,7 @@ class Solution:
         import heapq
         heap = []
         for ln in lists:
-            if ln:
-                heap.append((ln.val, ln))
+            if ln: heap.append((ln.val, ln))
 
         dummy = curr = ListNode(0)
         heapq.heapify(heap)
@@ -60,8 +59,7 @@ class Solution:
             _, ln_index = heapq.heappop(heap)
             curr.next = ln_index
             curr = curr.next
-            if ln_index.next:
-                heapq.heappush(heap, (ln_index.next.val, ln_index.next))
+            if ln_index.next: heapq.heappush(heap, (ln_index.next.val, ln_index.next))
         return dummy.next
 # @lc code=end
 

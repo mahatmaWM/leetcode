@@ -45,9 +45,7 @@ class Solution:
         res = []
 
         def inOrder(root):
-            if root == None:
-                return
-
+            if not root: return
             inOrder(root.left)
             res.append(root.val)
             inOrder(root.right)
@@ -61,8 +59,7 @@ class Solution:
 # 而中序遍历则是先入栈，然后节点弹出栈后再访问。
 class Solution1(object):
     def inorderTraversal(self, root):
-        if root is None:
-            return []
+        if not root: return []
         res = []
         stack = []
         node = root

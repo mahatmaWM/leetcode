@@ -56,7 +56,6 @@ class Solution:
         for a in pre_sum[::-1]:
             # 更新当前的上下限
             l, r = a + lower, a + upper
-
             i, j = bisect_left(walked, l), bisect_right(walked, r)
             ans += j - i
             insort(walked, a)

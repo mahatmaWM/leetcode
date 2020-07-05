@@ -34,21 +34,32 @@
 
 # @lc code=start
 class Solution:
-
+    # 和31题思路一样
     def nextGreaterElement(self, n: int) -> int:
-        n, tail = list(str(n)), []
-        for i in range(len(n) - 1, -1, -1):
-            # tail保存了倒序遍历n的每位数字的信息，逆序找到一位j比i更大，交换i j的数字，然后把后面的升序排，最后组合成新的数字
-            # 方法与31题一样
-            for j in tail:
-                if n[j] > n[i]:
-                    n[j], n[i] = n[i], n[j]
-                    m = int(''.join(n[:i + 1] + sorted(n[i + 1:])))
-                    return -1 if m > 2**31 - 1 else m
-            tail.append(i)
-        return -1
+        nums = list(str(n))
+
+        def swap(nums, i, j):
+            nums[i], nums[j] = nums[j], nums[i]
+
+        def reverse(nums, i, j):
+            for k in range(i, (i + j) // 2 + 1):
+                swap(nums, k, i + j - k)
+
+        i = len(nums) - 1
+        # 从后开始遍历数组，找到第一个降序的位置i
+        while i > 0 and nums[i] <= nums[i - 1]:
+            i -= 1
+        # 将位置i至n-1的数字反转
+        reverse(nums, i, len(nums) - 1)
+        # 遍历i到n-1的数字，找到第一个比i-1大的数字，交换彼此即可
+        if i > 0:
+            for j in range(i, len(nums)):
+                if nums[j] > nums[i - 1]:
+                    swap(nums, i - 1, j)
+                    break
+        m = int(''.join(nums))
+        # print('m={},n={}'.format(m,n))
+        return -1 if m > 2**31 - 1 or m <= n else m
 
 
-if __name__ == "__main__":
-    print(Solution().nextGreaterElement(n=21))
 # @lc code=end

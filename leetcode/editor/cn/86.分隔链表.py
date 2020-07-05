@@ -34,8 +34,8 @@
 
 class Solution:
     def partition(self, head: ListNode, x: int) -> ListNode:
-        if not head or not head.next:
-            return head
+        if not head or not head.next: return head
+
         p = head
         dummyA = ListNode(0)
         p1 = dummyA

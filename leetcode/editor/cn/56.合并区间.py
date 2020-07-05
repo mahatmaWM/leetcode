@@ -32,12 +32,12 @@
 
 # @lc code=start
 class Solution:
+    # 按区间start升序，然后遍历合并即可
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        if not intervals:
-            return []
+        if not intervals: return []
+
         res = []
         intervals.sort(key=lambda x: x[0])
-
         curr = intervals[0]
         for i in range(1, len(intervals)):
             # 如果curr的end比新的start小，则保存一个结果，更新curr

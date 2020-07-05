@@ -27,9 +27,6 @@
 # 输出: 2->3
 #
 #
-# 第一次遍历的时候，记录数字出现的次数。
-# 第二次遍历的时候，查找下个节点的值出现的次数如果不是1次，那么就删除下个节点。
-# 修改这个节点的下个指针指向下下个节点，这是指向该节点位置的指针不要动，因为还要判断新的next值。
 
 # @lc code=start
 # Definition for singly-linked list.
@@ -39,6 +36,9 @@
 #         self.next = None
 
 class Solution:
+    # 第一次遍历的时候，记录数字出现的次数。
+    # 第二次遍历的时候，查找下个节点的值出现的次数如果不是1次，那么就删除下个节点。
+    # 修改这个节点的下个指针指向下下个节点，这是指向该节点位置的指针不要动，因为还要判断新的next值。
     def deleteDuplicates(self, head: ListNode) -> ListNode:
         root = ListNode(0)
         root.next = head

@@ -47,20 +47,17 @@
 # nums1和nums2 的数组大小都不超过1000。
 #
 #
-# 解法：递减栈。
-#
-# 1、求出nums2中所有元素的右边第一个比其大数字，并记录到right_bigger中。
-#   具体做法：用递减栈（栈低到栈顶的元素递减）的思路维护stack。
-#   遍历nums2，对每一个元素，当当前元素i大于栈顶元素时，就弹出栈顶元素并记录此元素的right_bigger为当前元素i。
-#   最后入栈stack，维护stack单调栈的性质。
-#
-# 2、循环nums1中的元素，访问在right_bigger中的值。
 #
 
 
 # @lc code=start
 class Solution:
-
+    # 解法：递减栈。
+    # 1、求出nums2中所有元素的右边第一个比其大数字，并记录到right_bigger中。
+    #   具体做法：用递减栈（栈低到栈顶的元素递减）的思路维护stack。
+    #   遍历nums2，对每一个元素，当当前元素i大于栈顶元素时，就弹出栈顶元素并记录此元素的right_bigger为当前元素i。
+    #   最后入栈stack，维护stack单调栈的性质。
+    # 2、循环nums1中的元素，访问在right_bigger中的值。
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         right_bigger = {}
         stack = []

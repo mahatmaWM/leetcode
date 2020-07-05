@@ -37,8 +37,7 @@
 
 class Solution:
     def deleteDuplicates(self, head: ListNode) -> ListNode:
-        if head is None:
-            return head
+        if not head: return head
         cur_ptr = head
         next_ptr = head.next
         while cur_ptr and next_ptr:

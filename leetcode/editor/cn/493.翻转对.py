@@ -42,7 +42,7 @@
 
 
 # @lc code=start
-class Solution:
+class Solution1:
     # 归并排序的过程中，如果前半个数组的元素大于后半个数组的元素，这种组合叫翻转对，时间复杂度 O(NlogN)
     def reversePairs(self, nums: List[int]) -> int:
 
@@ -76,5 +76,44 @@ class Solution:
 
         return mergesort_and_count(nums, 0, len(nums) - 1)
 
+# 树状数组做法, O(NlogN)时间复杂度
+class BinaryIndexedTree(object):
+
+    def __init__(self, N):
+        self.B = [0] * N
+
+    def low_bit(self, x):
+        return x & (-x)
+
+    # 第index个节点增加val, index从1开始算起
+    def update(self, index, val):
+        while index < len(self.B):
+            self.B[index] += val
+            index += self.low_bit(index)
+
+    # 求数组A[0..index]的和, 包含index
+    def get_sum(self, index):
+        index = (len(self.B) + index) % len(self.B)
+        ans = 0
+        while index > 0:
+            ans += self.B[index]
+            index -= self.low_bit(index)
+        return ans
+
+
+class Solution:
+
+    def reversePairs(self, nums: List[int]) -> int:
+        arr = sorted(set(nums))
+        arr = [x * 2 for x in arr]
+        n1, n2 = len(arr), len(nums)
+        btree = BinaryIndexedTree(n1 + 1)
+        ans = 0
+        for i, v in enumerate(reversed(nums)):
+            index = bisect_left(arr, v)
+            ans += btree.get_sum(index)
+            index = bisect_left(arr, v * 2)
+            btree.update(index + 1, 1)
+        return ans
 
 # @lc code=end

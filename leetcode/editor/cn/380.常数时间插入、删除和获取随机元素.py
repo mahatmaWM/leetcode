@@ -50,14 +50,13 @@
 #
 #
 #
-# 思路：
-# 插入和删除时需要O(1)时间，必须用hash，而随机返回则可以用数组保存元素 + random选取索引。
-# 插入时：用哈希表来判断是否已存在O(1)，数组末尾增加一个元素O(1)，哈希表记录｛值：索引｝O(1)
-# 删除时：用哈希表来定位O(1)，把数组最后一个元素取下来顶替被删除元素位置O(1)(虽然这一步是很有技巧，但是仔细想想list尾部操作是O1时间，而且删除位置又知道了，插入也是O1时间)，更新哈希表O(1)
-# 取随机数时：随机从数组里面挑一个O(1)
 
 # @lc code=start
 class RandomizedSet:
+    # 插入和删除时需要O(1)时间，必须用hash，而随机返回则可以用数组保存元素 + random选取索引。
+    # 插入时：用哈希表来判断是否已存在O(1)，数组末尾增加一个元素O(1)，哈希表记录｛值：索引｝O(1)
+    # 删除时：用哈希表来定位O(1)，把数组最后一个元素取下来顶替被删除元素位置O(1)(虽然这一步是很有技巧，但是仔细想想list尾部操作是O1时间，而且删除位置又知道了，插入也是O1时间)，更新哈希表O(1)
+    # 取随机数时：随机从数组里面挑一个O(1)
     def __init__(self):
         """
         Initialize your data structure here.
@@ -95,8 +94,7 @@ class RandomizedSet:
         """
         Get a random element from the set.
         """
-        import random
-        return self.list[random.randint(0, len(self.list) - 1)]
+        return random.choice(self.list)
 
 
 
@@ -105,20 +103,6 @@ class RandomizedSet:
 # param_1 = obj.insert(val)
 # param_2 = obj.remove(val)
 # param_3 = obj.getRandom()
-
-def main():
-    obj = RandomizedSet()
-    print(obj.insert(1))
-    print(obj.remove(2))
-    print(obj.getRandom())
-
-
-if __name__ == "__main__":
-    import time
-
-    start = time.clock()
-    main()
-    print("%s sec" % (time.clock() - start))
 
 # @lc code=end
 

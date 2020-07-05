@@ -27,8 +27,7 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
-        if not height:
-            return 0
+        if not height: return 0
         n, res = len(height), 0
         left_max, right_max = [0] * n, [0] * n
 
