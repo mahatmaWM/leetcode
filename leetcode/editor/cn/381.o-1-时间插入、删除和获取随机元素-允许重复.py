@@ -62,7 +62,8 @@ class RandomizedCollection:
 
     def insert(self, val: int) -> bool:
         """
-        Inserts a value to the collection. Returns true if the collection did not already contain the specified element.
+        Inserts a value to the collection.
+        Returns true if the collection did not already contain the specified element.
         """
         if val not in self.hash: self.hash[val] = set()
         self.hash[val].add(len(self.list))
@@ -72,7 +73,8 @@ class RandomizedCollection:
 
     def remove(self, val: int) -> bool:
         """
-        Removes a value from the collection. Returns true if the collection contained the specified element.
+        Removes a value from the collection.
+        Returns true if the collection contained the specified element.
         """
         if val not in self.hash or len(self.hash[val]) == 0: return False
         index = self.hash[val].pop()

@@ -57,8 +57,7 @@ class Solution:
         for i in range(len(nums)):
             key = math.floor(nums[i] / max(1, t))
             for m in (key - 1, key, key + 1):
-                if m in dicts and abs(nums[i] - dicts[m]) <= t:
-                    return True
+                if m in dicts and abs(nums[i] - dicts[m]) <= t: return True
             dicts[key] = nums[i]
             if i >= k: dicts.popitem(last=False)
         return False

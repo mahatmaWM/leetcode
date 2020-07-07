@@ -60,9 +60,6 @@
 #
 
 # @lc code=start
-from typing import List
-
-
 class Solution:
     # 采用两个快慢指针，慢指针一次走一步，快指针一次走两步，如果两者相遇，说明存在环（注意排除死循环的情况）
     def circularArrayLoop(self, nums: List[int]) -> bool:

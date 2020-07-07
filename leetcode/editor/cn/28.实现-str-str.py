@@ -41,8 +41,7 @@
 # @lc code=start
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        if needle == '':
-            return 0
+        if needle == '': return 0
 
         needle_len = len(needle)
         haystack_len = len(haystack)

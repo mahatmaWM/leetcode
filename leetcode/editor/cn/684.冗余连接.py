@@ -103,14 +103,14 @@ class Solution:
             a.add(i[0])
             a.add(i[1])
         # 构造一个并查集
-        tree = UnionFind(len(a) + 1)
+        tree = UnionFind(len(a))
         answer = None
         # 依次尝试每条新边
         for i in edges:
-            x, y = tree.find(i[0]), tree.find(i[1])
+            x, y = tree.find(i[0] - 1), tree.find(i[1] - 1)
             # 如果新边两个节点的父亲不同（目前没有连通） 或者 新边两个节点都孤立
-            if (x != y) or (x == i[0] and y == i[1]):
-                tree.union(i[0], i[1])
+            if (x != y) or (x == i[0] - 1 and y == i[1] - 1):
+                tree.union(i[0] - 1, i[1] - 1)
             else:
                 answer = i
 

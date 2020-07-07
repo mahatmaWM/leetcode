@@ -1,8 +1,23 @@
+#
+# @lc app=leetcode.cn id=80 lang=python3
+#
+# [80] 删除排序数组中的重复项 II
+#
+# https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array-ii/description/
+#
+# algorithms
+# Medium (55.56%)
+# Likes:    237
+# Dislikes: 0
+# Total Accepted:    46.6K
+# Total Submissions: 83.8K
+# Testcase Example:  '[1,1,1,2,2,3]'
+#
 # 给定一个排序数组，你需要在原地删除重复出现的元素，使得每个元素最多出现两次，返回移除后数组的新长度。
 #
-# 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。 
+# 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
 #
-# 示例 1: 
+# 示例 1:
 #
 # 给定 nums = [1,1,1,2,2,3],
 #
@@ -10,22 +25,22 @@
 #
 # 你不需要考虑数组中超出新长度后面的元素。
 #
-# 示例 2: 
+# 示例 2:
 #
 # 给定 nums = [0,0,1,1,1,1,2,3,3],
 #
 # 函数应返回新长度 length = 7, 并且原数组的前五个元素被修改为 0, 0, 1, 1, 2, 3, 3 。
 #
 # 你不需要考虑数组中超出新长度后面的元素。
-# 
 #
-# 说明: 
 #
-# 为什么返回数值是整数，但输出的答案是数组呢? 
+# 说明:
 #
-# 请注意，输入数组是以“引用”方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。 
+# 为什么返回数值是整数，但输出的答案是数组呢?
 #
-# 你可以想象内部操作如下: 
+# 请注意，输入数组是以“引用”方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。
+#
+# 你可以想象内部操作如下:
 #
 # // nums 是以“引用”方式传递的。也就是说，不对实参做任何拷贝
 # int len = removeDuplicates(nums);
@@ -33,33 +48,28 @@
 # // 在函数里修改输入数组对于调用者是可见的。
 # // 根据你的函数返回的长度, 它会打印出数组中该长度范围内的所有元素。
 # for (int i = 0; i < len; i++) {
-#     print(nums[i]);
+# print(nums[i]);
 # }
-# Related Topics 数组 双指针
+#
+#
 
-
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def removeDuplicates(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        nums_length = len(nums)
-        if nums_length <= 2:
-            return nums_length
+# @lc code=start
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n <= 2: return n
 
         times = 1
         left = 0
-        for right in range(1, nums_length):
+        for right in range(1, n):
             if nums[left] == nums[right] and times < 2:
                 left += 1
                 nums[left] = nums[right]
                 times += 1
-            elif nums[left] != nums[right]:
+            if nums[left] != nums[right]:
                 left += 1
                 nums[left] = nums[right]
                 times = 1
         return left + 1
+# @lc code=end
 
-# leetcode submit region end(Prohibit modification and deletion)

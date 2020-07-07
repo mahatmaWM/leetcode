@@ -37,14 +37,15 @@
 # print(kth_smallest(pai, 0, len(pai) - 1, 0))
 
 
-import os
-import re
-import sys
+# import os
+# import re
+# import sys
 
-pwd = './editor/cn/'
-fileList = os.listdir(r"./editor/cn/")
-for fileName in fileList:
-    print(fileName)
-    new_name = fileName.replace('[','').replace(']','.')
-    print(new_name)
-    os.rename(pwd+fileName, pwd+new_name)
+# pwd = './editor/cn/'
+# fileList = os.listdir(r"./editor/cn/")
+# for fileName in fileList:
+#     print(fileName)
+#     new_name = fileName.replace('[','').replace(']','.')
+#     print(new_name)
+#     os.rename(pwd+fileName, pwd+new_name)
+

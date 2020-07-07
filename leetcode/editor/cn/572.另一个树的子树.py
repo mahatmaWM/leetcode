@@ -76,10 +76,13 @@ class Solution:
         # 判定两棵树是否相同
         def helper(a, b):
             if not a and not b:
+                print('1a={},b={}'.format(a,b))
                 return True
             elif (not a and b) or (not b and a):
+                print('2a={},b={}'.format(a,b))
                 return False
             elif a.val != b.val:
+                print('3a={},b={}'.format(a,b))
                 return False
             elif a.val == b.val:
                 return helper(a.left, b.left) and helper(a.right, b.right)

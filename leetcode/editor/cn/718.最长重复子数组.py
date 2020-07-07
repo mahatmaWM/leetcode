@@ -37,7 +37,7 @@
 
 # @lc code=start
 class Solution:
-
+    # 动态规划，dp[i][j]代表A[0:i] B[0:j]能构成的最长子数组
     def findLength(self, A: List[int], B: List[int]) -> int:
         dp = [[0] * (len(B) + 1) for _ in range(len(A) + 1)]
         res = 0
