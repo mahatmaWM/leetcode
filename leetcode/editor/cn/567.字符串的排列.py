@@ -45,8 +45,10 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+
     def checkInclusion(self, s1: str, s2: str) -> bool:
         l1, l2 = len(s1), len(s2)
         if l1 > l2: return False
@@ -61,9 +63,9 @@ class Solution:
             # 准备移动left，同时更新Window字典c2
             if right - left + 1 > l1:
                 c2[s2[left]] -= 1
-                if c2[s2[left]] == 0:
-                    del c2[s2[left]]
+                if c2[s2[left]] == 0: del c2[s2[left]]
                 left += 1
         return False
-# @lc code=end
 
+
+# @lc code=end

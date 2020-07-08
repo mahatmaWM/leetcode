@@ -51,7 +51,7 @@
 
 # @lc code=start
 class Solution:
-
+    # 把与边界相连的陆地都设置为-1，然后找所剩下的为1的陆地数目，dfs遍历图即可
     def numEnclaves(self, A: List[List[int]]) -> int:
         if not A: return 0
         row = len(A)
@@ -59,12 +59,11 @@ class Solution:
         res = 0
 
         def dfs(x, y):
-            if x < 0 or x >= row or y < 0 or y >= col:
-                return
-            if A[x][y] == 1:
-                A[x][y] = -1
-            else:
-                return
+            # 不合法 或者 已经走过，返回
+            if x < 0 or x >= row or y < 0 or y >= col: return
+            if A[x][y] != 1: return
+
+            A[x][y] = -1
             directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
             for _x, _y in directions:
                 dfs(x + _x, y + _y)
@@ -72,14 +71,12 @@ class Solution:
         # 从边界为1的格子触发，把与之相连的格子都赋值为-1
         for i in range(row):
             for j in range(col):
-                if i in [0, row - 1] or j in [0, col - 1] and A[i][j] == 1:
-                    dfs(i, j)
+                if i in [0, row - 1] or j in [0, col - 1] and A[i][j] == 1: dfs(i, j)
 
         # 找内陆中格子为1的数目
         for i in range(row):
             for j in range(col):
-                if A[i][j] == 1:
-                    res += 1
+                if A[i][j] == 1: res += 1
         return res
 
 

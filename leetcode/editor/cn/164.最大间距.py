@@ -54,13 +54,13 @@ class Solution:
         min_num, max_num, n = min(nums), max(nums), len(nums)
 
         # 每个桶的范围大小
-        bucket_range = (max_num - min_num) // (n - 1) or 1
+        each_bucket_range = (max_num - min_num) // (n - 1) or 1
         # 需要桶的个数
-        cnt = (max_num - min_num) // bucket_range + 1
+        cnt = (max_num - min_num) // each_bucket_range + 1
         # bucket[0] bucket[1] 分别为桶内的下界 上界
         buckets = [[None, None] for _ in range(cnt)]
         for i in nums:
-            bucket = buckets[(i - min_num) // bucket_range]
+            bucket = buckets[(i - min_num) // each_bucket_range]
             bucket[0] = i if not bucket[0] else min(bucket[0], i)
             bucket[1] = i if not bucket[1] else max(bucket[1], i)
         # 因为最后要检查 每个桶的下界 与 上一个桶的上届，所以这里要确保桶下界一定有值

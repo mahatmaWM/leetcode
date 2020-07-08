@@ -50,16 +50,15 @@
 # -10^4 <= nums[i] <= 10^4
 # 1 <= k <= nums.length
 #
-# 思路：
-# 使用双向队列来表示窗口，队列中保存索引，其对应元素值保持从大到小排序。这和单调栈很类似，叫单调队列
-# 当窗口右移的时候，入队列的元素需要和队列中的元素保持有序。
-# 队列中的最大元素的索引始终为队首元素。
-#
+
 
 # @lc code=start
 class Solution:
+    # 思路：使用队列来表示窗口，队列中保存索引，其对应元素值保持从大到小排序。这和单调栈很类似，叫单调队列
+    # 当窗口右移的时候，入队列的元素需要和队列中的元素保持有序。
+    # 队列中的最大元素的索引始终为队首元素。
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        # base cases
+        # 特殊情况
         n = len(nums)
         if n * k == 0: return []
         if k == 1: return nums
@@ -70,8 +69,7 @@ class Solution:
         # 把元素的索引index放入队列，并保证队首为最大元素
         def push_index_to_dq(index):
             # 直接挤出队首的元素的index
-            if deq and deq[0] == index - k:
-                deq.popleft()
+            if deq and deq[0] == index - k: deq.popleft()
             # 从队尾去掉那些更小的元素的index
             while deq and nums[index] > nums[deq[-1]]:
                 deq.pop()
@@ -81,13 +79,13 @@ class Solution:
         max_idx = 0
         for i in range(k):
             push_index_to_dq(i)
-            if nums[i] > nums[max_idx]:
-                max_idx = i
+            if nums[i] > nums[max_idx]: max_idx = i
 
         output = [nums[max_idx]]
         for i in range(k, n):
             push_index_to_dq(i)
             output.append(nums[deq[0]])
         return output
-# @lc code=end
 
+
+# @lc code=end

@@ -58,10 +58,8 @@
 #
 #
 
+
 # @lc code=start
-from typing import List
-
-
 class Solution:
     # 注意，此题仅仅对连通边缘染色，而非连通部分全部染色
     def colorBorder(self, grid: List[List[int]], r0: int, c0: int, color: int) -> List[List[int]]:
@@ -80,16 +78,13 @@ class Solution:
             is_edge = False
             for _x, _y in directions:
                 new_x, new_y = x + _x, y + _y
-                # 说明这一步试探已经走到连通边缘了
-                if not valid(new_x, new_y) or grid[new_x][new_y] != grid[x][y]:
-                    is_edge = True
+                # 说明这一步试探已经走到连通边缘
+                if not valid(new_x, new_y) or grid[new_x][new_y] != grid[x][y]: is_edge = True
                 # 还在连通内部，继续回溯
-                if valid(new_x, new_y) and res[new_x][new_y] == grid[x][y]:
-                    dfs(new_x, new_y)
+                if valid(new_x, new_y) and res[new_x][new_y] == grid[x][y]: dfs(new_x, new_y)
             # 还原标记
             res[x][y] = res[x][y] * -1
-            if is_edge:
-                res[x][y] = color
+            if is_edge: res[x][y] = color
 
         dfs(r0, c0)
         return res
