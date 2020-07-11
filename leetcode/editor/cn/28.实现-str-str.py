@@ -38,8 +38,10 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+
     def strStr(self, haystack: str, needle: str) -> int:
         if needle == '': return 0
 
@@ -47,10 +49,9 @@ class Solution:
         haystack_len = len(haystack)
         index = 0
         while index <= haystack_len - needle_len:
-            if needle == haystack[index:index + needle_len]:
-                return index
-            else:
-                index += 1
+            if needle == haystack[index:index + needle_len]: return index
+            index += 1
         return -1
-# @lc code=end
 
+
+# @lc code=end

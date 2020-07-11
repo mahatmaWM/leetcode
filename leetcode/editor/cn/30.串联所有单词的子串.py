@@ -45,7 +45,7 @@
 class Solution:
     # 通过滑动窗口来取子字符串，并通过字典对象比较单词的出现次数可以求解这个问题
     def findSubstring(self, s: str, words: List[str]) -> List[int]:
-        if len(s) < 0 or len(s) == 0 or len(words) == 0: return []
+        if len(s) <= 0 or len(words) == 0: return []
 
         res = []
         dic_words = {}

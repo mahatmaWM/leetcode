@@ -47,10 +47,11 @@ class Solution:
             '8': ['t', 'u', 'v'],
             '9': ['w', 'x', 'y', 'z']
         }
+        import copy
 
         def backtrack(tmp_res, next_digits):
             if len(next_digits) == 0:
-                self.output.append(tmp_res)
+                self.output.append(copy.deepcopy(tmp_res))
             else:
                 for letter in phone[next_digits[0]]:
                     # 选择

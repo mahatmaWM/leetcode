@@ -1,6 +1,21 @@
-# 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
 #
-# 示例 1:
+# @lc app=leetcode.cn id=3 lang=python3
+#
+# [3] 无重复字符的最长子串
+#
+# https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/description/
+#
+# algorithms
+# Medium (34.74%)
+# Likes:    3796
+# Dislikes: 0
+# Total Accepted:    523.9K
+# Total Submissions: 1.5M
+# Testcase Example:  '"abcabcbb"'
+#
+# 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
+#
+# 示例 1:
 #
 # 输入: "abcabcbb"
 # 输出: 3
@@ -19,34 +34,30 @@
 # 输入: "pwwkew"
 # 输出: 3
 # 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
-#      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
+# 请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。
 #
-# Related Topics 哈希表 双指针 字符串 Sliding Window
+#
+#
 
-# 思路：
-# 使用left right 指针模拟滑动窗口，窗口使用set可以快速查找。
-# 当right 插入滑动窗口时，不断检查window的合法性。
-
-# leetcode submit region begin(Prohibit modification and deletion)
+# @lc code=start
 class Solution:
-    def lengthOfLongestSubstring(self, s):
+    # 思路：使用left right 双指针模拟滑动窗口
+    # 窗口使用set可以快速查找，当right插入滑动窗口时，不断检查window的合法性。
+    def lengthOfLongestSubstring(self, s: str) -> int:
         if not s: return 0
 
         window = set()
         max_len, cur_len = 0, 0
         left = 0
-        for right in range(len(s)):
+        for right in range(0, len(s)):
+            # 检查window的合法性
             while s[right] in window:
                 window.remove(s[left])
                 left += 1
                 cur_len -= 1
-
             window.add(s[right])
             cur_len += 1
             max_len = max(max_len, cur_len)
         return max_len
+# @lc code=end
 
-
-# leetcode submit region end(Prohibit modification and deletion)
-if __name__ == "__main__":
-    print(Solution().lengthOfLongestSubstring(s="abcabcbb"))

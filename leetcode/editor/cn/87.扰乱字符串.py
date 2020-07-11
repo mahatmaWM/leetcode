@@ -69,23 +69,25 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+
     def isScramble(self, s1: str, s2: str) -> bool:
-        if len(s1) != len(s2):
-            return False
-        if s1 == s2:
-            return True
-        if sorted(s1) != sorted(s2):
-            return False
+        if len(s1) != len(s2): return False
+        if s1 == s2: return True
+        if sorted(s1) != sorted(s2): return False
 
         # 递归的思路, s1分为 s1_1 + s1_2，s2分为 s2_1 + s2_2
         # 如果 s1_1,s2_1 和 s1_2,s2_2 都是扰乱，则最终为扰乱
         # 如果 s1_1,s2_2 和 s1_2,s2_1 都是扰乱，则最终为扰乱
         for i in range(1, len(s1)):
-            if (self.isScramble(s1[:i], s2[:i]) and self.isScramble(s1[i:], s2[i:])) or \
-                    (self.isScramble(s1[:i], s2[-i:]) and self.isScramble(s1[i:], s2[:-i])):
-                return True
+            flag1_1 = self.isScramble(s1[:i], s2[:i])
+            flag1_2 = self.isScramble(s1[i:], s2[i:])
+            flag2_1 = self.isScramble(s1[:i], s2[-i:])
+            flag2_2 = self.isScramble(s1[i:], s2[:-i])
+            if (flag1_1 and flag1_2) or (flag2_1 and flag2_2): return True
         return False
+
 
 # @lc code=end

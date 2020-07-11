@@ -44,11 +44,9 @@ class Solution:
                 self.res.append(cur_str)
                 return
             # 如果左括号还有剩余，则可以放置左括号，
-            if left > 0:
-                dfs(left - 1, right, cur_str + '(')
+            if left > 0: dfs(left - 1, right, cur_str + '(')
             # 如果右括号的剩余数大于左括号，则可以放置右括号。
-            if right > left and right > 0:
-                dfs(left, right - 1, cur_str + ')')
+            if right > left and right > 0: dfs(left, right - 1, cur_str + ')')
 
         dfs(n, n, '')
         return self.res

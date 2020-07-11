@@ -38,32 +38,47 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 这个题是单调栈的运用，使用一个单调递增栈来维护已经出现了的矩形高度。
-    #   如果后面新来的元素高度比栈里的最后的元素大，那么需要入栈，因为面积最大的元素会出现在后面。
-    #   如果后面新来的元素高度比栈里的最后的元素小，那么需要弹出栈里的元素，并且，每次弹出的时候都要对计算目前的宽度，相乘得到面积。
-    #
-    # 栈里保存索引的方式是需要掌握的，保存索引的方式在最小值栈结构中也有运用。
-    # 每次求栈内矩形的高度的时候，其实是求其位置到最右边的距离。
-    # 注意即将入栈的元素索引i是一直不变的，另外栈里的每个元素的索引可以认为是矩形的右边界。
+    # 第i位置最大面积是以i为中心，向左找第一个小于heights[i]的位置left_i；向右找第一个小于heights[i]的位置right_i，
+    # 即最大面积为heights[i]*(right_i-left_i-1)
+    # 比如：只有一个元素时，left_i=0,right_i=2,2-0-1=1,也就是柱状图本身。
+    # 注意这种方法，需要在柱状图数组前后添加两个0元素占位。
+    # 然后向左向右找第一个更小值的位置，可以用单调栈在线性时间解决。
     def largestRectangleArea(self, heights: List[int]) -> int:
-        stack = list()
-        res = 0
-        heights.append(0)
-        for i in range(len(heights)):
-            if not stack or heights[i] > heights[stack[-1]]:
-                stack.append(i)
-            else:
-                while stack and heights[i] <= heights[stack[-1]]:
-                    h = heights[stack[-1]]
-                    stack.pop()
-                    if not stack:
-                        w = i
-                    else:
-                        w = i - stack[-1] - 1
-                    res = max(res, h * w)
-                stack.append(i)
-        return res
-# @lc code=end
+        if not heights: return 0
+        heights = [0] + heights + [0]
+        n = len(heights)
 
+        def find_pre_min_index(heights):
+            stack = []
+            left_i = [0] * n
+            for i in range(n):
+                h = heights[i]
+                while stack and heights[stack[-1]] >= h:
+                    stack.pop()
+                if stack: left_i[i] = stack[-1]
+                stack.append(i)
+            return left_i
+
+        def find_next_min_index(heights):
+            stack = []
+            right_i = [0] * n
+            for i in range(n - 1, -1, -1):
+                h = heights[i]
+                while stack and heights[stack[-1]] >= h:
+                    stack.pop()
+                if stack: right_i[i] = stack[-1]
+                stack.append(i)
+            return right_i
+
+        left_i = find_pre_min_index(heights)
+        right_i = find_next_min_index(heights)
+        res = 0
+        for i in range(n):
+            res = max(res, (right_i[i] - left_i[i] - 1) * heights[i])
+        return res
+
+
+# @lc code=end

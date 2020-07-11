@@ -56,15 +56,14 @@ class Solution:
     # 3、最后，通过与操作判断该位置是0还是1区分两个元素。
     def singleNumber(self, nums: List[int]) -> List[int]:
         xor = 0
-        num1, num2 = 0, 0
         for num in nums:
             xor ^= num
-
-        # 找出mask的特殊位
+        # 从xor中找到第一个为1的bit位，其一定是两个不同的数字做异或得到的
         mask = 1
         while xor & mask == 0:
             mask = mask << 1
 
+        num1, num2 = 0, 0
         for num in nums:
             if num & mask == 0:
                 num1 ^= num

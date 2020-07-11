@@ -37,7 +37,7 @@
 
 # @lc code=start
 class Solution:
-
+    # 转化为两个word的最长公共子串问题
     def minDistance(self, word1: str, word2: str) -> int:
         m = len(word1)
         n = len(word2)

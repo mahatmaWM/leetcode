@@ -60,24 +60,19 @@ class Solution:
             c = s[right]
             window[c] = window.get(c, 0) + 1
             # 查看字母c的个数是否满足t中的要求了
-            if c in t_cnt and window[c] == t_cnt[c]:
-                uniq_formed += 1
+            if c in t_cnt and window[c] == t_cnt[c]: uniq_formed += 1
 
             # 检查窗口中的候选集是否满足要求，尝试着右移left指针，减少窗口大小，更新窗口字母的计数，同时更新formed变量
             while left <= right and uniq_formed == uniq_require:
                 c = s[left]
-                if right - left + 1 < ans[0]:
-                    ans = (right - left + 1, left, right)
+                if right - left + 1 < ans[0]: ans = (right - left + 1, left, right)
                 window[c] -= 1
                 # 查看字母c的个数是否还满足t中的要求
-                if c in t_cnt and window[c] < t_cnt[c]:
-                    uniq_formed -= 1
+                if c in t_cnt and window[c] < t_cnt[c]: uniq_formed -= 1
                 left += 1
             right += 1
-        if ans[0] == float("inf"):
-            return ''
-        else:
-            return s[ans[1]:ans[2] + 1]
+        if ans[0] == float("inf"): return ''
+        return s[ans[1]:ans[2] + 1]
 
 
 # @lc code=end

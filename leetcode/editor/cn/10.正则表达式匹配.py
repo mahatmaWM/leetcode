@@ -105,6 +105,7 @@ class Solution:
         def dp(i, j):
             if (i, j) in memo: return memo[(i, j)]
             if j == P: return i == S
+            
             pre = i < S and p[j] in {s[i], "."}
             if j <= P - 2 and p[j + 1] == "*":
                 tmp = dp(i, j + 2) or (pre and dp(i + 1, j))

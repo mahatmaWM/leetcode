@@ -43,84 +43,85 @@
 #
 
 # @lc code=start
-class Node:
-    def __init__(self, startIndex, endIndex, val):
-        self.start = startIndex
-        self.end = endIndex
-        self.val = val
-        # lazy更新法
-        self.lazyVal = None
-        self.left = None
-        self.right = None
-
-class MultiOverwriteSegmentTree:
-    def __init__(self, data):
-        self.data = data
-        self.root = self._buildTree(0, len(self.data)-1)
-
-    def _buildTree(self, start, end):
-        if start == end:
-            return Node(start, end, self.data[start])
-
-        root = Node(start, end, 0)
-        mid = (start + end) // 2
-        root.left = self._buildTree(start, mid)
-        root.right = self._buildTree(mid+1, end)
-        root.val = max(root.left.val, root.right.val)
-        return root
-
-    def updateRange(self, i, j, val):
-        self._updateRange(self.root, i, j, val)
-
-    def _updateRange(self, root, i, j, val):
-        start, end = root.start, root.end
-        if i == start and j == end:
-            root.val = val
-            root.lazyVal = val
-            return
-
-        # 当node的lazyVal不为空的时候，需要将缓存的lazy值下推给子node
-        if root.lazyVal is not None:
-            self._pushDown(root)
-
-        mid = (start + end) // 2
-        if j <= mid:
-            self._updateRange(root.left, i, j, val)
-        elif i >= mid+1:
-            self._updateRange(root.right, i, j, val)
-        else:
-            self._updateRange(root.left, i, mid, val)
-            self._updateRange(root.right, mid+1, j, val)
-
-    def getRange(self, i, j):
-        return self._getRange(self.root, i, j)
-
-    def _getRange(self, root, i, j):
-        start, end = root.start, root.end
-        if i == start and j == end:
-            return root.val
-
-        # 当node的lazyVal不为空的时候，需要将缓存的lazy值下推给子node
-        if root.lazyVal is not None:
-            self._pushDown(root)
-
-        mid = (start + end) // 2
-        if j <= mid:
-            return self._getRange(root.left, i, j)
-        if i >= mid+1:
-            return self._getRange(root.right, i, j)
-        return max(self._getRange(root.left, i, mid), self._getRange(root.right, mid+1, j))
-
-    def _pushDown(self, root):
-        if root.left:
-            root.left.val = root.lazyVal
-            root.left.lazyVal = root.lazyVal
-        if root.right:
-            root.right.val = root.lazyVal
-            root.right.lazyVal = root.lazyVal
-        root.lazyVal = None
-
+import heapq
 class Solution:
+    # https://leetcode-cn.com/problems/the-skyline-problem/solution/chu-xue-zhe-bu-yong-dui-yong-zi-dian-de-fang-fa-by/
+    # Main idea：线性扫描每一个关键点,判断是左端点还是右端点
+    # Steps: 1.初始化两个字典，一个字典用于记录右关键点，另一个用于记录答案。为什么用字典，因为对于每一个坐标x，应该只记录一个高度, i.e., 最高的。
+    # 2.首先把每个关键点都记下来，简单明了，左端点标记left，右端点标记right，并按照左端点排序
+    # 3. 初始化高度0，目前高度cur=0，开始扫描：
+    # 如果这个点为左端点，把他我们把他右端点这样记录在字典里 dic[右端点]=高度：
+    # 如果这个点的右端点已经在字典里，存入最高的。
+    # 并检查字典的最高高度， 如果高度改变，说明这是一个天际线点，并把左端点和高度存入答案，如果已经被存入左端点，用最高高度覆盖
+    # 如果这个点是右端点，把其对应高度值从字典里删掉，并检查高度是否改变，如果改变，把其和新的高度存入。 因为在存入右端点时已经检查过重复，所以不用再次检查。
     def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
-# @lc code=end
+        if len(buildings) == 0: return []
+        ans = {}
+        height_dic = {}
+        points = []
+        for L, R, H in buildings:  #初始化所有关键点
+            points.append((L, 'left', H, R))
+            points.append((R, 'right', 0, 0))
+        points.sort()
+        height_dic[0] = 0
+        cur = 0
+        for x, s, H, R in points:
+            # 这个关键点是左端
+            if s == 'left':
+                # 把其右端点和高度存入高度字典
+                if R in height_dic.keys():
+                    height_dic[R] = max(height_dic[R], H)
+                else:
+                    height_dic[R] = H
+                # 当前的最高高度，如果其发生改变，则一定是天际线点
+                new = max(height_dic.values())
+                if new != cur:
+                    if x in ans.keys():
+                        ans[x] = max(ans[x], H)
+                    else:
+                        ans[x] = H
+                    cur = new
+            else:
+                # 前面已经被删除了，所有没有，跳过
+                if x not in height_dic.keys(): continue
+                # 删除右端点及其高度，检查高度是否改变
+                del height_dic[x]
+                new = max(height_dic.values())
+                if new != cur:
+                    ans[x] = new
+                    cur = new
+        return [[k, v] for k, v in ans.items()]
 
+
+class Solution2:
+    # 分治法
+    def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
+        if len(buildings) == 0: return []
+
+        def merge(buildings, start, end):
+            if start == end: return [[buildings[start][0], buildings[start][2]], [buildings[start][1], 0]]
+            mid = (start + end) // 2
+            skyline1 = merge(buildings, start, mid)
+            skyline2 = merge(buildings, mid + 1, end)
+            # 合并两组结果
+            res = []
+            h1, h2, i, j = 0, 0, 0, 0
+            while i < len(skyline1) or j < len(skyline2):
+                x1 = skyline1[i][0] if i < len(skyline1) else float('inf')
+                x2 = skyline2[j][0] if j < len(skyline2) else float('inf')
+                # 这里合并的几种情况
+                x, h = 0, 0
+                if x1 < x2:
+                    h1, x, i = skyline1[i][1], x1, i + 1
+                elif x1 > x2:
+                    h2, x, j = skyline2[j][1], x2, j + 1
+                elif x1 == x2:
+                    h1, h2, x, i, j = skyline1[i][1], skyline2[j][1], x1, i + 1, j + 1
+                h = max(h1, h2)
+                if len(res) == 0 or h != res[-1][1]: res.append([x, h])
+            return res
+
+        return merge(buildings, 0, len(buildings) - 1)
+
+
+# @lc code=end

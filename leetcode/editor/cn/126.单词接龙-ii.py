@@ -85,8 +85,7 @@ class Solution:
             for _ in range(len(queue)):
                 word, path = queue.pop()
                 # 如果当前节点是endWord，保存路径
-                if word == endWord:
-                    res.append(path)
+                if word == endWord: res.append(path)
 
                 # 访问该节点所有边
                 for i in range(len(word)):
@@ -98,7 +97,7 @@ class Solution:
                             queue.insert(0, [j, path + [j]])
                             new_visited.add(j)
             # 更新已经访问过的节点
-            visited |= new_visited
+            visited = visited | new_visited
 
         return res
 

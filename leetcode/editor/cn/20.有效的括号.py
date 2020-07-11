@@ -1,65 +1,75 @@
-# 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
 #
-# 有效字符串需满足： 
+# @lc app=leetcode.cn id=20 lang=python3
 #
-# 
-# 左括号必须用相同类型的右括号闭合。 
-# 左括号必须以正确的顺序闭合。 
-# 
+# [20] 有效的括号
 #
-# 注意空字符串可被认为是有效字符串。 
+# https://leetcode-cn.com/problems/valid-parentheses/description/
 #
-# 示例 1: 
+# algorithms
+# Easy (41.76%)
+# Likes:    1622
+# Dislikes: 0
+# Total Accepted:    299.6K
+# Total Submissions: 717.5K
+# Testcase Example:  '"()"'
+#
+# 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+#
+# 有效字符串需满足：
+#
+#
+# 左括号必须用相同类型的右括号闭合。
+# 左括号必须以正确的顺序闭合。
+#
+#
+# 注意空字符串可被认为是有效字符串。
+#
+# 示例 1:
 #
 # 输入: "()"
 # 输出: true
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入: "()[]{}"
 # 输出: true
-# 
 #
-# 示例 3: 
+#
+# 示例 3:
 #
 # 输入: "(]"
 # 输出: false
-# 
 #
-# 示例 4: 
+#
+# 示例 4:
 #
 # 输入: "([)]"
 # 输出: false
-# 
 #
-# 示例 5: 
+#
+# 示例 5:
 #
 # 输入: "{[]}"
 # 输出: true
-# Related Topics 栈 字符串
-
-# 思路：
-# 使用栈，注意parentheses中每一对合法括号的定义
+#
+#
 
 
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
+# @lc code=start
+class Solution:
+    # 思路：使用栈，注意parentheses中每一对合法括号的定义
+    def isValid(self, s: str) -> bool:
         stack = []
         parentheses = {"]": "[", "}": "{", ")": "("}
         for char in s:
             if char in parentheses.values():
                 stack.append(char)
             elif char in parentheses.keys():
-                if stack == [] or parentheses[char] != stack.pop():
-                    return False
+                if not stack or parentheses[char] != stack.pop(): return False
             else:
                 return False
-        return stack == []
+        return not stack
 
-# leetcode submit region end(Prohibit modification and deletion)
+
+# @lc code=end
