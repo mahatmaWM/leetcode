@@ -78,26 +78,25 @@ class Solution1:
 
 # 树状数组做法, O(NlogN)时间复杂度
 class BinaryIndexedTree(object):
-
+    # 注意index从1开始到N
     def __init__(self, N):
-        self.B = [0] * N
+        self.BIT = [0] * (N + 1)
 
-    def low_bit(self, x):
+    def __low_bit(self, x):
         return x & (-x)
 
-    # 第index个节点增加val, index从1开始算起
-    def update(self, index, val):
-        while index < len(self.B):
-            self.B[index] += val
-            index += self.low_bit(index)
+    # 第index个节点增加delta, index从1开始算起
+    def update(self, index, delta):
+        while index < len(self.BIT):
+            self.BIT[index] += delta
+            index += self.__low_bit(index)
 
-    # 求数组A[0..index]的和, 包含index
+    # 求数组A[1..index]的和, 包含index
     def get_sum(self, index):
-        index = (len(self.B) + index) % len(self.B)
         ans = 0
         while index > 0:
-            ans += self.B[index]
-            index -= self.low_bit(index)
+            ans += self.BIT[index]
+            index -= self.__low_bit(index)
         return ans
 
 

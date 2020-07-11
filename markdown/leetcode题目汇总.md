@@ -15,7 +15,30 @@
 - [回溯方法](#%E5%9B%9E%E6%BA%AF%E6%96%B9%E6%B3%95)
 
 <!-- /TOC -->
+算法部分：
+二分搜索 Binary Search
+分治 divide conquer
+宽度优先搜索 bfs
+深度优先搜索 dfs
+回溯法 backtracking
+双指针 two pointers
+动态规划 dp
+扫描线 scan-line algorithm
+快排 quick sort
 
+数据结构部分：
+栈 stack
+队列 queue
+链表 linked list
+数组 array
+哈希表 hash table
+二叉树 binary tree
+堆 heap
+并查集 union find
+字典树 trie
+
+
+[刷leetcode需要哪些基础](https://www.zhihu.com/question/30737325/answer/524120016)
 # 数组相关
 
 # 树相关

@@ -46,7 +46,11 @@ class Solution1:
 
 
 class Solution:
-    # 线段树方法？？？
+    # 线段树方法
+    # 1、首先把数组的 min max 区间创建线段树
+    # 2、然后逆序遍历数组，对于数字nums[i]，我们只需要在线段树中寻找[min , nums[i]-1]区间出现的数字个数即可
+    # 3、同时遍历的时候把nums[i]更新入线段树
+    # 这样的过程就是在模拟整个操作，只是寻找个数这里，利用了线段树logN的特性加速
     def countSmaller(self, nums: List[int]) -> List[int]:
 
         class SegmentNode:
@@ -62,15 +66,13 @@ class Solution:
                 self.right = None
 
         def buildTree(l, r):
-            if l > r: return None
+            # if l > r: return None
             if l == r:  # 叶子
                 leaf = SegmentNode(l, r)
-                # n.sum = nums[l]
                 return leaf
             root = SegmentNode(l, r)
             mid = (l + r) // 2
             root.left, root.right = buildTree(l, mid), buildTree(mid + 1, r)
-            # root.sum = root.left.sum + root.right.sum
             return root
 
         def updateTree(root, i, val):
@@ -91,27 +93,20 @@ class Solution:
             # 叶子节点
             if root.start == start and root.end == end: return root.cnt
             mid = (root.start + root.end) // 2
-            left_count, right_count = 0, 0
-
-            if start <= mid:
-                if mid < end:
-                    left_count = count(root.left, start, mid)
-                else:
-                    left_count = count(root.left, start, end)
-            if mid < end:
-                if start <= mid:
-                    right_count = count(root.right, mid + 1, end)
-                else:
-                    right_count = count(root.right, start, end)
-            return left_count + right_count
+            if end <= mid: return count(root.left, start, end)
+            if start > mid: return count(root.right, start, end)
+            return count(root.left, start, mid) + count(root.right, mid + 1, end)
 
         res = list()
         length = len(nums)
         if length == 0: return res
         start, end = min(nums), max(nums)
+        # 首先创建一颗从min到max区间的线段树（把节点分配好，不填入值）
         root = buildTree(start, end)
+        # 倒序遍历数组，在当前线段树中查找[min,nums[i]-1]之间有多少个数字，这就是nums[i]右边小于它的个数
         for i in range(length - 1, -1, -1):
             res.insert(0, count(root, start, nums[i] - 1))
+            # 把nums[i]数字放入线段树，其cnt=1
             updateTree(root, nums[i], 1)
         return res
 

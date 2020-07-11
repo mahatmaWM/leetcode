@@ -41,11 +41,13 @@ class SegmentNode:
         # node节点的区间[start, end]，两边都闭
         self.start = start
         self.end = end
-        # 区间和
+        # 区间和，这个可以根据题意，比如区间最大，区间最小
         self.sum = 0
         # 左右子树
         self.left = None
         self.right = None
+
+
 class NumArray1:
     # 由于数组可以被修改，所以和303题情况不同，这里用 线段树 segment-tree 数据结构来处理
     # 线段树 本质类似完全二叉树，每个节点的区间都被两个子节点平分
@@ -95,36 +97,44 @@ class NumArray1:
         return findNode(self.root, i, j)
 
 
-class NumArray(object):
-    # 由于数组可以被修改，所以和303题情况不同，这里用 树状数组 binary-indexed-tree 数据结构来处理
-    def __init__(self, nums):
-        self.nums = nums[:]
-        self.sum = [0 for i in range(len(nums) + 1)]
-        for i in range(len(nums)):
-            self.initialize(i, nums[i])
+class BinaryIndexedTree(object):
+    # 注意index从1开始到N
+    def __init__(self, N):
+        self.BIT = [0] * (N + 1)
 
-    def initialize(self, i, val):
-        i += 1
-        while i < len(self.nums) + 1:
-            self.sum[i] += val
-            # lowbit的操作，保证了logN
-            i += (i & -i)
+    def __low_bit(self, x):
+        return x & (-x)
+
+    # 第index个节点增加delta, index从1开始算起
+    def update(self, index, delta):
+        while index < len(self.BIT):
+            self.BIT[index] += delta
+            index += self.__low_bit(index)
+
+    # 求数组A[1..index]的和, 包含index
+    def get_sum(self, index):
+        ans = 0
+        while index > 0:
+            ans += self.BIT[index]
+            index -= self.__low_bit(index)
+        return ans
+
+
+class NumArray(object):
+    # 由于数组可以被修改，所以和303题情况不同，这里用 树状数组 BIT 数据结构来处理
+    def __init__(self, nums):
+        self.tree = BinaryIndexedTree(len(nums))
+        self.nums_ = nums
+        for i in range(len(nums)):
+            self.tree.update(i + 1, nums[i])
 
     def update(self, i, val):
-        diff = val - self.nums[i]
-        self.nums[i] = val
-        self.initialize(i, diff)
-
-    def left_sum(self, i):
-        i += 1
-        total = 0
-        while i > 0:
-            total += self.sum[i]
-            i -= (i & -i)
-        return total
+        delta = val - self.nums_[i]
+        self.tree.update(i + 1, delta)
+        self.nums_[i] = val
 
     def sumRange(self, i, j):
-        return self.left_sum(j) - self.left_sum(i - 1)
+        return self.tree.get_sum(j + 1) - self.tree.get_sum(i)
 
 
 # Your NumArray object will be instantiated and called as such:
