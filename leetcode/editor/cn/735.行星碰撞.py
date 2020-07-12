@@ -81,8 +81,7 @@ class Solution:
 
         for i in range(n):
             # 向右移动的
-            if asteroids[i] > 0:
-                stack.append((asteroids[i], i))
+            if asteroids[i] > 0: stack.append((asteroids[i], i))
             # 向左移动的
             elif asteroids[i] < 0:
                 # 当栈顶向右移动的行星 会 被当前左移动的行星吃掉

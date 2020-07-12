@@ -91,6 +91,12 @@ class Solution:
             left_height = maxDepth(node.left)
             right_height = maxDepth(node.right)
             return max(left_height, right_height) + 1
+        def level_order(depth, root, index):
+            if not root: return
+            order.append((depth, root.val, index))
+            level_order(depth + 1, root.left, 2 * index)
+            level_order(depth + 1, root.right, 2 * index + 1)
+            return
 
         if not root: return [[""]]
         max_depth = maxDepth(root)
@@ -99,14 +105,6 @@ class Solution:
 
         # 前序遍历，把每个节点的(深度，值，索引)找出来
         order = []
-
-        def level_order(depth, root, index):
-            if not root: return
-            order.append((depth, root.val, index))
-            level_order(depth + 1, root.left, 2 * index)
-            level_order(depth + 1, root.right, 2 * index + 1)
-            return
-
         level_order(0, root, 0)
         for d, v, i in order:
             # 把树中的索引转化为矩阵中的索引

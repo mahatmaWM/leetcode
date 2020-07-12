@@ -27,8 +27,8 @@
 # 思路：
 # Least recently used，最近最少使用
 # 1、查找需要O1，需要hashmap保存。
-# 2、最近最少使用 特性，需要维护热度信息，使用链表保存（前面的热度高，后面的热度低，这里只会涉及到头尾的操作，所以是O1时间）。
-
+# 2、最近最少使用特性，如果可以在O1时间内找到最新&最旧的，即可。
+# 使用双向链表保存（前面的热度高，后面的热度低，这里只会涉及到头尾的操作，所以是O1时间）
 # 注意双向链表设置了 伪头部和伪尾部 ，链表的常用技巧
 # self.head, self.tail = DLinkedNode(), DLinkedNode()
 
@@ -85,8 +85,7 @@ class LRUCache(object):
         :rtype: int
         """
         node = self.cache.get(key, None)
-        if not node:
-            return -1
+        if not node: return -1
 
         # move the accessed node to the head;
         self._move_to_head(node)

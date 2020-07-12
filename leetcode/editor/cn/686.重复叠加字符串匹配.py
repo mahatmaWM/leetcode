@@ -2,11 +2,11 @@
 #
 # 举个例子，A = "abcd",B = "cdabcdab"。
 #
-# 答案为 3， 因为 A 重复叠加三遍后为 “abcdabcdabcd”，此时 B 是其子串；A 重复叠加两遍后为"abcdabcd"，B 并不是其子串。 
+# 答案为 3， 因为 A 重复叠加三遍后为 “abcdabcdabcd”，此时 B 是其子串；A 重复叠加两遍后为"abcdabcd"，B 并不是其子串。
 #
-# 注意: 
+# 注意:
 #
-# A 与 B 字符串的长度在1和10000区间范围内。 
+# A 与 B 字符串的长度在1和10000区间范围内。
 # Related Topics 字符串
 
 
@@ -19,12 +19,9 @@ class Solution(object):
         :rtype: int
         """
         m = len(B) // len(A)
-        if B in A * m:
-            return m
-        elif B in A * (m + 1):
-            return m + 1
-        elif B in A * (m + 2):
-            return m + 2
+        if B in A * m: return m
+        if B in A * (m + 1): return m + 1
+        if B in A * (m + 2): return m + 2
         return -1
 
 

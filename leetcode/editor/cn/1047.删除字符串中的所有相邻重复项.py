@@ -44,7 +44,7 @@
 
 # @lc code=start
 class Solution:
-    # 由于被删除后，还可能出现相邻重复的情况，所以用栈最合适
+    # 模拟过程，由于被删除后，还可能出现相邻重复的情况，所以用栈最合适
     def removeDuplicates(self, S: str) -> str:
         stack = []
         for i in S:

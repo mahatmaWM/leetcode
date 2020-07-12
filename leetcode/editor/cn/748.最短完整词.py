@@ -77,7 +77,6 @@ class Solution:
                 if words[i].count(k) < v:
                     find = False
                     break
-            if find is True:
-                return words[i]
+            if find is True: return words[i]
 
 # @lc code=end

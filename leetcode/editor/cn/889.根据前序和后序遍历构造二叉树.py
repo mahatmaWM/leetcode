@@ -47,11 +47,9 @@
 
 class Solution:
     def constructFromPrePost(self, pre: List[int], post: List[int]) -> TreeNode:
-        if not pre:
-            return None
+        if not pre: return None
         node = TreeNode(pre[0])
-        if len(pre) == 1:
-            return node
+        if len(pre) == 1: return node
         i = post.index(pre[1])
 
         # 划分可能的左右子树

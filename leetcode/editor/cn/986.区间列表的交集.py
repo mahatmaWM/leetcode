@@ -42,23 +42,24 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+    # 双指针
     def intervalIntersection(self, A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
-        i, j = 0, 0 # 双指针
+        i, j = 0, 0
         res = []
         while i < len(A) and j < len(B):
-            a1, a2 = A[i][0], A[i][1]
-            b1, b2 = B[j][0], B[j][1]
+            a_beg, a_end = A[i][0], A[i][1]
+            b_beg, b_end = B[j][0], B[j][1]
             # 两个区间存在交集
-            if b2 >= a1 and a2 >= b1:
-                # 计算出交集，加入 res
-                res.append([max(a1, b1), min(a2, b2)])
+            if b_end >= a_beg and a_end >= b_beg: res.append([max(a_beg, b_beg), min(a_end, b_end)])
             # 指针前进
-            if b2 < a2:
+            if b_end < a_end:
                 j += 1
             else:
                 i += 1
         return res
-# @lc code=end
 
+
+# @lc code=end

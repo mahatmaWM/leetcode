@@ -44,9 +44,12 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+
     def numIslands(self, grid: List[List[str]]) -> int:
+
         class UnionFind:
 
             def __init__(self, n):
@@ -102,8 +105,7 @@ class Solution:
         for i in range(row):
             for j in range(col):
                 # 如果是水域，都连到那个虚拟的空间去
-                if grid[i][j] == '0':
-                    uf.union(get_index(i, j), dummy_node)
+                if grid[i][j] == '0': uf.union(get_index(i, j), dummy_node)
                 if grid[i][j] == '1':
                     # 向下向右如果都是陆地，即 "1"，就要合并一下
                     for direction in directions:
@@ -144,6 +146,7 @@ class Solution1(object):
             if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][new_j] == '1':
                 self.__dfs(grid, new_i, new_j, m, n, marked)
 
+
 # flood fill方法的广度优先搜索版本
 class Solution2:
     directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
@@ -178,4 +181,6 @@ class Solution2:
                                 #【特别注意】如果是出队列的时候再标记，会造成很多重复的结点进入队列，造成重复的操作，这句话如果你没有写对地方，代码会严重超时的
                                 marked[new_i][new_j] = True
         return count
+
+
 # @lc code=end

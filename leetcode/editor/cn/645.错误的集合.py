@@ -54,9 +54,7 @@ class Solution:
         # 递增下标，找到大于0的那个，说明对应的元素是缺失的
         missing = -1
         for i in range(n):
-            if nums[i] > 0:
-                missing = i + 1
-
+            if nums[i] > 0: missing = i + 1
         return [dup, missing]
 
 

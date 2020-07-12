@@ -38,8 +38,7 @@
 # @lc code=start
 class Solution:
     def findMinArrowShots(self, points: List[List[int]]) -> int:
-        if points == []:
-            return 0
+        if points == []: return 0
         points.sort()
         start, end = points[0][0], points[0][1]
         arrow = 1
@@ -52,9 +51,7 @@ class Solution:
                 end = i[1]
             # 不用增加箭，但是要注意是否要更新end值
             else:
-                if i[1] < end:
-                    end = i[1]
-
+                if i[1] < end: end = i[1]
         return arrow
 
 # @lc code=end

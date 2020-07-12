@@ -12,7 +12,7 @@
 # Total Accepted:    14.8K
 # Total Submissions: 35.4K
 # Testcase Example:  '["LFUCache","put","put","get","put","get","get","put","get","get","get"]\n' +
-  '[[2],[1,1],[2,2],[1],[3,3],[2],[3],[4,4],[1],[3],[4]]'
+	'[[2],[1,1],[2,2],[1],[3,3],[2],[3],[4,4],[1],[3],[4]]'
 #
 # 请你为 最不经常使用（LFU）缓存算法设计并实现数据结构。它应该支持以下操作：get 和 put。
 #
@@ -46,18 +46,45 @@
 # cache.get(3);       // 返回 3
 # cache.get(4);       // 返回 4
 #
-# 本题与146区别，这里要记录使用次数，所以不能用LRU的双向列表来存储所谓的热度（次数），O1时间是解决不了的。
+# 本题与146区别，这里要记录使用次数，所以不能用LRU的双向列表来存储所谓的热度，O1时间是解决不了的。
 
 # @lc code=start
 class LFUCache:
+	def __init__(self, capacity: int):
+		from collections import OrderedDict, defaultdict
+		self.freq = defaultdict(OrderedDict)
+		self.key_to_freq = {}
+		self.capacity = capacity
+		self.min_freq = 0
 
-    def __init__(self, capacity: int):
+
+	def get(self, key: int) -> int:
+		if key not in self.key_to_freq: return -1
+		key_freq = self.key_to_freq[key]
+		res = self.freq[key_freq].pop(key)
+		if not self.freq[key_freq] and key_freq == self.min_freq: self.min_freq += 1
+		self.freq[key_freq + 1][key] = res
+		self.key_to_freq[key] = key_freq + 1
+		return res
 
 
-    def get(self, key: int) -> int:
-
-
-    def put(self, key: int, value: int) -> None:
+	def put(self, key: int, value: int) -> None:
+		if self.capacity == 0: return
+		# key 本身就在其中
+		if key in self.key_to_freq:
+			key_freq = self.key_to_freq[key]
+			self.freq[key_freq].pop(key)
+			if not self.freq[key_freq] and key_freq == self.min_freq: self.min_freq += 1
+			self.freq[key_freq + 1][key] = value
+			self.key_to_freq[key] = key_freq + 1
+		else:
+			# key不在, 要弹出频率使用次数少的key
+			if len(self.key_to_freq) == self.capacity:
+				k, v = self.freq[self.min_freq].popitem(last=False)
+				self.key_to_freq.pop(k)
+			self.key_to_freq[key] = 1
+			self.freq[1][key] = value
+			self.min_freq = 1
 
 
 

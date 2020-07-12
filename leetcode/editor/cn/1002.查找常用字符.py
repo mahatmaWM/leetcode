@@ -47,11 +47,12 @@
 
 # @lc code=start
 class Solution:
-    # 取出第一个单词中的所有字母组成集合，然后考察该集合中的字母在每个单词中出现过的最小次数
+    # 取出第一个单词中的所有字母组成集合，
+    # 然后考察该集合中的字母在每个单词中出现过的最小次数
     def commonChars(self, A: List[str]) -> List[str]:
-        res = []
-        if not A: return res
+        if not A: return []
 
+        res = []
         key = set(A[0])
         for k in key:
             minnum = min(a.count(k) for a in A)

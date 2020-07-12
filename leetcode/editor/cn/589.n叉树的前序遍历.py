@@ -39,16 +39,20 @@ class Node:
         self.children = children
 """
 
+
 class Solution:
+
     def preorder(self, root: 'Node') -> List[int]:
         self.res = []
+
         def helper(node):
             if not node: return
             self.res.append(node.val)
             for child in node.children:
                 helper(child)
+
         helper(root)
         return self.res
 
-# @lc code=end
 
+# @lc code=end

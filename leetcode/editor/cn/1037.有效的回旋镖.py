@@ -53,12 +53,9 @@ class Solution:
         if points[1][0] != points[0][0]: k_1_0 = (points[1][1] - points[0][1]) / (points[1][0] - points[0][0])
         if points[2][0] != points[0][0]: k_2_0 = (points[2][1] - points[0][1]) / (points[2][0] - points[0][0])
 
-        if k_1_0 == 'no' and k_2_0 == 'no':
-            return False
-        elif k_1_0 == 'no' or k_2_0 == 'no':
-            return True
-        else:
-            return k_1_0 != k_2_0
+        if k_1_0 == 'no' and k_2_0 == 'no': return False
+        if k_1_0 == 'no' or k_2_0 == 'no': return True
+        return k_1_0 != k_2_0
 
 
 # @lc code=end

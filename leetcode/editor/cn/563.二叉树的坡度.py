@@ -56,17 +56,6 @@
 
 
 class Solution:
-
-    def findTilt1(self, root: TreeNode) -> int:
-        # 返回的tuple为(子树和，坡度和)
-        def dfs(node):
-            if not node: return 0, 0
-            left = dfs(node.left)
-            right = dfs(node.right)
-            return node.val + left[0] + right[0], abs(left[0] - right[0]) + left[1] + right[1]
-
-        return dfs(root)[1]
-
     def findTilt(self, root: TreeNode) -> int:
         self.res = 0
 

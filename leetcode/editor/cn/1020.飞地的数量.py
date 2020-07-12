@@ -57,6 +57,7 @@ class Solution:
         row = len(A)
         col = len(A[0])
         res = 0
+        directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
 
         def dfs(x, y):
             # 不合法 或者 已经走过，返回
@@ -64,7 +65,6 @@ class Solution:
             if A[x][y] != 1: return
 
             A[x][y] = -1
-            directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
             for _x, _y in directions:
                 dfs(x + _x, y + _y)
 

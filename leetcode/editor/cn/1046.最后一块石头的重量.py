@@ -50,7 +50,7 @@
 
 # @lc code=start
 class Solution:
-    # 利用堆，每次取最大的两个元素操作
+    # 模拟过程，每次取最大的两个元素操作，利用堆
     def lastStoneWeight(self, stones: List[int]) -> int:
         # python只有最小堆，所以每个石头的重量取负号存入
         stones = [-x for x in stones]

@@ -59,7 +59,8 @@ class Solution:
         ans = {}
         height_dic = {}
         points = []
-        for L, R, H in buildings:  #初始化所有关键点
+        # 初始化所有关键点
+        for L, R, H in buildings:
             points.append((L, 'left', H, R))
             points.append((R, 'right', 0, 0))
         points.sort()
