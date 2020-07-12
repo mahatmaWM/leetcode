@@ -65,12 +65,10 @@ class Solution:
             a = min(p.val, q.val)
             b = max(p.val, q.val)
             if a == root.val or b == root.val: return root
+            if a < root.val < b: return root
+            if a == b: return p
 
-            if a < root.val < b:
-                return root
-            elif a == b:
-                return p
-            elif b < root.val:
+            if b < root.val:
                 return self.lowestCommonAncestor(root.left, p, q)
             elif a > root.val:
                 return self.lowestCommonAncestor(root.right, p, q)

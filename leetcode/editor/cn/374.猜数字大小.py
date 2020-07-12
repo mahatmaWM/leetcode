@@ -6,9 +6,9 @@
 # -1 : 我的数字比较小
 # 1 : 我的数字比较大
 # 0 : 恭喜！你猜对了！
-# 
 #
-# 示例 : 
+#
+# 示例 :
 #
 # 输入: n = 10, pick = 6
 # 输出: 6
@@ -31,9 +31,8 @@ class Solution(object):
         while left <= right:
             mid = left + (right - left) // 2
             res = guess(mid)
-            if res == 0:
-                return mid
-            elif res == 1:
+            if res == 0: return mid
+            if res == 1:
                 left = mid + 1
             elif res == -1:
                 right = mid - 1

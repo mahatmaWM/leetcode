@@ -23,6 +23,7 @@
 #
 # [int(y) for y in sorted([str(x) for x in (range(1, n+1))])]
 
+
 # @lc code=start
 class Solution:
 
@@ -30,18 +31,17 @@ class Solution:
         res = []
 
         def dfs(cur):  # cur为根结点
-            if cur > n:
-                return
-            else:
-                res.append(cur)
-                for i in range(10):
-                    if 10 * cur + i > n:  # 比如叶子结点为14，而n是13，dfs就结束了
-                        return
-                    dfs(10 * cur + i)
+            if cur > n: return
+            res.append(cur)
+            for i in range(10):
+                # 比如叶子结点为14，而n是13，dfs就结束了
+                if 10 * cur + i > n: return
+                dfs(10 * cur + i)
 
         # 对1~9的每棵树进行dfs
         for i in range(1, 10):
             dfs(i)
         return res
+
 
 # @lc code=end

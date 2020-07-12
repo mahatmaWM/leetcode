@@ -42,11 +42,9 @@
 class Solution:
 
     def maxProfit(self, k: int, prices: List[int]) -> int:
-        if not prices:
-            return 0
+        if not prices: return 0
         n = len(prices)
-        if k > n / 2:
-            return self.maxProfit_k_inf(prices)
+        if k > n / 2:return self.maxProfit_k_inf(prices)
 
         dp = [[[0] * 2 for _ in range(k + 1)] for _ in range(n)]
         for j in range(k + 1):
@@ -63,8 +61,7 @@ class Solution:
 
     def maxProfit_k_inf(self, prices: List[int]) -> int:
         n = len(prices)
-        if n <= 1:
-            return 0
+        if n <= 1: return 0
         dp = [[0] * 2 for _ in range(n)]
         dp[0][0] = 0
         dp[0][1] = -prices[0]

@@ -1,34 +1,43 @@
+#
+# @lc app=leetcode.cn id=131 lang=python3
+#
+# [131] 分割回文串
+#
+# https://leetcode-cn.com/problems/palindrome-partitioning/description/
+#
+# algorithms
+# Medium (67.89%)
+# Likes:    304
+# Dislikes: 0
+# Total Accepted:    34.3K
+# Total Submissions: 50.4K
+# Testcase Example:  '"aab"'
+#
 # 给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
 #
-# 返回 s 所有可能的分割方案。 
+# 返回 s 所有可能的分割方案。
 #
-# 示例: 
+# 示例:
 #
 # 输入: "aab"
 # 输出:
 # [
-#  ["aa","b"],
-#  ["a","a","b"]
+# ⁠ ["aa","b"],
+# ⁠ ["a","a","b"]
 # ]
-# Related Topics 回溯算法
+#
+#
 
-
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def __init__(self):
-        self.res = []
-
-    def partition(self, s):
-        """
-        :type s: str
-        :rtype: List[List[str]]
-        """
+# @lc code=start
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
         if len(s) == 0: return []
+        res = []
 
         # 回溯的路径为start，选择列表为tmp_list
         def backtrack(start, tmp_list):
             if start == len(s):
-                self.res.append(tmp_list[:])
+                res.append(tmp_list[:])
                 return
             for end in range(start + 1, len(s) + 1):
                 cur_str = s[start:end]
@@ -40,9 +49,6 @@ class Solution(object):
                     tmp_list.pop()
 
         backtrack(0, [])
-        return self.res
+        return res
+# @lc code=end
 
-
-# leetcode submit region end(Prohibit modification and deletion)
-if __name__ == '__main__':
-    print(Solution().partition(s="aab"))

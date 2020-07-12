@@ -34,20 +34,19 @@ class Solution:
         if len(nums) == 0: return []
         nums.sort()
         memo = [False] * len(nums)
-        self.res = []
+        res = []
 
         # 路径：记录在 tmp_res 中
         # 选择列表：nums 中不存在于 memo 的那些元素
         # 结束条件：nums 中的元素全都在 tmp_res 中出现
         def backtrack(tmp_res, memo):
             if len(tmp_res) == len(nums):
-                self.res.append(tmp_res[:])
+                res.append(tmp_res[:])
                 return
             for i in range(len(nums)):
                 if not memo[i]:
                     # 有重复元素时的剪枝条件：元素相等时，前一个已被用则当前的就不用
-                    if i > 0 and nums[i] == nums[i - 1] and memo[i - 1]:
-                        continue
+                    if i > 0 and nums[i] == nums[i - 1] and memo[i - 1]: continue
 
                     memo[i] = True
                     tmp_res.append(nums[i])
@@ -56,6 +55,6 @@ class Solution:
                     tmp_res.pop()
 
         backtrack([], memo)
-        return self.res
+        return res
 # @lc code=end
 

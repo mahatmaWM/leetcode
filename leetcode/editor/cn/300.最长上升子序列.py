@@ -43,8 +43,7 @@ class Solution:
 
         for i in range(1, len_nums):
             for j in range(i):
-                if nums[j] < nums[i]:
-                    dp[i] = max(dp[i], 1 + dp[j])
+                if nums[j] < nums[i]: dp[i] = max(dp[i], 1 + dp[j])
         return max(dp)
 
 

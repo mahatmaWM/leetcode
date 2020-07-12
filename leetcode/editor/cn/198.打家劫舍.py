@@ -44,21 +44,17 @@
 # 0 <= nums[i] <= 400
 #
 #
-# 动态规划，定义数组dp，dp[i]表示一直到位置i能偷到的最多的钱。
-# dp[i] = max(dp[i-2]+nums[i], dp[i-1])
-
 # @lc code=start
 class Solution:
+    # 动态规划，定义数组dp，dp[i]表示一直到位置i能偷到的最多的钱。
+    # dp[i] = max(dp[i-2]+nums[i], dp[i-1])
     def rob(self, nums: List[int]) -> int:
-        if not nums:
-            return 0
-        if len(nums) == 1:
-            return nums[0]
-        dp = [0] * len(nums)
+        if not nums: return 0
+        if len(nums) == 1: return nums[0]
 
+        dp = [0] * len(nums)
         dp[0] = nums[0]
         dp[1] = max(nums[0], nums[1])
-
         for i in range(2, len(nums)):
             dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
         return dp[-1]

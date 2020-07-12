@@ -47,8 +47,7 @@
 # @lc code=start
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        if not prices:
-            return 0
+        if not prices: return 0
         n = len(prices)
 
         #dp[i][j][0] 今天是第i天 进行 j次 交易 手上没有股票

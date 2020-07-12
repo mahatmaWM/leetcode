@@ -49,7 +49,7 @@ class Solution:
         left, right = 0, len(nums) - 1
         while left < right:
             mid = (right + left) // 2
-            print('mid={}'.format(mid))
+            # print('mid={}'.format(mid))
             if nums[mid] == target: return True
             # 说明右边是升序的
             if nums[mid] < nums[right]:

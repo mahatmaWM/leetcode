@@ -77,6 +77,7 @@ class Solution:
                 if stack: stack.pop()
             elif item != ".":
                 stack.append(item)
+                
         if not stack: return "/"
         for i in stack:
             res += "/" + i

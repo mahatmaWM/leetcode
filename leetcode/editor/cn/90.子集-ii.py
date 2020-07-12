@@ -43,11 +43,9 @@ class Solution:
 
         def back_track(start, tmp_res):
             self.res.append(tmp_res[:])
-            if start == n:
-                return
+            if start == n: return
             for j in range(start, n):
-                if j > start and nums[j] == nums[j - 1]:
-                    continue
+                if j > start and nums[j] == nums[j - 1]: continue
                 tmp_res.append(nums[j])
                 back_track(j + 1, tmp_res)
                 tmp_res.pop()

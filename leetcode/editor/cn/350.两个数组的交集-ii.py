@@ -56,11 +56,9 @@ class Solution:
         dd1 = defaultdict(int)
         dd2 = defaultdict(int)
         for a in nums1:
-            if a in inter:
-                dd1[a] += 1
+            if a in inter: dd1[a] += 1
         for b in nums2:
-            if b in inter:
-                dd2[b] += 1
+            if b in inter: dd2[b] += 1
 
         res = []
         for i in inter:

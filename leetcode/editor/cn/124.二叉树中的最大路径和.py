@@ -59,13 +59,10 @@ class Solution:
         # 返回node节点所能贡献的最大路径和（node节点到叶子节点）
         def dfs(node):
             if not node: return 0
-
             # 注意node节点的左右孩子有可能会贡献一个负值，这时需要置为0
             left_gain = max(dfs(node.left), 0)
             right_gain = max(dfs(node.right), 0)
-
             self.max_sum = max(self.max_sum, node.val + left_gain + right_gain)
-
             return node.val + max(left_gain, right_gain)
 
         dfs(root)

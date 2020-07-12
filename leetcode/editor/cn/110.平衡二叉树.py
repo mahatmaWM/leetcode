@@ -72,10 +72,8 @@ class Solution:
 
             if left_depth == -1: return -1
             if right_depth == -1: return -1
-            if abs(left_depth - right_depth) <= 1:
-                return 1 + max(left_depth, right_depth)
-            else:
-                return -1
+            if abs(left_depth - right_depth) > 1: return -1
+            return 1 + max(left_depth, right_depth)
 
         return dfs(root) != -1
 

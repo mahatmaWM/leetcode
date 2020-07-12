@@ -46,8 +46,7 @@ import math
 class Solution:
 
     def canMeasureWater(self, x: int, y: int, z: int) -> bool:
-        if z > x + y:
-            return False
+        if z > x + y: return False
         t = math.gcd(x, y)
         if t == 0:
             return True if z == x or z == y else False

@@ -1,26 +1,26 @@
 # 给定两个字符串 s 和 t，判断它们是否是同构的。
 #
-# 如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。 
+# 如果 s 中的字符可以被替换得到 t ，那么这两个字符串是同构的。
 #
-# 所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身。 
+# 所有出现的字符都必须用另一个字符替换，同时保留字符的顺序。两个字符不能映射到同一个字符上，但字符可以映射自己本身。
 #
-# 示例 1: 
+# 示例 1:
 #
 # 输入: s = "egg", t = "add"
 # 输出: true
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入: s = "foo", t = "bar"
 # 输出: false
 #
-# 示例 3: 
+# 示例 3:
 #
 # 输入: s = "paper", t = "title"
 # 输出: true
 #
-# 说明: 
+# 说明:
 # 你可以假设 s 和 t 具有相同的长度。
 # Related Topics 哈希表
 
@@ -35,8 +35,7 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
-        if len(s) != len(t):
-            return False
+        if len(s) != len(t): return False
 
         def change_fmt(s):
             sDic = {}
@@ -53,10 +52,8 @@ class Solution(object):
         tStr = change_fmt(t)
         # print(sStr)
         # print(tStr)
-        if sStr == tStr:
-            return True
-        else:
-            return False
+        if sStr == tStr: return True
+        return False
 
 # leetcode submit region end(Prohibit modification and deletion)
 if __name__ == '__main__':

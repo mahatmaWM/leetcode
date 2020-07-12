@@ -56,15 +56,15 @@
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
         # board[i]=j，表示第 i 行 j 列
-        self.board = [-1] * n
-        self.res = []
+        board = [-1] * n
+        res = []
 
         # 检查第 k 行时，是否可以放置在第 j 列
         #   board[i] == j 表示第i行的皇后也放在j列。
         #   k - i == abs(board[i] - j) 表示(k,j)(i,board[i])两个皇后可以对角线相遇。
         def valid(k, j):
             for i in range(k):
-                if self.board[i] == j or k - i == abs(self.board[i] - j):
+                if board[i] == j or k - i == abs(board[i] - j):
                     return False
             return True
 
@@ -73,20 +73,20 @@ class Solution:
         # 结束条件：depth访问到最低一行
         def backtrack(depth, tmp_list):
             if depth == n:
-                self.res.append(tmp_list[:])
+                res.append(tmp_list[:])
                 return
             for j in range(n):
                 if valid(depth, j):
                     # 选择位置j
-                    self.board[depth] = j
+                    board[depth] = j
                     s = '.' * n
                     tmp_list.append(s[:j] + 'Q' + s[j + 1:])
                     backtrack(depth + 1, tmp_list)
                     # 撤销位置j
                     tmp_list.pop()
-                    self.board[depth] = -1
+                    board[depth] = -1
 
         backtrack(0, [])
-        return self.res
+        return res
 # @lc code=end
 

@@ -46,8 +46,7 @@ class Solution:
         def traverse(node):
             if not node: return
             # 判断左叶子
-            if node.left and not node.left.left and not node.left.right:
-                self.res += node.left.val
+            if node.left and not node.left.left and not node.left.right: self.res += node.left.val
             traverse(node.left)
             traverse(node.right)
 

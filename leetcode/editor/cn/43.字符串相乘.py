@@ -58,7 +58,7 @@ class Solution:
             digit = arr[i] % 10
             carry = arr[i] // 10
             if i < len(arr) - 1: arr[i + 1] += carry
-            # 逆序了结果
+            # 这里每次插入0的位置，相当于逆序了最后结果
             ans.insert(0, str(digit))
         # print('ans={}'.format(ans))
         while len(ans) > 0 and ans[0] == '0':

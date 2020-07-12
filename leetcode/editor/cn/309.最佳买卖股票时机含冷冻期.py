@@ -30,16 +30,13 @@
 #
 #
 
+
 # @lc code=start
-from typing import List
-
-
 class Solution:
 
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
-        if n <= 1:
-            return 0
+        if n <= 1: return 0
         dp = [[0] * 2 for _ in range(n)]
         dp[0][0] = 0
         dp[0][1] = -prices[0]
@@ -56,5 +53,4 @@ class Solution:
 
 if __name__ == "__main__":
     print(Solution().maxProfit(prices=[1, 2, 4]))
-
 # @lc code=end
