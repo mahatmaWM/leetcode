@@ -62,41 +62,44 @@ class Solution:
             else:  # /
                 return num1 // num2
 
-        def process(data, opt):
-            operator = opt.pop()
-            num2 = data.pop()
-            num1 = data.pop()
-            data.append(getvalue(num1, num2, operator))
+        def process(num_stack, opt_stack):
+            operator = opt_stack.pop()
+            num2 = num_stack.pop()
+            num1 = num_stack.pop()
+            num_stack.append(getvalue(num1, num2, operator))
 
-        data = []  # 数据栈
-        opt = []  # 操作符栈
-        i = 0  # 表达式遍历索引
+        num_stack = []
+        opt_stack = []
+        i = 0
         while i < len(s):
             if s[i] == ' ':
                 pass
-            elif s[i].isdigit():  # 数字，入栈data
-                start = i  # 数字字符开始位置
+            # 数字，入栈num_stack
+            elif s[i].isdigit():
+                start = i
                 while i + 1 < len(s) and s[i + 1].isdigit():
                     i += 1
-                data.append(int(s[start:i + 1]))  # i为最后一个数字字符的位置
-            elif s[i] == ")":  # 右括号，opt出栈同时data出栈并计算，计算结果入栈data，直到opt出栈一个左括号
-                while opt[-1] != "(":
-                    process(data, opt)
-                opt.pop()  # 出栈"("
-            elif not opt or opt[-1] == "(":  # 操作符栈为空，或者操作符栈顶为左括号，操作符直接入栈opt
-                opt.append(s[i])
-            elif s[i] == "(" or compare(s[i], opt[-1]):  # 当前操作符为左括号或者比栈顶操作符优先级高，操作符直接入栈opt
-                opt.append(s[i])
-            else:  # 优先级不比栈顶操作符高时，opt出栈同时data出栈并计算，计算结果如栈data
-                while opt and not compare(s[i], opt[-1]):
-                    # if opt[-1] == "(":  # 若遇到左括号，停止计算
+                num_stack.append(int(s[start:i + 1]))
+            # 右括号，opt_stack出栈，同时num_stack出栈并计算，计算结果入栈num_stack，直到opt_stack出栈一个左括号
+            elif s[i] == ")":
+                while opt_stack[-1] != "(":
+                    process(num_stack, opt_stack)
+                opt_stack.pop()
+            # 操作符栈为空 或者 操作符栈顶为左括号，操作符直接入栈opt_stack
+            # 当前操作符为左括号或者比栈顶操作符优先级高，操作符直接入栈opt_stack
+            elif not opt_stack or opt_stack[-1] == "(" or s[i] == "(" or compare(s[i], opt_stack[-1]):
+                opt_stack.append(s[i])
+            else:  # 优先级不比栈顶操作符高时，opt_stack出栈同时num_stack出栈并计算，计算结果如栈num_stack
+                while opt_stack and not compare(s[i], opt_stack[-1]):
+                    # if opt_stack[-1] == "(":  # 若遇到左括号，停止计算
                     #     break
-                    process(data, opt)
-                opt.append(s[i])
-            i += 1  # 遍历索引后移
-        while opt:
-            process(data, opt)
-        return data.pop()
+                    process(num_stack, opt_stack)
+                opt_stack.append(s[i])
+            i += 1
+
+        while opt_stack:
+            process(num_stack, opt_stack)
+        return num_stack.pop()
 
 
 # @lc code=end

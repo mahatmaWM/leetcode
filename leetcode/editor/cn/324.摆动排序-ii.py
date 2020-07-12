@@ -50,48 +50,42 @@
 #                 res[i] = nums[p1]
 #                 p1 += 1
 #         return res
-
-
-# 无序数组要快也可以借鉴二分查找的方法找到第K（中位数）大的元素，将左右两边的数字调整好。
-# but 这个时候再按照有序的方式去调整的话，结果是错的。
-# 因为不能保证两边的子数组是有序的，这个时候要借用三色荷兰国旗排序方法进行调整。
 # @lc code=start
 class Solution:
-
+    # 找到中位数，然后将大于或者小于中位数数字调整好。
+    # but 这个时候再按照有序的方式去调整的话，结果是错的。
+    # 因为不能保证两边的子数组是有序的，这个时候要借用三色荷兰国旗排序方法进行调整。
     def wiggleSort(self, nums: List[int]) -> None:
         """
         Do not return anything, modify nums in-place instead.
         """
-        # 返回索引下标
-        def partition(num, low, high):
-            # 选取low位置为pivot
-            pivot = num[low]
-            while low < high:
-                while low < high and num[high] <= pivot:
-                    high -= 1
-                num[low] = num[high]
-                while low < high and num[low] >= pivot:
-                    low += 1
-                num[high] = num[low]
-            num[low] = pivot
-            return low
 
-        def kth_largest(num, low, high, k):
-            index = partition(num, low, high)
-            if index == k - 1:
-                return num[index]
+        # [left, right]两边都是闭区间，且从0开始，返回索引下标
+        def partition(num, left, right):
+            # 选取left位置为pivot
+            pivot = num[left]
+            while left < right:
+                while left < right and num[right] <= pivot:
+                    right -= 1
+                num[left] = num[right]
+                while left < right and num[left] >= pivot:
+                    left += 1
+                num[right] = num[left]
+            num[left] = pivot
+            return left
+
+        # [left, right]两边都是闭区间，且从0开始，k从1开始
+        def kth_largest(num, left, right, k):
+            index = partition(num, left, right)
+            if index == k - 1: return num[index]
             if index < k - 1:
-                return kth_largest(num, index + 1, high, k)
+                return kth_largest(num, index + 1, right, k)
             else:
-                return kth_largest(num, low, index - 1, k)
+                return kth_largest(num, left, index - 1, k)
 
         n = len(nums)
-        if n <= 1:
-            return
+        if n <= 1: return
         mid = kth_largest(nums, 0, n - 1, (n + 1) // 2)
-        # print((n + 1) // 2)
-        # print(mid)
-        # print(nums)
 
         # O(n)时间原地修改，类似75题的三色荷兰国旗排序算法。
         # 但数组是全部奇数位下标和偶数位下标的拼接
