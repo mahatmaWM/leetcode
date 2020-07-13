@@ -52,25 +52,25 @@
 
 # @lc code=start
 class Solution:
-    # 二分查找+双指针法，二分查找到数组中第一个不小于x的数的位置，然后从这个地方开始向两个方向扩展区间
+    # 二分查找+双指针法
+    # 二分查找到数组中第一个不小于x的数的位置，然后从这个地方开始向两个方向扩展区间
     def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
 
         # 二分查找：第一个不小于target的数的位置
         def searchInsert(nums, target):
-            n = len(nums)
-            if target > nums[n - 1]: return n
-            left, right = 0, n - 1
-            while left <= right:
-                mid = (right + left) >> 1
+            left, right = 0, len(nums)
+            while left < right:
+                mid = left + (right - left) // 2
+                # print('left={},mid={},right={}'.format(left, mid, right))
                 if nums[mid] == target: return mid
                 if nums[mid] < target:
                     left = mid + 1
-                else:
-                    right = mid - 1
+                elif nums[mid] > target:
+                    right = mid
             return left
 
         i = searchInsert(arr, x)
-        # print('i={}'.format(i))
+        print('i={}'.format(i))
 
         # 处理在一头一尾的特殊情况
         if i == 0: return arr[:k]

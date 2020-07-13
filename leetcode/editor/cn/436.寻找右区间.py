@@ -70,16 +70,14 @@ class Solution:
 
         # 二分查找：第一个大于等于右边界的数
         def searchInsert(nums, target):
-            n = len(nums)
-            if target > nums[n - 1]: return n
-            left, right = 0, n - 1
-            while left <= right:
-                mid = (right + left) >> 1
+            left, right = 0, len(nums)
+            while left < right:
+                mid = left + (right - left) // 2
                 if nums[mid] == target: return mid
                 if nums[mid] < target:
                     left = mid + 1
                 else:
-                    right = mid - 1
+                    right = mid
             return left
 
         # 取出已排序的左边界

@@ -46,12 +46,10 @@
 
 # @lc code=start
 class Solution:
-
+    # 由于题目的返回要求：返回最小和的值
+    # 最小和必然落在 [max(nums), sum(nums)] 之间
+    # 我们可以使用二分来进行查找
     def splitArray(self, nums: List[int], m: int) -> int:
-        # 由于题目的返回要求：返回最小和的值
-        # 最小和必然落在 [max(nums), sum(nums)] 之间
-        # 我们可以使用二分来进行查找
-        low, high = max(nums), sum(nums)
 
         def splitArrayCnt(sum_flag):
             count = 0
@@ -67,12 +65,12 @@ class Solution:
 
         # 淘汰算法
         # 我们由前向后对nums进行划分，使其子数组和 <= mid，然后统计满足条件的数组数量
-        # 若我们选的sum值过小，则满足条件的数量 > m，目标值应落在 [mid+1, high]
-        # 若我们选的sum值过大，则满足条件的数量 < m，目标值应落在 [low, mid-1]
+        # 若我们选的sum值过小，则满足条件的数量 > m，目标值应落在 [mid+1, high)
+        # 若我们选的sum值过大，则满足条件的数量 < m，目标值应落在 [low, mid)
+        low, high = max(nums), sum(nums) + 1
         while low < high:
-            mid = (low + high) // 2
+            mid = low + (high - low) // 2
             count = splitArrayCnt(mid)
-
             if count > m:
                 low = mid + 1
             else:

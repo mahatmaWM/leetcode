@@ -46,26 +46,25 @@ class Solution:
     def search(self, nums: List[int], target: int) -> bool:
         if len(nums) == 0: return False
 
-        left, right = 0, len(nums) - 1
-        while left < right:
-            mid = (right + left) // 2
-            # print('mid={}'.format(mid))
+        l, r = 0, len(nums)
+        while l < r:
+            mid = l + (r - l) // 2
             if nums[mid] == target: return True
             # 说明右边是升序的
-            if nums[mid] < nums[right]:
-                if nums[mid] < target <= nums[right]:
-                    left = mid + 1
+            if nums[mid] < nums[r - 1]:
+                if nums[mid] < target <= nums[r - 1]:
+                    l = mid + 1
                 else:
-                    right = mid - 1
+                    r = mid
             # 说明左边是升序的
-            elif nums[mid] > nums[right]:
-                if nums[left] <= target < nums[mid]:
-                    right = mid - 1
+            elif nums[mid] > nums[r - 1]:
+                if nums[l] <= target < nums[mid]:
+                    r = mid
                 else:
-                    left = mid + 1
-            elif nums[mid] == nums[right]:
-                right = right - 1
-        if nums[left] == target: return True
+                    l = mid + 1
+            # 说明右边值完全相同
+            elif nums[mid] == nums[r - 1]:
+                r = r - 1
         return False
 
 

@@ -45,6 +45,7 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
     # 思路：
@@ -56,17 +57,18 @@ class Solution:
         m = len(matrix)
         if m == 0: return False
         n = len(matrix[0])
-        # 两边闭合区间
-        left, right = 0, m * n - 1
-        while left <= right:
-            mid = (left + right) // 2
+        # 按照索引位置进行二分查找[left, right)
+        left, right = 0, m * n
+        while left < right:
+            mid = left + (right - left) // 2
             # 一维索引转化为二维索引的技巧
             mid_val = matrix[mid // n][mid % n]
             if mid_val == target: return True
             if mid_val < target:
                 left = mid + 1
             elif mid_val > target:
-                right = mid - 1
+                right = mid
         return False
-# @lc code=end
 
+
+# @lc code=end

@@ -32,17 +32,12 @@
 # @lc code=start
 class Solution:
     # 首先设计到任务区间和的问题，最好都转化为数组前缀和的表达。
-    #
     # 如果有了前缀和表达pre_sum[i]，那么对于 lower <= pre_sum[right] - pre_sum[left] <= upper
     # 通过上面的不等式 pre_sum[left] + lower <= pre_sum[right] <= pre_sum[left] + upper
     #
-    # 如果我们逆序访问前缀和数组，当访问pre_sum[left]的时候，对于已经访问过的前缀和中pre_sum[right]，
-    # 如果在[pre_sum[left] + lower , pre_sum[left] + upper]区间范围内的，都是满足条件的。
-    #
-    # 我们可以将已经访问过的前缀和pre_sum[right]都排序存好，就能使用二分查找从而找到满足范围的前缀和的数量，
-    # 也就是以当前节点作为区间右端点满足区间和在[lower,upper]中的区间数量
+    # 如果我们逆序访问前缀和数组，当访问pre_sum[left]的时候，对于已经访问过的前缀和中pre_sum[right]，在[pre_sum[left] + lower , pre_sum[left] + upper]区间范围内的，都是满足条件的。
+    # 我们可以将已经访问过的前缀和pre_sum[right]都排序存好，就能使用二分查找从而找到满足范围的前缀和的数量，也就是以当前节点作为区间右端点满足区间和在[lower,upper]中的区间数量
     def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
-        from bisect import bisect_left, bisect_right, insort
         if not nums or upper < lower: return 0
 
         # 计算前缀和
@@ -56,9 +51,9 @@ class Solution:
         for a in pre_sum[::-1]:
             # 更新当前的上下限
             l, r = a + lower, a + upper
-            i, j = bisect_left(walked, l), bisect_right(walked, r)
+            i, j = bisect.bisect_left(walked, l), bisect.bisect_right(walked, r)
             ans += j - i
-            insort(walked, a)
+            bisect.insort(walked, a)
         return ans
 
 

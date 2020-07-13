@@ -35,7 +35,7 @@ class Solution:
     # 移动right累加total, 当total >= s时, 右移left找出最短的sub array, 跳出内层循环后right继续往右走, 直到刷完nums
     def minSubArrayLen(self, s: int, nums: List[int]) -> int:
         if sum(nums) < s: return 0
-        res = len(nums)
+        res = float('inf')
         left, total = 0, 0
         for right, i in enumerate(nums):
             total += i
@@ -44,5 +44,24 @@ class Solution:
                 total -= nums[left]
                 left += 1
         return res
+
+class Solution1:
+    # 因为元素全部为正，所以前缀和数组是升序的。
+    # 假如遍历到位置i，则当前的前缀和为presum_i，我们可以快速在前面已经遍历的前缀和数组中找到不大于presum_i-s
+    def minSubArrayLen(self, s: int, nums: List[int]) -> int:
+        res = float('inf')
+
+        preSum = []
+        pre = 0
+        for i, num in enumerate(nums):
+            pre += num
+            preSum.append(pre)
+            diff = pre - s
+            if diff >= 0:
+                j = bisect.bisect_right(preSum, diff)
+                res = min(res, i - j + 1)
+        return res if res != float('inf') else 0
+
+
 # @lc code=end
 

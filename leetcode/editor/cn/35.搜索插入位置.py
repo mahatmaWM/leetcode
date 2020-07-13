@@ -48,17 +48,16 @@
 class Solution:
 
     def searchInsert(self, nums: List[int], target: int) -> int:
-        # 采用[left, right]，这会影响left，right指针移动的方式
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            middle = (left + right) // 2
-            if target == nums[middle]:
-                return middle
-            elif target > nums[middle]:
-                left = middle + 1
-            elif target < nums[middle]:
-                right = middle - 1
-        return left
+        # 采用[l, r)，这会影响l，r指针移动的方式
+        l, r = 0, len(nums)
+        while l < r:
+            mid = l + (r - l) // 2
+            if target == nums[mid]: return mid
+            if target > nums[mid]:
+                l = mid + 1
+            elif target < nums[mid]:
+                r = mid
+        return l
 
 
 # @lc code=end

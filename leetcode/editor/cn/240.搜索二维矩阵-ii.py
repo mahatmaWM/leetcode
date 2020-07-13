@@ -42,8 +42,7 @@
 
 # @lc code=start
 class Solution:
-  # 从左下角或者右上角开始遍历。
-  # 这里选右上角开始。
+  # 从左下角或者右上角开始遍历，这里选右上角开始。
     def searchMatrix(self, matrix, target):
         """
         :type matrix: List[List[int]]
@@ -55,11 +54,11 @@ class Solution:
         rows = len(matrix)
         cols = len(matrix[0])
         row, col = 0, cols - 1
-
+        # 二分索引的思想
         while row < rows and col >= 0:
-            if matrix[row][col] == target:
-                return True
-            elif matrix[row][col] < target:
+            if matrix[row][col] == target: return True
+
+            if matrix[row][col] < target:
                 row += 1
             else:
                 col -= 1

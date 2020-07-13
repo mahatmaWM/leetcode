@@ -42,8 +42,8 @@
 
 
 # @lc code=start
-class Solution:
-
+class Solution1:
+    # 时间复杂度：O((k+N)logN)，k最大可以达到 O(N^2)，因此最坏情况下，时间复杂度为O(N^2logN)，超出了时间限制
     def smallestDistancePair(self, nums: List[int], k: int) -> int:
         nums.sort()
         heap = [(nums[i + 1] - nums[i], i, i + 1) for i in range(len(nums) - 1)]
@@ -53,6 +53,31 @@ class Solution:
             d, i, j = heapq.heappop(heap)
             if j + 1 < len(nums): heapq.heappush(heap, (nums[j + 1] - nums[i], i, j + 1))
         return d
+
+
+class Solution:
+    # 二分法，类似378题，目标距离一定存在[lo, hi]之间，应该可以二分逼近查找
+    def smallestDistancePair(self, nums: List[int], k: int) -> int:
+
+        def possible(guess):
+            #Is there k or more pairs with distance <= guess?
+            count = left = 0
+            for right, x in enumerate(nums):
+                while x - nums[left] > guess:
+                    left += 1
+                count += right - left
+            return count >= k
+
+        nums.sort()
+        lo = 0
+        hi = nums[-1] - nums[0]
+        while lo < hi:
+            mi = (lo + hi) // 2
+            if possible(mi):
+                hi = mi
+            else:
+                lo = mi + 1
+        return lo
 
 
 # @lc code=end

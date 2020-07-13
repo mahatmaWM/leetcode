@@ -73,24 +73,16 @@
 class Solution:
 
     def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
-        # 判定两棵树是否相同
-        def helper(a, b):
-            if not a and not b:
-                print('1a={},b={}'.format(a,b))
-                return True
-            elif (not a and b) or (not b and a):
-                print('2a={},b={}'.format(a,b))
-                return False
-            elif a.val != b.val:
-                print('3a={},b={}'.format(a,b))
-                return False
-            elif a.val == b.val:
-                return helper(a.left, b.left) and helper(a.right, b.right)
+        # 判定n1,n2两棵树是否相同
+        def helper(n1, n2):
+            if not n1 and not n2: return True
+            if not n1 or not n2: return False
+            return n1.val == n2.val and helper(n1.left, n2.left) and helper(n1.right, n2.right)
 
-        if not s: return False
-        # 若 s 和 t 对应的两棵树相同则返回True
-        if helper(s, t): return True
-        return helper(s.left, t) or helper(s.right, t)
+        if not s and not t: return True
+        if not s or not t: return False
+        # s,t两棵树相同，或者 t是s左右孩子的子树
+        return helper(s, t) or self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
 
 
 # @lc code=end

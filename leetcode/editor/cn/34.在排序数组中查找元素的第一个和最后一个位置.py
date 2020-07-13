@@ -36,41 +36,35 @@
 class Solution:
 
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        # 采用[left, right]，这会影响left，right指针移动的方式
-        def binarySearchLow(left, right):
-            while left <= right:
-                mid = (left + right) // 2
-                # 找low，所以相等时收缩right指针
-                if nums[mid] == target:
-                    right = mid - 1
+        # 采用[left, right)，这会影响left，right指针移动的方式
+        def lower_bound(left, right):
+            while left < right:
+                mid = left + (right - left) // 2
+                if nums[mid] >= target:
+                    right = mid
                 elif nums[mid] < target:
                     left = mid + 1
-                elif nums[mid] > target:
-                    right = mid - 1
             if left >= len(nums) or nums[left] != target:
                 return -1
             else:
                 return left
 
-        # 采用[left, right]，这会影响left，right指针移动的方式
-        def binarySearchHigh(left, right):
-            while left <= right:
-                mid = (left + right) // 2
-                # 找high，所以相等时放大left指针
-                if nums[mid] == target:
+        # 采用[left, right)，这会影响left，right指针移动的方式
+        def upper_bound(left, right):
+            while left < right:
+                mid = left + (right - left) // 2
+                if nums[mid] > target:
+                    right = mid
+                elif nums[mid] <= target:
                     left = mid + 1
-                elif nums[mid] < target:
-                    left = mid + 1
-                elif nums[mid] > target:
-                    right = mid - 1
-            if right < 0 or nums[right] != target:
+            if left < 0 or nums[left - 1] != target:
                 return -1
             else:
-                return right
+                return left - 1
 
         if not nums: return -1, -1
-        left, right = 0, len(nums) - 1
-        return binarySearchLow(left, right), binarySearchHigh(left, right)
+        left, right = 0, len(nums)
+        return lower_bound(left, right), upper_bound(left, right)
 
 
 # @lc code=end

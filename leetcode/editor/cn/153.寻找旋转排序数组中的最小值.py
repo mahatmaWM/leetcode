@@ -33,25 +33,30 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+
     def findMin(self, nums: List[int]) -> int:
         # 如果长度为1或者本身还是升序
         if len(nums) == 1 or nums[0] < nums[-1]: return nums[0]
 
-        # 采用左右闭合的方式
-        left, right = 0, len(nums) - 1
-        while left < right:
-            mid = (left + right) // 2
+        # [l, r)
+        l, r = 0, len(nums)
+        while l < r:
+            mid = l + (r - l) // 2
             # 位置mid与左右两边的值大小，看mid是否出现在拐点处
-            if nums[mid] > nums[mid + 1]:
+            if mid + 1 < len(nums) and nums[mid] > nums[mid + 1]:
                 return nums[mid + 1]
-            if  nums[mid] < nums[mid - 1]:
+            if mid - 1 >= 0 and nums[mid] < nums[mid - 1]:
                 return nums[mid]
-            # 位置mid与位置right比较，看拐点在右边 或者 左边
-            if nums[mid] > nums[right]:
-                left = mid + 1
-            elif nums[mid] < nums[right]:
-                right = mid - 1
-# @lc code=end
 
+            # 位置mid 与 位置r-1 比较，看拐点在右边 或者 左边
+            if nums[mid] > nums[r - 1]:
+                l = mid + 1
+            elif nums[mid] < nums[r - 1]:
+                r = mid
+        return nums[l]
+
+
+# @lc code=end

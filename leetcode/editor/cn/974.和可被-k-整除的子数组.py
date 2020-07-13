@@ -39,26 +39,22 @@
 #
 #
 
+
 # @lc code=start
-from itertools import combinations
-
-
 class Solution:
-
+    # 参考560题的思路，整除转化为同余定理处理
     def subarraysDivByK(self, A: List[int], K: int) -> int:
-        if not A or not K: return 0
-        l, result = len(A), 0
-        for i in range(l):
-            if A[i] % K == 0: result += 1
-        # print('res={}'.format(result))
-        curr_sum = [0] * (l+1)
-        for i in range(1, l+1):
-            curr_sum[i] = curr_sum[i - 1] + A[i-1]
-        for it1, it2 in list(combinations(curr_sum, 2)):
-            if (it2 - it1) % K == 0:
-                # print('it2={},it1={}'.format(it2,it1))
-                result += 1
-        return result
+        # 余数为0的状况，也就是直接被整除的情况，要提前放个1，考虑比如 A = {K}
+        hash = {0: 1}
+        pre_sum = 0
+        res = 0
+        for i in range(len(A)):
+            pre_sum += A[i]
+            # 同余定理的运用
+            m = pre_sum % K
+            res += hash.get(m, 0)
+            hash[m] = hash.get(m, 0) + 1
+        return res
 
 
 # @lc code=end

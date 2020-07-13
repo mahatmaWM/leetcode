@@ -9,7 +9,7 @@
 # Medium (44.54%)
 # Likes:    465
 # Dislikes: 0
-# Total Accepted:    55.1K
+# Total pre_sumepted:    55.1K
 # Total Submissions: 123.7K
 # Testcase Example:  '[1,1,1]\n2'
 #
@@ -31,22 +31,34 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 思路：借助哈希表保存累加和curr_sum及出现的次数。
-    # 若累加和curr_sum - k在哈希表中存在，则说明存在一段连续序列使得和为k。
-    # 则之前的累加和中，curr_sum−k 出现的次数即为有多少种子序列使得累加和为sum-k。
+    # 参考前缀和计算的思路，借助哈希表保存curr_sum以及其出现的次数
+    # 如果curr_sum-k也在哈希表中，则说明存在一段连续序列使得和为k，将其个数累加。
     def subarraySum(self, nums: List[int], k: int) -> int:
-        import collections
-        hash = collections.defaultdict(int)
-        # 为了第一次累加到k时的连续子数组有预设值1
-        hash[0] = 1
-        curr_sum = 0
-        count = 0
-        for i in range(len(nums)):
-            curr_sum += nums[i]
-            hash[curr_sum] += 1
-            if (curr_sum - k) in hash: count += hash[curr_sum - k]
-        return count
-# @lc code=end
+        hash = {}
+        pre_sum = 0
+        res = 0
+        for num in nums:
+            pre_sum += num
+            if pre_sum == k: res += 1
+            if pre_sum - k in hash: res += hash[pre_sum - k]
+            hash[pre_sum] = hash.get(pre_sum, 0) + 1
+        return res
 
+
+class Solution1:
+    # 使用前缀和，然后再暴力枚举，O(N2)会超时
+    def subarraySum(self, nums: List[int], k: int) -> int:
+        cnt, n = 0, len(nums)
+        pre = [0] * (n + 1)
+        for i in range(1, n + 1):
+            pre[i] = pre[i - 1] + nums[i - 1]
+        for i in range(1, n + 1):
+            for j in range(i, n + 1):
+                if pre[j] - pre[i - 1] == k: cnt += 1
+        return cnt
+
+
+# @lc code=end

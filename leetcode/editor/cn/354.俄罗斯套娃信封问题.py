@@ -27,30 +27,28 @@
 # 输出: 3
 # 解释: 最多信封的个数为 3, 组合为: [2,3] => [5,4] => [6,7]。
 #
-# 思路：本题是最长递增子序列（Longes Increasing Subsequence，简写为 LIS）的一个变种，300题。
-# 比如先按照信封的W进行升序排序，而当W相同的时候，按照H降序排（这里有贪心的思想，显然当W相同时，如果要选一个信封到最终结果中，肯定是选择H最小的那个，如果H降序排，那么对H找到LIS即可）
+
 
 # @lc code=start
 class Solution:
+    # 思路：本题是最长递增子序列（Longes Increasing Subsequence，简写为 LIS）的一个变种，300题。
+    # 比如先按照信封的W进行升序排序，而当W相同的时候，按照H降序排（这里有贪心的思想，显然当W相同时，如果要选一个信封到最终结果中，肯定是选择H最小的那个，如果H降序排，那么对H找到LIS即可）
     def maxEnvelopes(self, envelopes: List[List[int]]) -> int:
-        # sort increasing in first dimension and decreasing on second
         envelopes.sort(key=lambda x: (x[0], -x[1]))
 
         def lis(nums):
             import bisect
-            mem = list()
+            memo = list()
             n = len(nums)
             for i in range(n):
-                index = bisect.bisect_left(mem, nums[i])
-                if len(mem) == index:
-                    mem.append(nums[i])
+                index = bisect.bisect_left(memo, nums[i])
+                if len(memo) == index:
+                    memo.append(nums[i])
                 else:
-                    mem[index] = nums[i]
-            return len(mem)
+                    memo[index] = nums[i]
+            return len(memo)
 
-        # extract the second dimension and run the LIS
         return lis([i[1] for i in envelopes])
 
 
 # @lc code=end
-

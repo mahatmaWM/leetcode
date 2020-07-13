@@ -48,7 +48,7 @@ class Solution:
     # 如果count <= mid，就代表重复的数字应该不会落在mid左侧的区间内，于是更新left；反之就更新right。
     # 这种方法相当于二分猜数字，然后判断该数字是否满足条件。
     def findDuplicate(self, nums: List[int]) -> int:
-        left, right = 1, len(nums) - 1
+        left, right = 1, len(nums)
         while left < right:
             mid = left + (right - left) // 2
             # 遍历记录 <= mid的数字，如果小于等于mid本身，说明重复数字一定出现在[mid+1 right]的区间
