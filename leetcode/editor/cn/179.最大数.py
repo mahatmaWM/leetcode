@@ -34,13 +34,16 @@
 class Solution:
 
     def largestNumber(self, nums: List[int]) -> str:
+        # 定义排序准则
+        def cmp(x, y):
+            if x + y < y + x:
+                return 1
+            elif x + y > y + x:
+                return -1
+            else:
+                return 0
 
-        class compare(str):
-
-            def __lt__(x, y):
-                return x + y > y + x
-
-        largest = ''.join(sorted([str(v) for v in nums], key=compare))
+        largest = ''.join(sorted([str(v) for v in nums], key=functools.cmp_to_key(cmp)))
         return '0' if largest[0] == '0' else largest
 
 

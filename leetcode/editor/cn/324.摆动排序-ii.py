@@ -78,10 +78,8 @@ class Solution:
         def kth_largest(num, left, right, k):
             index = partition(num, left, right)
             if index == k - 1: return num[index]
-            if index < k - 1:
-                return kth_largest(num, index + 1, right, k)
-            else:
-                return kth_largest(num, left, index - 1, k)
+            if index < k - 1: return kth_largest(num, index + 1, right, k)
+            return kth_largest(num, left, index - 1, k)
 
         n = len(nums)
         if n <= 1: return

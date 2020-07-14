@@ -50,6 +50,7 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
     # 首先理清两个概念，满二叉树 和 完全二叉树。
     # 满二叉树：要求所有的结点都有0个或者2个叶子结点。
@@ -58,25 +59,25 @@ class Solution:
     # 　(2)对任一结点，如果其右子树的最大层次为L，则其左子树的最大层次为L或L+l。
     # 也就是完全二叉树比满二叉树的形式更加集中。
     #
-    # 思路：需要注意的是，如果N是偶数，则一定不能构成满二叉树。
+    # 思路：如果N是偶数则一定不能构成满二叉树。
     # 本题用递归的思想，比如对：左边节点 节点i 右边节点，左右都递归构成满二叉树，再和节点i组合在一起即可。
-    # 这里用了递归的时候加速，可以把中间状态记录下来。
+    # 这里用备忘录加速，N从1开始
     def allPossibleFBT(self, N: int) -> List[TreeNode]:
         if N <= 0 or N % 2 == 0: return []
-
         result = []
-        
-        self._dict = {1: [TreeNode(0)]}
-        if N in self._dict: return self._dict[N]
-        for dummy_root in range(1, N, 2):
-            for left in self.allPossibleFBT(dummy_root):
-                for right in self.allPossibleFBT(N - 1 - dummy_root):
+        memo = {1: [TreeNode(0)]}
+        if N in memo: return memo[N]
+
+        # 左边节点 节点i 右边节点
+        for i in range(1, N, 2):
+            for left in self.allPossibleFBT(i):
+                for right in self.allPossibleFBT(N - (i + 1)):
                     root = TreeNode(0)
                     root.left = left
                     root.right = right
                     result += [root]
-        self._dict[N] = result
+        memo[N] = result
         return result
 
-# @lc code=end
 
+# @lc code=end

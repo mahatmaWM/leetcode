@@ -38,16 +38,16 @@
 class Solution:
     # 思路：标准回溯套路
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        self.res = []
-
+        res = []
         def backtrack(nums, choose, index):
-            self.res.append(choose[:])
+            nonlocal res
+            res.append(copy.deepcopy(choose))
             for i in range(index, len(nums)):
                 choose.append(nums[i])
                 backtrack(nums, choose, i + 1)
                 choose.pop()
 
         backtrack(nums, [], 0)
-        return self.res
+        return res
 # @lc code=end
 

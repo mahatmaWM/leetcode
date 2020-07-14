@@ -57,21 +57,19 @@
 
 # @lc code=start
 class Solution:
-
+    # 只要保证window里面的元素有序，类似239题也可一样
     def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
         import bisect
         window = []
         res = []
         left = 0
         for right in range(len(nums)):
-            # 二分查找插入到window
             bisect.insort(window, nums[right])
-            # 需要移除left元素
+            # 移除left指针元素
             while len(window) > k:
                 window.pop(bisect.bisect_left(window, nums[left]))
                 left += 1
-            # 注意，长度为k的Windows，求其中位数的方法
-            # (window[k // 2] + window[(k - 1) // 2]) / 2.0，可以不用考虑 奇数&偶数 个数
+            # 注意，长度为k的Windows，求其中位数的方法 (window[k//2]+window[(k-1)//2])/2.0，可以不用考虑 奇数&偶数 个数
             if len(window) == k: res.append((window[k // 2] + window[(k - 1) // 2]) / 2.0)
         return res
 

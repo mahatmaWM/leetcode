@@ -43,7 +43,7 @@ class Solution:
         citations.sort()
         h = 0
         for i, c in enumerate(citations):
-            # 当前至少n-i篇论文引用次数大于c
+            # 当前的引用指数=至少n-i篇论文引用次数大于c
             cur_h = min(n-i, c)
             h = max(h, cur_h)
         return h

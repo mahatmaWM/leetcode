@@ -47,24 +47,25 @@
 
 # @lc code=start
 class Solution:
-  # 思路：
-  # 1 把words中的word存入前缀树
-  # 2 对board进行深度优先搜索
-  #
-  # dfs三个核心部分：
-  # 1 新的字符不在搜索范围内，退出
-  # 2 新的字符在搜索范围内，且该字符与之前的字符串为words中的一个word，加入结果集，并将word结束标志置0，放置重复搜索
-  # 3 按深度优先递归搜索
+    # 思路：
+    # 1 把words中的word存入前缀树
+    # 2 对board进行深度优先搜索
+    #
+    # dfs三个核心部分：
+    # 1 新的字符不在搜索范围内，退出
+    # 2 新的字符在搜索范围内，且该字符与之前的字符串为words中的一个word，加入结果集，并将word结束标志置0，放置重复搜索
+    # 3 按深度优先递归搜索
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
-        self.res = []
+        res = []
 
         def dfs(i, j, t, s):
+            nonlocal res
             # 递归结束
             ch = board[i][j]
             if ch not in t: return
             t = t[ch]
             if "end" in t and t["end"] == 1:
-                self.res.append(s + ch)
+                res.append(s + ch)
                 t["end"] = 0
 
             # 开始回溯i j位置
@@ -91,6 +92,6 @@ class Solution:
         for i in range(m):
             for j in range(n):
                 dfs(i, j, trie, "")
-        return self.res
+        return res
 # @lc code=end
 

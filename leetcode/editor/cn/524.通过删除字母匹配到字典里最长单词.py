@@ -49,12 +49,12 @@
 
 # @lc code=start
 class Solution:
-    # 1、把字典按照长度和字典序排序
+    # 1、把字典按照单词长度以及字典序排序
     # 2、依次检查排序后的字典中的每个单词是否可以由s得到，找到就返回结果
     def findLongestWord(self, s: str, d: List[str]) -> str:
         d.sort(key=lambda x: (-len(x), x))
 
-        def isSubseq(word, s):
+        def isSubSeq(word, s):
             i = 0
             for c in s:
                 if c == word[i]: i += 1
@@ -62,7 +62,7 @@ class Solution:
             return False
 
         for word in d:
-            if isSubseq(word, s): return word
+            if isSubSeq(word, s): return word
         return ''
 
 

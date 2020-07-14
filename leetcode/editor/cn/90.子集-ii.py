@@ -31,29 +31,29 @@
 # ]
 #
 #
-# 回溯算法，时间复杂度：O(n!)，解空间大小为n！
-# 先排序是为了剪枝，j > i and nums[j] == nums[j - 1] 跳过，此步为了去除重复的子集。
+
+
 
 # @lc code=start
 class Solution:
+    # 回溯算法，时间复杂度：O(n!)，解空间大小为n！
+    # 先排序是为了剪枝，j > i and nums[j] == nums[j - 1] 跳过，此步为了去除重复的子集。
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        n = len(nums)
         nums.sort()
-        self.res = []
+        res = []
 
         def back_track(start, tmp_res):
-            self.res.append(tmp_res[:])
-            if start == n: return
-            for j in range(start, n):
+            nonlocal res
+            res.append(copy.deepcopy(tmp_res))
+            if start == len(nums): return
+            for j in range(start, len(nums)):
                 if j > start and nums[j] == nums[j - 1]: continue
                 tmp_res.append(nums[j])
                 back_track(j + 1, tmp_res)
                 tmp_res.pop()
 
         back_track(0, [])
-        return self.res
+        return res
 
-if __name__ == "__main__":
-    print(Solution().subsetsWithDup(nums=[1, 2, 2]))
+
 # @lc code=end
-

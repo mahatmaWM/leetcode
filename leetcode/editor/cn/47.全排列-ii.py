@@ -44,15 +44,15 @@ class Solution:
                 res.append(tmp_res[:])
                 return
             for i in range(len(nums)):
-                if not memo[i]:
-                    # 有重复元素时的剪枝条件：元素相等时，前一个已被用则当前的就不用
-                    if i > 0 and nums[i] == nums[i - 1] and memo[i - 1]: continue
+                if memo[i]: continue
 
-                    memo[i] = True
-                    tmp_res.append(nums[i])
-                    backtrack(tmp_res, memo)
-                    memo[i] = False
-                    tmp_res.pop()
+                # 有重复元素时的剪枝条件：元素相等时，前一个已被用则当前的就不用
+                if i > 0 and nums[i] == nums[i - 1] and memo[i - 1]: continue
+                memo[i] = True
+                tmp_res.append(nums[i])
+                backtrack(tmp_res, memo)
+                memo[i] = False
+                tmp_res.pop()
 
         backtrack([], memo)
         return res

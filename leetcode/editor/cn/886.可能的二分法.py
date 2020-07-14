@@ -60,9 +60,10 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 图标记两种颜色的思路
+    # 图标记两种颜色，bfs&dfs，785题类似，O(V+E)
     def possibleBipartition(self, N: int, dislikes: List[List[int]]) -> bool:
         visited = [0] * N
         # 构造连接图
@@ -72,10 +73,10 @@ class Solution:
             graph[v].append(u)
 
         # dfs遍历图
-        for i in range(len(visited)):
+        for i in range(len(graph)):
             if visited[i] == 1: continue
-            color_map = {i+1: 0}
-            stack = [(i+1, 0)]
+            color_map = {i + 1: 0}
+            stack = [(i + 1, 0)]
             visited[i] = 1
             while stack:
                 u, color = stack.pop(0)
@@ -83,11 +84,12 @@ class Solution:
                     # 如果v没有被标过颜色
                     if v not in color_map:
                         color_map[v] = 1 - color
-                        stack.append((v, 1-color))
-                        visited[v-1] = 1
+                        stack.append((v, 1 - color))
+                        visited[v - 1] = 1
                     # 否则被标过颜色，就检查是否颜色冲突
                     elif color_map[v] == color_map[u]:
                         return False
         return True
-# @lc code=end
 
+
+# @lc code=end

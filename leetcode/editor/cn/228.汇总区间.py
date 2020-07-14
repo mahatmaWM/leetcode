@@ -35,10 +35,9 @@ class Solution:
     def summaryRanges(self, nums: List[int]) -> List[str]:
         if not nums: return []
         left, right = 0, 0
-        n = len(nums)
         res = []
-        while right < n:
-            while right < n - 1 and nums[right] + 1 == nums[right + 1]:
+        while right < len(nums):
+            while right < len(nums) - 1 and nums[right] + 1 == nums[right + 1]:
                 right += 1
             # 相等说明只有一个数
             if left == right:

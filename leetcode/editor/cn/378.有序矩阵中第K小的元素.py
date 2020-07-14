@@ -39,29 +39,27 @@
 
 
 # @lc code=start
-class Solution1:
-    # 思路1：堆
-    # 相当于N（行）个有序列中查找第K小元素，维护一个大小为N的堆来决定每次应该从哪个序列中获取元素，堆里保存(num, row, col)元组。
+class Solution:
+    # 思路1：相当于N行个有序列中查找第K小元素，维护一个大小为N的堆来决定每次应该从哪个序列中获取元素，堆里保存(num, row, col)元组。
     # 复杂度 有序列表建堆是O(min(k,N)) + k*O(log(min(k,N)))
     def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
-        import heapq
         minheap = []
         n = len(matrix)
-        # 当k小于n时，只需遍历前k行
+        # 将min(k,n)行的第一个元素入堆
         for i in range(min(k, n)):
             heapq.heappush(minheap, (matrix[i][0], i, 0))
 
+        # 从堆中找到前k个最小值
         cnt = 0
-        x, i, j = 0, 0, 0
         while cnt < k:
             cnt += 1
             x, i, j = heapq.heappop(minheap)
-            # 向堆里加入该元素所在行的下一个元素
+            # 下一个元素入堆
             if j < n - 1: heapq.heappush(minheap, (matrix[i][j + 1], i, j + 1))
         return x
 
 
-class Solution:
+class Solution1:
     # 思路2：二分查找 NlogN
     # 特点：这里粗看和74题类似，但是74是Z字形严格有序，这题不一定，所以不能按展开成一维有序，照位置索引二分查找元素的思路做。
     # 常见的二分查找是在有序列中，二分索引的办法来查找元素，这里是采用二分begin end元素值的方法来查找，类似二分猜数字。
@@ -86,11 +84,11 @@ class Solution:
         while low < high:
             mid = low + (high - low) // 2
             cnt = count_smaller_equal_than_target(mid, 0, n - 1)
-            if cnt < k:  # 包含相等的数量小于k，才将中间值加1
-                low = mid + 1
-            else:
+            if cnt >= k:
                 high = mid
-        return high
+            else:
+                low = mid + 1
+        return low
 
 
 # @lc code=end

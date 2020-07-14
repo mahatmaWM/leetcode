@@ -73,21 +73,23 @@
 class Solution:
     # 思路：如果第一个用户选择了x节点，整棵树会被分成3个部分{x节点的左孩子、x节点的右孩子、其他部分}
     # 分别设为A B C 三部分，统计各个部分的大小，就能确定第二个用户如何选择（统计大小可以dfs后序遍历树计数）
+    # dfs遍历树，既可以找到A B两部分的大小
     def btreeGameWinningMove(self, root: TreeNode, n: int, x: int) -> bool:
-        self.red_left, self.red_right = 0, 0
+        red_left, red_right = 0, 0
 
         def dfs(root):
+            nonlocal red_left, red_right
             if not root: return 0
             left = dfs(root.left)
             right = dfs(root.right)
             if root.val == x:
-                self.red_left = left
-                self.red_right = right
+                red_left = left
+                red_right = right
             return left + right + 1
 
         dfs(root)
-        other = n - self.red_left - self.red_right - 1
-        choice = [other, self.red_left, self.red_right]
+        other = n - red_left - red_right - 1
+        choice = [other, red_left, red_right]
         return max(choice) > n - max(choice)
 
 

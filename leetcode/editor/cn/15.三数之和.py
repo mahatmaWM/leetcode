@@ -62,11 +62,10 @@ class Solution:
         # nums已经被排序
         def nSumTarget(nums, n, start, target):
             res = list(list())
-            l = len(nums)
-            if n < 2 or l < n: return res
+            if n < 2 or len(nums) < n: return res
             # 处理2数和的情况（while是为了跳过相等的数字）
             if n == 2:
-                low, hig = start, l - 1
+                low, hig = start, len(nums) - 1
                 while low < hig:
                     left = nums[low]
                     right = nums[hig]
@@ -85,13 +84,13 @@ class Solution:
                             hig -= 1
             else:
                 i = start
-                while i < l:
+                while i < len(nums):
                     sub = nSumTarget(nums, n - 1, i + 1, target - nums[i])
                     for item in sub:
                         item.append(nums[i])
                         res.append(item)
                     # 跳过相等的元素
-                    while i < l - 1 and nums[i] == nums[i + 1]:
+                    while i < len(nums) - 1 and nums[i] == nums[i + 1]:
                         i += 1
                     i += 1
             return res

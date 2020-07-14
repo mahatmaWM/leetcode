@@ -56,12 +56,11 @@
 # @lc code=start
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        n = len(nums)
-        if n <= 2: return n
+        if len(nums) <= 2: return len(nums)
 
         times = 1
         left = 0
-        for right in range(1, n):
+        for right in range(1, len(nums)):
             if nums[left] == nums[right] and times < 2:
                 left += 1
                 nums[left] = nums[right]

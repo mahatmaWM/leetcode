@@ -66,6 +66,8 @@ class Solution:
 
             pa = min(k // 2, l1)
             pb = k - pa
+
+            
             if arr1[pa - 1] <= arr2[pb - 1]:
                 return getKth(arr1[pa:], arr2, pb)
             else:

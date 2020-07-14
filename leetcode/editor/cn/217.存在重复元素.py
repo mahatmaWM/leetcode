@@ -36,9 +36,16 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    def containsDuplicate(self, nums: List[int]) -> bool:
-        return len(nums) != len(set(nums))
-# @lc code=end
 
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        hash = collections.defaultdict(int)
+        for i in nums:
+            if hash[i] > 0: return True
+            hash[i] += 1
+        return False
+
+
+# @lc code=end

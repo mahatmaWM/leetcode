@@ -39,12 +39,12 @@
 # @lc code=start
 class Solution:
     def combinationSum3(self, k: int, n: int) -> List[List[int]]:
-        self.res = []
+        res = []
 
         def backtrack(start, k, tmp_sum, tmp_res):
+            nonlocal res
             if k == 0 and tmp_sum == 0:
-                import copy
-                self.res.append(copy.deepcopy(tmp_res))
+                res.append(copy.deepcopy(tmp_res))
 
             # 组合中一个数字只能出现一次，所以从下一位开始选i
             for i in range(start + 1, 10):
@@ -53,6 +53,6 @@ class Solution:
                 tmp_res.pop()
 
         backtrack(0, k, n, [])
-        return self.res
+        return res
 # @lc code=end
 

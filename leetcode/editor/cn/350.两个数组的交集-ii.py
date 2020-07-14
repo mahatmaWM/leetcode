@@ -41,17 +41,17 @@
 # 如果 nums2 的元素存储在磁盘上，磁盘内存是有限的，并且你不能一次加载所有的元素到内存中，你该怎么办？
 #
 #
-# 思路：
-# 考虑到数组中元素可能重复，所以需要记录元素出现次数。
-#
-# 1、如果数组已经有序，那么就是求有序数组的交集问题，两个指针分别遍历数组即可。
-# 2、如果nums1比nums2小很多，那么用小的那个来做hash表，遍历长的nums2。
-# 3、
 
 # @lc code=start
 class Solution:
+    # 思路：考虑到数组中元素可能重复，所以需要记录元素出现次数。
+    # 1、如果数组已经有序，那么就是求有序数组的交集问题，两个指针分别遍历数组即可。
+    # 2、如果nums1比nums2小很多，那么用小的那个来做hash表，遍历长的nums2。
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # 1、找到相交的数字
         inter = set(nums1) & set(nums2)
+
+        # 2、找每个相加数字的最小次数
         from collections import defaultdict
         dd1 = defaultdict(int)
         dd2 = defaultdict(int)

@@ -28,15 +28,32 @@
 #
 #
 
-
 # @lc code=start
+
+
+class Solution1:
+    # 首先设计到任务区间和的问题，最好都转化为数组前缀和的表达
+    # 然后可以暴力枚举所有的区间和判断，但这样倒数第二个case会超时
+    def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
+        if not nums or upper < lower: return 0
+
+        # 计算前缀和
+        pre_sum = [0]
+        for a in nums:
+            pre_sum.append(pre_sum[-1] + a)
+        ans = 0
+        for left in range(len(pre_sum)):
+            for right in range(left + 1, len(pre_sum)):
+                if lower <= pre_sum[right] - pre_sum[left] <= upper: ans += 1
+        return ans
+
+
 class Solution:
-    # 首先设计到任务区间和的问题，最好都转化为数组前缀和的表达。
-    # 如果有了前缀和表达pre_sum[i]，那么对于 lower <= pre_sum[right] - pre_sum[left] <= upper
-    # 通过上面的不等式 pre_sum[left] + lower <= pre_sum[right] <= pre_sum[left] + upper
+    # 上面的方法会超时，那么在遍历前缀和数组时需要加速。
+    # 如果已经遍历过的前缀和数组保持有序，那么对于新进入的 元素，则可以快速找到满足条件的前缀和个数，从而得到符合区间和的个数。
     #
-    # 如果我们逆序访问前缀和数组，当访问pre_sum[left]的时候，对于已经访问过的前缀和中pre_sum[right]，在[pre_sum[left] + lower , pre_sum[left] + upper]区间范围内的，都是满足条件的。
-    # 我们可以将已经访问过的前缀和pre_sum[right]都排序存好，就能使用二分查找从而找到满足范围的前缀和的数量，也就是以当前节点作为区间右端点满足区间和在[lower,upper]中的区间数量
+    # 这里有个编程技巧，逆序访问前缀和数组
+    # 当访问pre_sum[left]的时候，对于已经访问过的前缀和pre_sum[right]们，在[pre_sum[left] + lower , pre_sum[left] + upper]区间范围内的，都是满足条件的。
     def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
         if not nums or upper < lower: return 0
 

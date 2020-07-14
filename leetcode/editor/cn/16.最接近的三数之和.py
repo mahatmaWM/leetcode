@@ -45,10 +45,8 @@ class Solution:
     def threeSumClosest(self, nums: List[int], target: int) -> int:
         nums.sort()
         res = sum(nums[:3])
-        n = len(nums)
-
-        for i in range(n):
-            left, right = i + 1, n - 1
+        for i in range(len(nums)):
+            left, right = i + 1, len(nums) - 1
             while left < right:
                 sum_3 = nums[i] + nums[left] + nums[right]
                 if abs(sum_3 - target) < abs(res - target): res = sum_3

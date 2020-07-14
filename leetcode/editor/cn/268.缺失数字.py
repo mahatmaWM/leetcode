@@ -1,33 +1,48 @@
-# 给定一个包含 0, 1, 2, ..., n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。
 #
-# 示例 1: 
+# @lc app=leetcode.cn id=268 lang=python3
+#
+# [268] 缺失数字
+#
+# https://leetcode-cn.com/problems/missing-number/description/
+#
+# algorithms
+# Easy (55.89%)
+# Likes:    269
+# Dislikes: 0
+# Total Accepted:    69.1K
+# Total Submissions: 123.6K
+# Testcase Example:  '[3,0,1]'
+#
+# 给定一个包含 0, 1, 2, ..., n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。
+#
+#
+#
+# 示例 1:
 #
 # 输入: [3,0,1]
 # 输出: 2
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入: [9,6,4,2,3,5,7,0,1]
 # 输出: 8
-# 
 #
-# 说明: 
+#
+#
+#
+# 说明:
 # 你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现?
-# Related Topics 位运算 数组 数学
+#
+#
 
-
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def missingNumber(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
+# @lc code=start
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
         a = len(nums)
         b = int(a * (a + 1) / 2)
         for n in nums:
             b -= n
         return b
+# @lc code=end
 
-# leetcode submit region end(Prohibit modification and deletion)

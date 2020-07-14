@@ -36,12 +36,12 @@
 class Solution:
     # 分别从n个左括号&右括号中选择括号来组成合理的序列。
     def generateParenthesis(self, n: int) -> List[str]:
-        self.res = []
+        res = []
 
         # 定义左右还剩余的括号数目，以及当前得到的中间状态
         def dfs(left, right, cur_str):
             if left == 0 and right == 0:
-                self.res.append(cur_str)
+                res.append(cur_str)
                 return
             # 如果左括号还有剩余，则可以放置左括号，
             if left > 0: dfs(left - 1, right, cur_str + '(')
@@ -49,7 +49,7 @@ class Solution:
             if right > left and right > 0: dfs(left, right - 1, cur_str + ')')
 
         dfs(n, n, '')
-        return self.res
+        return res
 
 
 # @lc code=end

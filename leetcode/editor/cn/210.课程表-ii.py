@@ -54,30 +54,31 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 思路：典型的拓扑排序，使用节点的入度来求解，入度为0的节点代表没有前置依赖。
+    # 207题一样，本题输出路径
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        in_degrees = [0 for _ in range(numCourses)]
+        in_degree = [0 for _ in range(numCourses)]
         adj_list = [set() for _ in range(numCourses)]
         for second, first in prerequisites:
-            in_degrees[second] += 1
+            in_degree[second] += 1
             adj_list[first].add(second)
-        # print(in_degrees)
-        # 首先遍历一遍，把所有入度为 0 的结点加入队列
-        res = []
-        import collections
+
+        # 所有入度为 0 的结点加入队列
         queue = collections.deque()
         for i in range(numCourses):
-            if in_degrees[i] == 0: queue.append(i)
+            if in_degree[i] == 0: queue.append(i)
 
         # 从队列里面找入度为0的节点，不断更新后继节点的入度
+        res = []
         while queue:
             top = queue.pop()
             res.append(top)
             for successor in adj_list[top]:
-                in_degrees[successor] -= 1
-                if in_degrees[successor] == 0: queue.append(successor)
+                in_degree[successor] -= 1
+                if in_degree[successor] == 0: queue.append(successor)
         return res if len(res) == numCourses else []
-# @lc code=end
 
+
+# @lc code=end

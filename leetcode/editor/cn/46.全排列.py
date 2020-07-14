@@ -35,27 +35,26 @@
 class Solution:
     # 标准的回溯套路 + 备忘录
     def permute(self, nums: List[int]) -> List[List[int]]:
-        results = []
-        memo = dict.fromkeys(nums, False)  # 保存数字是否使用过
+        memo = [False] * len(nums)
+        res = []
 
         # 路径：记录在 tmp_res 中
         # 选择列表：nums 中不存在于 memo 的那些元素
         # 结束条件：nums 中的元素全都在 tmp_res 中出现
         def backtrack(tmp_res, memo):
             if len(tmp_res) == len(nums):
-                results.append(tmp_res[:])
+                res.append(copy.deepcopy(tmp_res))
                 return
-
-            for x in nums:
-                if not memo[x]:
-                    memo[x] = True
-                    tmp_res.append(x)
-                    backtrack(tmp_res, memo)
-                    tmp_res.pop()
-                    memo[x] = False
+            for i in range(len(nums)):
+                if memo[i]: continue
+                memo[i] = True
+                tmp_res.append(nums[i])
+                backtrack(tmp_res, memo)
+                memo[i] = False
+                tmp_res.pop()
 
         backtrack([], memo)
-        return results
+        return res
 
 
 # @lc code=end

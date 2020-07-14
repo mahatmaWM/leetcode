@@ -70,7 +70,7 @@ class Solution:
 
         nums.sort()
         lo = 0
-        hi = nums[-1] - nums[0]
+        hi = nums[-1] - nums[0] + 1
         while lo < hi:
             mi = (lo + hi) // 2
             if possible(mi):

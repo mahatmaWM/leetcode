@@ -36,7 +36,7 @@ class Solution:
 
     def letterCombinations(self, digits: str) -> List[str]:
         if not digits: return []
-        self.output = []
+        output = []
         phone = {
             '2': ['a', 'b', 'c'],
             '3': ['d', 'e', 'f'],
@@ -47,11 +47,10 @@ class Solution:
             '8': ['t', 'u', 'v'],
             '9': ['w', 'x', 'y', 'z']
         }
-        import copy
 
         def backtrack(tmp_res, next_digits):
             if len(next_digits) == 0:
-                self.output.append(copy.deepcopy(tmp_res))
+                output.append(copy.deepcopy(tmp_res))
             else:
                 for letter in phone[next_digits[0]]:
                     # 选择
@@ -61,7 +60,7 @@ class Solution:
                     tmp_res = tmp_res[:-1]
 
         backtrack("", digits)
-        return self.output
+        return output
 
 
 # @lc code=end

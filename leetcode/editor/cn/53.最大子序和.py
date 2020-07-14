@@ -45,34 +45,32 @@ class Solution1:
 
 
 class Solution:
-    # 分治法
+    # 分治法，注意在原位操作nums
     def maxSubArray(self, nums: List[int]) -> int:
         n = len(nums)
         # 递归终止条件
-        if n == 1:
-            return nums[0]
-        else:
-            # 递归计算中点两边最大子序和
-            mid = len(nums) // 2
+        if n == 1: return nums[0]
 
-            max_left = self.maxSubArray(nums[0:mid])
-            max_right = self.maxSubArray(nums[mid:len(nums)])
+        # 递归计算中点两边最大子序和，[l,r)
+        mid = len(nums) // 2
+        max_left = self.maxSubArray(nums[0:mid])
+        max_right = self.maxSubArray(nums[mid:len(nums)])
 
-            # 从mid往前往后的中间最大子序和
-            max_l = nums[mid - 1]
-            tmp = 0
-            for i in range(mid - 1, -1, -1):
-                tmp += nums[i]
-                max_l = max(tmp, max_l)
+        # 从mid-1往前计算最大子序和
+        max_l = nums[mid - 1]
+        tmp = 0
+        for i in range(mid - 1, -1, -1):
+            tmp += nums[i]
+            max_l = max(tmp, max_l)
+        # 从mid往后计算最大子序列和
+        max_r = nums[mid]
+        tmp = 0
+        for i in range(mid, len(nums)):
+            tmp += nums[i]
+            max_r = max(tmp, max_r)
 
-            max_r = nums[mid]
-            tmp = 0
-            for i in range(mid, len(nums)):
-                tmp += nums[i]
-                max_r = max(tmp, max_r)
-
-            # 返回三个中的最大值
-            return max(max_right, max_left, max_l + max_r)
+        # 返回三个中的最大值
+        return max(max_right, max_left, max_l + max_r)
 
 
 # @lc code=end

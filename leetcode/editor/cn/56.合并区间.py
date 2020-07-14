@@ -30,12 +30,12 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
     # 按区间start升序，然后遍历合并即可
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         if not intervals: return []
-
         res = []
         intervals.sort(key=lambda x: x[0])
         curr = intervals[0]
@@ -44,10 +44,11 @@ class Solution:
             if curr[1] < intervals[i][0]:
                 res.append(curr)
                 curr = intervals[i]
-            # 更新curr的end值
             else:
+                # 更新curr的end值
                 curr[1] = max(intervals[i][1], curr[1])
         res.append(curr)
         return res
-# @lc code=end
 
+
+# @lc code=end

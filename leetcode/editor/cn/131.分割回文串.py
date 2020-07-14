@@ -36,13 +36,13 @@ class Solution:
 
         # 回溯的路径为start，选择列表为tmp_list
         def backtrack(start, tmp_list):
+            nonlocal res
             if start == len(s):
-                res.append(tmp_list[:])
+                res.append(copy.deepcopy(tmp_list))
                 return
             for end in range(start + 1, len(s) + 1):
                 cur_str = s[start:end]
-                # 如果当前子串为回文串，则可以继续递归并回溯
-                # 不是回文的被剪掉
+                # 如果当前子串为回文串，则可以继续递归并回溯，不是回文的被剪掉
                 if cur_str == cur_str[::-1]:
                     tmp_list.append(cur_str)
                     backtrack(end, tmp_list)

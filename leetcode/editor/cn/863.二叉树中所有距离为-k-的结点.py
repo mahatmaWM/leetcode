@@ -53,9 +53,41 @@
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+#         val = x
+#         left = None
+#         right = None
+
+
+class Solution1:
+    # 把二叉树看成图，然后从target节点开始，bfs遍历K步到达的节点
+    def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
+        if K == 0: return [target.val]
+
+        graph = {}
+
+        def buildGraph(root):
+            for i in (root.left, root.right):
+                if i:
+                    graph[root.val] = graph.get(root.val, set()) | {i.val}
+                    graph[i.val] = {root.val}
+                    buildGraph(i)
+
+        buildGraph(root)
+
+        # 通过bfs找目标
+        q = [(target.val, 0)]
+        res = []
+        visited = set()
+        while q:
+            node, dist = q.pop(0)
+            if node not in visited:
+                if dist == K:
+                    res.append(node)
+                else:
+                    visited.add(node)
+                    for i in graph.get(node, set()):
+                        q.append((i, dist + 1))
+        return res
 
 
 class Solution:
@@ -64,31 +96,28 @@ class Solution:
     #
     # 那么为了获取所有节点到目标节点的距离，需要获取目标节点与所有节点的最近公共祖先。
     #
-    # 首先考虑目标节点的祖先，目标节点的祖先即从根节点到目标节点这一路径, 路径上每个节点都是目标节点的祖先。
-    # 目标节点到其的距离为i，那么其他节点到当前祖先节点的距离（高度）应为K-i，由此便很容易计算出所有满足题意的节点。
+    # 首先考虑目标节点的祖先，目标节点的祖先即从根节点到目标节点这一路径, 路径上每个节点都是目标节点的祖先（包括节点自身）。
+    # 目标节点到其的距离为i，那么其他节点到当前祖先节点的距离（高度）应为K-i，由此容易计算出所有满足题意的节点。
     def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
-        self.path = []
-        self.result = []
+        path = []
+        result = []
 
-        # 寻找root节点到目标target之间的路径，这条路径上的每个点都可以作为target的祖先
-        def find_path(root, dire):
-            if root:
-                # 选择当前点为路径
-                self.path.append((root, dire))
-
-                if root == target: return True
-                if find_path(root.left, 'l') or find_path(root.right, 'r'): return True
-
-                # 取消当前点为路径
-                self.path.pop()
-            return False
+        # 递归回溯，寻找root节点到目标target之间的路径，这条路径上的每个点都可以作为target的祖先
+        def find_path(node, dire):
+            if not node: return False
+            # 当前节点加入路径
+            path.append((node, dire))
+            if node == target: return True
+            if find_path(node.left, 'l') or find_path(node.right, 'r'): return True
+            # 取消当前点为路径
+            path.pop()
 
         def find_root_with_distance(root, dire, dis_to_root, goal, nodes):
             if root:
                 if dis_to_root == goal: nodes.append(root.val)
                 if dis_to_root < goal:
                     # 关于方向的说明，此前已经求出了到达目标节点的路径与方向，观察题例
-                    # 如果target=5， 那么对于祖先节点5（自身）来说，可能的节点存在于自身两个方向；
+                    # 如果target=5，那么对于祖先节点5（自身）来说，可能的节点存在于自身两个方向；
                     # 对于祖先节点3来说，目标节点在其左子树，那么左子树中可能的点已经由下层的节点计算，自身只需要计算右子树即可
                     if dire == 'l':
                         find_root_with_distance(root.right, 'a', dis_to_root + 1, goal, nodes)
@@ -98,25 +127,26 @@ class Solution:
                         find_root_with_distance(root.right, 'a', dis_to_root + 1, goal, nodes)
                         find_root_with_distance(root.left, 'a', dis_to_root + 1, goal, nodes)
 
-        # 寻找所有的祖先节点
+        # 寻找target节点的所有的祖先节点
         find_path(root, None)
+
         # 把祖先路径上的每个节点都做尝试
-        for i, (root, _) in enumerate(self.path):
+        for i, (root, _) in enumerate(path):
             # 方向存储在下一个节点中
-            if i + 1 < len(self.path):
-                dire = self.path[i + 1][1]
+            if i + 1 < len(path):
+                dire = path[i + 1][1]
             else:
                 # 自身作为祖先的时候
                 dire = 'a'
 
             nodes = []
-            dis = len(self.path) - i - 1
+            dis = len(path) - i - 1
             goal_dis = K - dis
 
             find_root_with_distance(root, dire, 0, goal_dis, nodes)
-            self.result.extend(nodes)
+            result.extend(nodes)
 
-        return self.result
+        return result
 
 
 # @lc code=end

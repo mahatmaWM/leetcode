@@ -62,6 +62,7 @@
 
 # @lc code=start
 class Solution:
+    # 和886题类似，bfs&dfs O(V+E)
     def isBipartite(self, graph: List[List[int]]) -> bool:
         # bfs遍历图
         color = [0] * len(graph)

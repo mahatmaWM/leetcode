@@ -70,9 +70,9 @@ class Solution:
                     empty.append((i, j))
 
         # 从空格列表中获取空格，一个一个的回溯放置数字
-        def backtrack(iter):
-            if iter == len(empty): return True
-            i, j = empty[iter]
+        def backtrack(it):
+            if it == len(empty): return True
+            i, j = empty[it]
             b = (i // 3) * 3 + j // 3
             for val in row[i] & col[j] & block[b]:
                 # 选择val
@@ -80,7 +80,7 @@ class Solution:
                 col[j].remove(val)
                 block[b].remove(val)
                 board[i][j] = str(val)
-                if backtrack(iter + 1): return True
+                if backtrack(it + 1): return True
                 # 取消选择
                 row[i].add(val)
                 col[j].add(val)

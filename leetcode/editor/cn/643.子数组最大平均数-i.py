@@ -35,12 +35,12 @@
 
 # @lc code=start
 class Solution:
-    # 采用滑动窗口。
+    # 采用滑动窗口
     def findMaxAverage(self, nums: List[int], k: int) -> float:
-        left, right, n = 0, k - 1, len(nums)
+        left, right = 0, k - 1
         cur_window = sum(nums[0:k])
         res = cur_window
-        while right < n - 1:
+        while right < len(nums) - 1:
             right = right + 1
             cur_window = cur_window - nums[left] + nums[right]
             res = max(res, cur_window)

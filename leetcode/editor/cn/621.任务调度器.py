@@ -44,16 +44,13 @@
 class Solution1:
     # 使用优先队列模拟整个过程，会超时
     def leastInterval(self, tasks: List[str], n: int) -> int:
-        import collections
         counter = collections.Counter(tasks)
 
         # 优先队列，根据任务多少排序(优先级取负)
-        import queue
         pq = queue.PriorityQueue(len(counter))
         for k, v in counter.items():
             pq.put((-v, k))
-
-        # print(pq)
+            
         res = 0
         while not pq.empty():
             i = 0

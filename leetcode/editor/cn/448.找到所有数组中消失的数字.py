@@ -33,8 +33,8 @@
 
 # @lc code=start
 class Solution:
-    # 思路一
-    # 原地变负来标记。比如对于[4, 3, 2, 7, 8, 2, 3, 1]，把这些元素作为list的索引，指向的元素变换成负数，
+    # 思路，原地变负来标记。类似442题
+    # 比如对于[4, 3, 2, 7, 8, 2, 3, 1]，把这些元素作为list的索引，指向的元素变换成负数，
     # 那么没有变换成负数的位置就是没有人指向它，故这个位置对应的下标没有出现。
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
         for i in range(len(nums)):

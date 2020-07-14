@@ -36,14 +36,13 @@
 #
 # 给定数字的范围是 [0, 10^8]
 #
-# 1、将所有字符进行逆序排序
-# 2、从前面向后找，找到当前字符与逆序不同的数字，表示后面肯定有比当前数字大的
-# 3、在后面找出最大的，并且位置最靠后的数字即可
 #
 
 # @lc code=start
 class Solution:
-
+    # 1、将所有字符进行逆序排序
+    # 2、从前面向后找，找到当前字符与逆序不同的数字，表示后面肯定有比当前数字大的
+    # 3、在后面找出最大的，并且位置最靠后的数字即可
     def maximumSwap(self, num: int) -> int:
         num_str = list(str(num))
         sorted_num = list(sorted(num_str, reverse=True))

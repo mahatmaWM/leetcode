@@ -1,24 +1,35 @@
-# 给定一个正整数 n，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
 #
-# 示例: 
+# @lc app=leetcode.cn id=59 lang=python3
+#
+# [59] 螺旋矩阵 II
+#
+# https://leetcode-cn.com/problems/spiral-matrix-ii/description/
+#
+# algorithms
+# Medium (77.50%)
+# Likes:    195
+# Dislikes: 0
+# Total Accepted:    36.5K
+# Total Submissions: 47.1K
+# Testcase Example:  '3'
+#
+# 给定一个正整数 n，生成一个包含 1 到 n^2 所有元素，且元素按顺时针顺序螺旋排列的正方形矩阵。
+#
+# 示例:
 #
 # 输入: 3
 # 输出:
 # [
-# [ 1, 2, 3 ],
-# [ 8, 9, 4 ],
-# [ 7, 6, 5 ]
+# ⁠[ 1, 2, 3 ],
+# ⁠[ 8, 9, 4 ],
+# ⁠[ 7, 6, 5 ]
 # ]
-# Related Topics 数组
+#
+#
 
-
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def generateMatrix(self, n):
-        """
-        :type n: int
-        :rtype: List[List[int]]
-        """
+# @lc code=start
+class Solution:
+    def generateMatrix(self, n: int) -> List[List[int]]:
         self.matrix = [[0] * n for _ in range(n)]
         self.num = 1
 
@@ -47,5 +58,5 @@ class Solution(object):
             changeInCircle(start)
             start += 1
         return self.matrix
+# @lc code=end
 
-# leetcode submit region end(Prohibit modification and deletion)

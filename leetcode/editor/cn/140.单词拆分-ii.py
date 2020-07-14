@@ -64,11 +64,11 @@
 class Solution:
     # 递归 + 备忘录
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
-        import collections
-        self.memo = collections.defaultdict(list)
+        memo = collections.defaultdict(list)
 
         def dfs(s, start, word_dict):
-            if start in self.memo: return self.memo[start]
+            nonlocal memo
+            if start in memo: return memo[start]
             res = list([])
             if start == len(s): res.append('')
             for end in range(start + 1, len(s) + 1):
@@ -77,7 +77,7 @@ class Solution:
                     right_res = dfs(s, end, word_dict)
                     for item in right_res:
                         res.append(tmp_str + ' ' + item)
-            self.memo[start] = res
+            memo[start] = res
             return res
 
         res = dfs(s, 0, wordDict)

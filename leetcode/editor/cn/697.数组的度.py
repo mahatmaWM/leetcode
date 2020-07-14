@@ -48,8 +48,8 @@
 # @lc code=start
 class Solution:
     # 思路:
-    # (1)遍历数组,记录每个数值的数量已经最左边和最右边的索引值
-    # (2)找出数量最多的数,返回长度
+    # 1、遍历数组,记录每个数值的数量已经最左边和最右边的索引值
+    # 2、找出数量最多的数,返回长度
     def findShortestSubArray(self, nums: List[int]) -> int:
         freqDict = {}
         for i in range(len(nums)):

@@ -62,13 +62,14 @@
 class Solution:
     # 右中左的方式遍历即可
     def bstToGst(self, root: TreeNode) -> TreeNode:
-        self.sum = 0
+        sum = 0
 
         def inorder(node):
+            nonlocal sum
             if not node: return
             inorder(node.right)
-            self.sum += node.val
-            node.val = self.sum
+            sum += node.val
+            node.val = sum
             inorder(node.left)
 
         inorder(root)

@@ -41,10 +41,22 @@
 #
 #
 
+
 # @lc code=start
-import collections
-class Solution:
+class Solution1:
+    # 注意本题评率相同的元素要么全部包含在结果中，要么都不在。
+    # 不会出现部分在部分不在的情况，否则本题解法是不成立的，692题就有breaking tail的情况
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         return [item[0] for item in collections.Counter(nums).most_common(k)]
-# @lc code=end
 
+
+class Solution:
+
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        count = collections.Counter(nums)
+        heap = [(-freq, num) for word, freq in count.items()]
+        heapq.heapify(heap)
+        return [heapq.heappop(heap)[1] for _ in range(k)]
+
+
+# @lc code=end

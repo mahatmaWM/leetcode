@@ -1,6 +1,6 @@
 # 给定一个包含 m x n 个元素的矩阵（m 行, n 列），请按照顺时针螺旋顺序，返回矩阵中的所有元素。
 #
-# 示例 1: 
+# 示例 1:
 #
 # 输入:
 # [
@@ -9,9 +9,9 @@
 # [ 7, 8, 9 ]
 # ]
 # 输出: [1,2,3,6,9,8,7,4,5]
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入:
 # [
@@ -20,7 +20,7 @@
 #  [9,10,11,12]
 # ]
 # 输出: [1,2,3,4,8,12,11,10,9,5,6,7]
-# 
+#
 # Related Topics 数组
 
 # dirs定义4个走向：水平向右、垂直向下、水平向左、垂直向上。
@@ -33,8 +33,7 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: List[int]
         """
-        if not matrix or not matrix[0]:
-            return []
+        if not matrix or not matrix[0]: return []
         M, N = len(matrix), len(matrix[0])
         left, right, up, down = 0, N - 1, 0, M - 1
         res = []

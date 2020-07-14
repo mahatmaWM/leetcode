@@ -50,16 +50,16 @@ class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
         import heapq
         heap = []
-        for ln in lists:
-            if ln: heap.append((ln.val, ln))
+        for node in lists:
+            if node: heap.append((node.val, node))
 
         dummy = curr = ListNode(0)
         heapq.heapify(heap)
         while heap:
-            _, ln_index = heapq.heappop(heap)
-            curr.next = ln_index
+            _, node = heapq.heappop(heap)
+            curr.next = node
             curr = curr.next
-            if ln_index.next: heapq.heappush(heap, (ln_index.next.val, ln_index.next))
+            if node.next: heapq.heappush(heap, (node.next.val, node.next))
         return dummy.next
 # @lc code=end
 

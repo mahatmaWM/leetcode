@@ -75,13 +75,14 @@
 
 
 # @lc code=start
-class Solution:
+class Solution0:
     # 如果不考虑有正则的情况，仅仅比较两个字符串是否相等，很容易写出递归解法。
     def __isMatch(self, s, p):
         if not p: return not s
         first = bool(s) and p[0] == s[0]
         return first and self.isMatch_0(s[1:], p[1:])
 
+class Solution:
     # 以下正则递归版本只是在__isMatch基础上改进得到
     def isMatch(self, s: str, p: str) -> bool:
         if not p: return not s
@@ -95,8 +96,9 @@ class Solution:
         else:
             return first and self.isMatch(s[1:], p[1:])
 
+class Solution1:
     # 动态规划版本，在递归树的基础上添加了一个备忘录减少计算
-    def isMatch2(self, s, p):
+    def isMatch(self, s, p):
         S = len(s)
         P = len(p)
         # 存储s[0:i], p[0:j] 是否能匹配 (i, j)
@@ -105,7 +107,7 @@ class Solution:
         def dp(i, j):
             if (i, j) in memo: return memo[(i, j)]
             if j == P: return i == S
-            
+
             pre = i < S and p[j] in {s[i], "."}
             if j <= P - 2 and p[j + 1] == "*":
                 tmp = dp(i, j + 2) or (pre and dp(i + 1, j))

@@ -1,39 +1,53 @@
-# 给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。
 #
-# 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下： 
+# @lc app=leetcode.cn id=60 lang=python3
 #
-# 
-# "123" 
-# "132" 
-# "213" 
-# "231" 
-# "312" 
-# "321" 
-# 
+# [60] 第k个排列
 #
-# 给定 n 和 k，返回第 k 个排列。 
+# https://leetcode-cn.com/problems/permutation-sequence/description/
 #
-# 说明： 
+# algorithms
+# Medium (48.69%)
+# Likes:    258
+# Dislikes: 0
+# Total Accepted:    35.9K
+# Total Submissions: 73.6K
+# Testcase Example:  '3\n3'
 #
-# 
-# 给定 n 的范围是 [1, 9]。 
-# 给定 k 的范围是[1, n!]。 
-# 
+# 给出集合 [1,2,3,…,n]，其所有元素共有 n! 种排列。
 #
-# 示例 1: 
+# 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：
+#
+#
+# "123"
+# "132"
+# "213"
+# "231"
+# "312"
+# "321"
+#
+#
+# 给定 n 和 k，返回第 k 个排列。
+#
+# 说明：
+#
+#
+# 给定 n 的范围是 [1, 9]。
+# 给定 k 的范围是[1,  n!]。
+#
+#
+# 示例 1:
 #
 # 输入: n = 3, k = 3
 # 输出: "213"
-# 
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入: n = 4, k = 9
 # 输出: "2314"
-# 
-# Related Topics 数学 回溯算法
-
-
+#
+#
+#
 # 参见网友喜刷刷的博客，首先我们要知道当n = 3时，其排列组合共有3! = 6种，当n = 4时，其排列组合共有4! = 24种，我们就以n = 4, k = 17的情况来分析，所有排列组合情况如下：
 #
 # 1234
@@ -96,15 +110,9 @@
 #
 # an = kn-1 / 0!
 # kn = kn-1 % 0!
-
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def getPermutation(self, n, k):
-        """
-        :type n: int
-        :type k: int
-        :rtype: str
-        """
+# @lc code=start
+class Solution:
+    def getPermutation(self, n: int, k: int) -> str:
         res, jiechengs = '', [1]
         nums = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
         k -= 1
@@ -118,8 +126,5 @@ class Solution(object):
             res += nums[point]
             nums.pop(point)
         return res
+# @lc code=end
 
-
-# leetcode submit region end(Prohibit modification and deletion)
-if __name__ == '__main__':
-    print(Solution().getPermutation(n=4, k=9))

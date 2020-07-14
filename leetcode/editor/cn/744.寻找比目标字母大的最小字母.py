@@ -71,7 +71,7 @@
 # @lc code=start
 class Solution:
     def nextGreatestLetter(self, letters: List[str], target: str) -> str:
-        index = bisect.bisect(letters, target)
+        index = bisect.bisect_right(letters, target)
         return letters[index % len(letters)]
 
 # @lc code=end

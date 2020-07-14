@@ -42,39 +42,42 @@
 
 
 # @lc code=start
-class Solution1:
+class Solution:
     # 归并排序的过程中，如果前半个数组的元素大于后半个数组的元素，这种组合叫翻转对，时间复杂度 O(NlogN)
+    # 而且归并排序就是不停调整翻转对，使其最终有序
     def reversePairs(self, nums: List[int]) -> int:
 
-        # 合并两个有序数组，nums[start:mid] nums[mid+1:end]，都采用前闭后闭的方式，代码更容易理解
+        # 合并两个有序数组，nums[start, mid) nums[mid:end)
         def merge(nums, start, mid, end):
-            l, r = start, mid + 1
+            l, r = start, mid
             res = []
-            while l <= mid and r <= end:
-                if nums[l] >= nums[r]:
-                    res.append(nums[r])
-                    r += 1
-                else:
+            while l < mid and r < end:
+                if nums[l] < nums[r]:
                     res.append(nums[l])
                     l += 1
-            nums[start:end + 1] = res + nums[l:mid + 1] + nums[r:end + 1]
+                else:
+                    res.append(nums[r])
+                    r += 1
+            nums[start:end] = res + nums[l:mid] + nums[r:end]
 
         def mergesort_and_count(nums, start, end):
-            if start >= end: return 0
-            mid = (start + end) // 2
-            count = mergesort_and_count(nums, start, mid) + mergesort_and_count(nums, mid + 1, end)
-
-            # 统计翻转对
-            j = mid + 1
-            for i in range(start, mid + 1):
-                while j < end + 1 and nums[i] > 2 * nums[j]:
+            # print('start={},end={}'.format(start, end))
+            # 为空 或者 只有一个元素时，退出
+            if start + 1 >= end: return 0
+            mid = start + (end - start) // 2
+            count = mergesort_and_count(nums, start, mid) + mergesort_and_count(nums, mid, end)
+            # 统计[start, mid) [mid, end)两个区间中出现的翻转对
+            j = mid
+            for i in range(start, mid):
+                while j < end and nums[i] > 2 * nums[j]:
                     j += 1
-                count += j - (mid + 1)
-
+                count += j - mid
+            # 合并两个有序区间
             merge(nums, start, mid, end)
             return count
 
-        return mergesort_and_count(nums, 0, len(nums) - 1)
+        return mergesort_and_count(nums, 0, len(nums))
+
 
 # 树状数组做法, O(NlogN)时间复杂度
 class BinaryIndexedTree(object):
@@ -100,7 +103,7 @@ class BinaryIndexedTree(object):
         return ans
 
 
-class Solution:
+class Solution1:
 
     def reversePairs(self, nums: List[int]) -> int:
         arr = sorted(set(nums))
@@ -114,5 +117,6 @@ class Solution:
             index = bisect_left(arr, v * 2)
             btree.update(index + 1, 1)
         return ans
+
 
 # @lc code=end

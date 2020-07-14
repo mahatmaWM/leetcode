@@ -55,6 +55,7 @@ class Solution:
                 window.remove(s[left])
                 left += 1
                 cur_len -= 1
+
             window.add(s[right])
             cur_len += 1
             max_len = max(max_len, cur_len)

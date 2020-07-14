@@ -39,27 +39,44 @@
 
 
 # @lc code=start
-class Solution:
-    # 给定一个数组，判断数组中是否存在两个不同位置i,j的元素，j-i<=k, |nums[j]-nums[i]|<=t.
-    # 本题需要推导技巧：
-    # |nums[j]−nums[i]|<=t 推导出 |nums[j]/t−nums[i]/t|<=1 推导出 |floor(nums[j]/t)−floor(nums[i]/t)|<=1
-    # 所以 floor(nums[j]/t) 一定属于 {floor(nums[i]/t−1,floor(nums[i]/t),floor(nums[i]/t)+1}
-    #
-    # 如果 floor(nums[j]/t) 不属于 {floor(nums[i]/t−1,floor(nums[i]/t),floor(nums[i]/t)+1}
-    # 则 |nums[j]−nums[i]|<=t 不成立。
-
+class Solution1:
+    # 暴力枚举O(N*k)，K太大时会超时
     def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
         if k < 1 or t < 0: return False
-
-        import collections
-        dicts = collections.OrderedDict()
-        import math
         for i in range(len(nums)):
-            key = math.floor(nums[i] / max(1, t))
-            for m in (key - 1, key, key + 1):
-                if m in dicts and abs(nums[i] - dicts[m]) <= t: return True
-            dicts[key] = nums[i]
-            if i >= k: dicts.popitem(last=False)
+            j = i + 1
+            while j < len(nums) and j < i + k + 1:
+                if abs(nums[j] - nums[i]) <= t: return True
+                j += 1
+        return False
+
+
+from sortedcontainers import SortedSet
+
+
+class Solution:
+    # 与219题的区别，nums[i] 和 nums[j]不再是相等，而是差值小于等于t
+    # 所以219题用hash O(1)时间判断元素的思路不能用，上面在窗口内判断元素是线性时间，所以会超时
+    # 想办法加速元素判断，如果能O(logK)判断元素，平衡树结构合适。
+    #
+    # java的treeSet数据结构，其floor()方法和ceiling()方法可以在logK时间内找到最靠近的元素
+    # python中没有类似的treeSet数据结构，使用SortedSet替换，用其二分查找最靠近的元素
+    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
+        if k < 1 or t < 0: return False
+        sort_set = SortedSet([])
+        sort_set.add(nums[0])
+        for i in range(1, len(nums)):
+            insert_index = sort_set.bisect_left(nums[i])
+            # 插入位置分别为最左端、最右端、中间三种情况(但是最右端时涉及到len，也是线性时间)
+            if insert_index == 0:
+                if abs(nums[i] - sort_set[insert_index]) <= t: return True
+            elif insert_index == len(sort_set):
+                if abs(nums[i] - sort_set[insert_index - 1]) <= t: return True
+            else:
+                if abs(nums[i] - sort_set[insert_index - 1]) <= t or abs(nums[i] - sort_set[insert_index]) <= t:
+                    return True
+            sort_set.add(nums[i])
+            if i >= k: sort_set.remove(nums[i - k])
         return False
 
 

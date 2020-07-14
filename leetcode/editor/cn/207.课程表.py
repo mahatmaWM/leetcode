@@ -45,35 +45,37 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+    # 有向无环 DAG图才有拓扑排序。常用的方法：
+    # 1、从 DAG 图中选择一个 没有前驱（入度为0）的顶点并输出。
+    # 2、从图中删除该顶点和所有以它为起点的有向边。
+    # 重复 1 和 2 直到当前的 DAG 图为空或当前图中不存在无前驱的顶点为止。后一种情况说明有向图中必然存在环。
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # 依赖学习课程的长度
-        clen = len(prerequisites)
-        if clen == 0: return True
+        if len(prerequisites) == 0: return True
 
-        # 入度数组，一开始全部为 0
-        in_degrees = [0 for _ in range(numCourses)]
-        # 邻接表
-        adj = [set() for _ in range(numCourses)]
-
-        # 想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示他们: [0,1]
-        # [0,1] 表示先学习 1，再学习 0，注意：邻接表存放的是后继 successor 结点的集合
+        # [0,1]表示先学习1，再学习0，注意：邻接表存放的是后继 successor 结点的集合
+        in_degree = [0 for _ in range(numCourses)]
+        adj_list = [set() for _ in range(numCourses)]
         for second, first in prerequisites:
-            in_degrees[second] += 1
-            adj[first].add(second)
+            in_degree[second] += 1
+            adj_list[first].add(second)
 
-        # 首先遍历一遍，把所有入度为 0 的结点加入队列
-        counter = 0
-        queue = []
+        # 所有入度为 0 的结点加入队列
+        queue = collections.deque()
         for i in range(numCourses):
-            if in_degrees[i] == 0: queue.append(i)
-        while queue:
-            top = queue.pop(0)
-            counter += 1
-            for successor in adj[top]:
-                in_degrees[successor] -= 1
-                if in_degrees[successor] == 0: queue.append(successor)
-        return counter == numCourses
-# @lc code=end
+            if in_degree[i] == 0: queue.append(i)
 
+        # 从队列里面找入度为0的节点，不断更新后继节点的入度
+        counter = 0
+        while queue:
+            top = queue.pop()
+            counter += 1
+            for successor in adj_list[top]:
+                in_degree[successor] -= 1
+                if in_degree[successor] == 0: queue.append(successor)
+        return counter == numCourses
+
+
+# @lc code=end

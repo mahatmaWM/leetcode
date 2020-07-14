@@ -42,6 +42,7 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
     # 思路：使用深度优先dfs，memo[i][j]记录从i j节点能走的最长路径。
@@ -58,11 +59,12 @@ class Solution:
             for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]]:
                 tmp_i = x + i
                 tmp_j = y + j
-                if 0 <= tmp_i < row and 0 <= tmp_j < col and matrix[tmp_i][tmp_j] > matrix[i][j]: res = max(res, 1 + dfs(tmp_i, tmp_j))
+                if 0 <= tmp_i < row and 0 <= tmp_j < col and matrix[tmp_i][tmp_j] > matrix[i][j]:
+                    res = max(res, 1 + dfs(tmp_i, tmp_j))
             memo[i][j] = max(res, memo[i][j])
             return memo[i][j]
 
         return max(dfs(i, j) for i in range(row) for j in range(col))
 
-# @lc code=end
 
+# @lc code=end

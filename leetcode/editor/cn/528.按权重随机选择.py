@@ -57,32 +57,24 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-
+    # 根据权重w数组，将区间归一化为和为1的概率，然后依次计算cur_sum概率和
+    # 随机返回概率时，看[0 1]之间的随机数落在什么区域，返回对应的概率值，使用二分查找
     def __init__(self, w: List[int]):
-        self.N = len(w)
-        self.pre_sum = w
-        for i in range(1, len(w)):
-            self.pre_sum[i] = self.pre_sum[i - 1] + self.pre_sum[i]
-
+        self.probability = [0] * len(w)
+        total_sum = sum(w)
+        cur_sum = 0
+        for i in range(len(w)):
+            cur_sum += w[i]
+            self.probability[i] = cur_sum / total_sum
 
     def pickIndex(self) -> int:
-        import random
-        tmp = random.random() % self.N
-        start, end = 0, self.N-1
-        while start < end:
-            mid = start + (end - start) // 2
-            if self.pre_sum[mid] <= tmp:
-                start = mid + 1
-            else:
-                end = mid
-        return start
-
+        return bisect.bisect_right(self.probability, random.random())
 
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(w)
 # param_1 = obj.pickIndex()
 # @lc code=end
-

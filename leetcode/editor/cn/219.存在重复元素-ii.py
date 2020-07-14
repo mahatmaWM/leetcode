@@ -35,18 +35,18 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
-        dd = dict()
-        for index in range(len(nums)):
-            if nums[index] not in dd:
-                dd[nums[index]] = index
-            else:
-                if index - dd[nums[index]] <= k:
-                    return True
-                else:
-                    dd[nums[index]] = index
-        return False
-# @lc code=end
 
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        hash = collections.defaultdict(int)
+        for index in range(len(nums)):
+            if nums[index] in hash:
+                if index - hash[nums[index]] <= k: return True
+            # 可以把其index更新为最大的位置
+            hash[nums[index]] = index
+        return False
+
+
+# @lc code=end

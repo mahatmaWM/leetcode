@@ -40,13 +40,11 @@ class Solution:
     # 使用一左一右的双指针，不断增加left&减小right指针。
     # 每变化一次的时候，更新最大值，如果左边高度小于右边高度，则移动左指针；否则移动有指针
     def maxArea(self, height: List[int]) -> int:
-        n = len(height)
-        left, right = 0, n - 1
+        left, right = 0, len(height) - 1
         max_water = min(height[left], height[right]) * (right - left)
         while left < right:
             cur = min(height[left], height[right]) * (right - left)
             max_water = max(cur, max_water)
-
             if height[left] < height[right]:
                 left += 1
             else:

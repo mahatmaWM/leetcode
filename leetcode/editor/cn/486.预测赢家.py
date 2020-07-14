@@ -60,30 +60,30 @@
 
 
 # @lc code=start
-class Solution:
+class Solution1:
 
     def PredictTheWinner(self, nums: List[int]) -> bool:
+        # 递归，玩家从[l,r]区间可以获取的最大差分数
+        def getDiffScore(nums, l, r):
+            if l == r: return nums[l]
+            return max(nums[l] - getDiffScore(nums, l + 1, r), nums[r] - getDiffScore(nums, l, r - 1))
+
+        return getDiffScore(nums, 0, len(nums) - 1) >= 0
+
+
+class Solution:
+    # 备忘录版本
+    def PredictTheWinner(self, nums: List[int]) -> bool:
         n = len(nums)
-        dp = [[[0, 0]] * n for _ in range(n)]
+        memo = [[0] * n for _ in range(n)]
 
-        for i in range(n):
-            dp[i][i][0] = nums[i]
-            dp[i][i][1] = 0
+        def getDiffScore(nums, l, r):
+            if l == r: return nums[l]
+            if memo[l][r] > 0: return memo[l][r]
+            memo[l][r] = max(nums[l] - getDiffScore(nums, l + 1, r), nums[r] - getDiffScore(nums, l, r - 1))
+            return memo[l][r]
 
-        # 斜着遍历数组
-        for i in range(n - 2, -1, -1):
-            for j in range(i + 1, n):
-                # 先手选择最左边或者最右边的分数
-                left = nums[i] + dp[i + 1][j][1]
-                right = nums[j] + dp[i][j - 1][1]
-                if left > right:
-                    dp[i][j][0] = left
-                    dp[i][j][1] = dp[i + 1][j][0]
-                else:
-                    dp[i][j][0] = right
-                    dp[i][j][1] = dp[i][j - 1][0]
-
-        return dp[0][n - 1][0] >= dp[0][n - 1][1]
+        return getDiffScore(nums, 0, len(nums) - 1) >= 0
 
 
 # @lc code=end

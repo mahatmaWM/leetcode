@@ -42,11 +42,10 @@ class Solution:
 
         def nSumTarget(nums, n, start, target):
             res = list(list())
-            l = len(nums)
-            if n < 2 or l < n: return res
+            if n < 2 or len(nums) < n: return res
             # 处理2数和的情况
             if n == 2:
-                low, hig = start, l - 1
+                low, hig = start, len(nums) - 1
                 while low < hig:
                     left = nums[low]
                     right = nums[hig]
@@ -65,13 +64,13 @@ class Solution:
                             hig -= 1
             else:
                 i = start
-                while i < l:
+                while i < len(nums):
                     sub = nSumTarget(nums, n - 1, i + 1, target - nums[i])
                     for item in sub:
                         item.append(nums[i])
                         res.append(item)
                     # 跳过相等的元素
-                    while i < l - 1 and nums[i] == nums[i + 1]:
+                    while i < len(nums) - 1 and nums[i] == nums[i + 1]:
                         i += 1
                     i += 1
             return res
@@ -85,11 +84,10 @@ class Solution1:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
         nums.sort()
         res = []
-        length = len(nums)
-        for i in range(0, length - 3):
-            for j in range(i + 1, length - 2):
+        for i in range(0, len(nums) - 3):
+            for j in range(i + 1, len(nums) - 2):
                 # 求剩余两数字之和
-                left, right = j + 1, length - 1
+                left, right = j + 1, len(nums) - 1
                 while left < right:
                     sum_4 = nums[i] + nums[j] + nums[left] + nums[right]
                     if sum_4 == target:

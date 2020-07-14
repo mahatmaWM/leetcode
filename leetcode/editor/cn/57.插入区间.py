@@ -32,23 +32,29 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
+    # 原始有序，insert到合适位置，然后采用类似56题思路合并区间
     def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
-        intervals.append(newInterval)
-        l = len(intervals)
+        insert_index = len(intervals)
+        for i, it in enumerate(intervals):
+            if it[0] > newInterval[0]:
+                insert_index = i
+                break
+        intervals.insert(insert_index, newInterval)
         res = []
-        intervals = sorted(intervals, key=lambda interval: interval[0])
-        low = intervals[0][0]
-        high = intervals[0][1]
-        for i in range(1, l):
-            if intervals[i][0] <= high:
-                high = max(high, intervals[i][1])
+        curr = intervals[0]
+        for i in range(1, len(intervals)):
+            # 如果curr的end比新的start小，则保存一个结果，更新curr
+            if curr[1] < intervals[i][0]:
+                res.append(curr)
+                curr = intervals[i]
             else:
-                res.append([low, high])
-                low = intervals[i][0]
-                high = intervals[i][1]
-        res.append([low, high])
+                # 更新curr的end值
+                curr[1] = max(intervals[i][1], curr[1])
+        res.append(curr)
         return res
-# @lc code=end
 
+
+# @lc code=end
