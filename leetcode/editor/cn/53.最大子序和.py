@@ -35,11 +35,9 @@ class Solution1:
     # 转移方程，当前位置i的最大子序列和为: dp[i] = max(dp[i - 1] + nums[i], nums[i])
     # 可以继续优化空间复杂度为O(1)
     def maxSubArray(self, nums: List[int]) -> int:
-        n = len(nums)
-        dp = [0] * n
-
+        dp = [0] * len(nums)
         dp[0] = nums[0]
-        for i in range(1, n):
+        for i in range(1, len(nums)):
             dp[i] = max(dp[i - 1] + nums[i], nums[i])
         return max(dp)
 
@@ -47,9 +45,7 @@ class Solution1:
 class Solution:
     # 分治法，注意在原位操作nums
     def maxSubArray(self, nums: List[int]) -> int:
-        n = len(nums)
-        # 递归终止条件
-        if n == 1: return nums[0]
+        if len(nums) == 1: return nums[0]
 
         # 递归计算中点两边最大子序和，[l,r)
         mid = len(nums) // 2

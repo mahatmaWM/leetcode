@@ -29,34 +29,33 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 思路：与169题一样，都是属于摩尔投票法的使用。
+    # 思路：与169题一样，都属于摩尔投票法的使用。
     # 本题的结果可能有0个、1个、2个。
     def majorityElement(self, nums: List[int]) -> List[int]:
-        # 摩尔投票法
-        m = n = None
-        mcount = ncount = 0
+        mor1, mor2, mor1_cnt, mor2_cnt = None, None, 0, 0
         for num in nums:
-            if num == m:
-                mcount += 1
-            elif num == n:
-                ncount += 1
-            elif not mcount:
-                m, mcount = num, 1
-            elif not ncount:
-                n, ncount = num, 1
+            if mor1_cnt == 0 and num != mor2:
+                mor1 = num
+                mor1_cnt += 1
+            elif mor2_cnt == 0 and num != mor1:
+                mor2 = num
+                mor2_cnt += 1
             else:
-                mcount -= 1
-                ncount -= 1
-        # 再次找这两个数字
-        mcount = ncount = 0
-        for num in nums:
-            if num == m:
-                mcount += 1
-            elif num == n:
-                ncount += 1
-        N = len(nums)
-        return [i for i, c in zip((m, n), (mcount, ncount)) if c > N // 3]
-# @lc code=end
+                if mor1 == num: mor1_cnt += 1
+                elif mor2 == num: mor2_cnt += 1
+                else:
+                    mor1_cnt -= 1
+                    mor2_cnt -= 1
 
+        # 确认这两个数字
+        mor1_cnt, mor2_cnt = 0, 0
+        for num in nums:
+            if num == mor1: mor1_cnt += 1
+            elif num == mor2: mor2_cnt += 1
+        return [i for i, c in zip((mor1, mor2), (mor1_cnt, mor2_cnt)) if c > len(nums) // 3]
+
+
+# @lc code=end

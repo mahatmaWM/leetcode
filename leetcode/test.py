@@ -1,3 +1,3 @@
-import math
-
-print(math.gcd(math.gcd(2,4),5))
+a = [1]
+print(a[1:])
+if not a[1:]: print('kong')

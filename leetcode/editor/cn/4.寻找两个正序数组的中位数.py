@@ -44,39 +44,33 @@
 class Solution:
 
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        # 找arr1 arr2 两个有序序列合在一起的有序中的第K个元素，K从1开始
-        #
-        # 假设arr2更长，所以每次更新决定丢弃多少时，主要依据K和arr1长度，二分减半K值。
-        #
-        # 根据每次找到的pa值，把两个数组分段：
-        # arr1[0:pa-1] arr1[pa:]
-        # arr2[0:pb-1] arr2[pb:]
-        #
-        # 如果 A[pa-1] <= B[pb-1]，删去A的前几个元素A[0:pa-1]，并找到第k-pa个元素即可
-        #                         否则去掉B的前pb个B[0:pb-1]，并找到新链表第pa个元素即可
+        n = len(nums1) + len(nums2)
 
-        def getKth(arr1, arr2, k):
-            l1 = len(arr1)
-            l2 = len(arr2)
-            # 假设我们需要arr2更长一些
-            if l1 > l2: return getKth(arr2, arr1, k)
-            # 递归的终止条件
-            if l1 == 0: return arr2[k - 1]
-            if k == 1: return min(arr1[0], arr2[0])
-
-            pa = min(k // 2, l1)
-            pb = k - pa
-
-            
-            if arr1[pa - 1] <= arr2[pb - 1]:
-                return getKth(arr1[pa:], arr2, pb)
+        # 找到两个升序数组的第K个元素（K从0开始计数）
+        def findKth(nums1, nums2, k):
+            if not nums1: return nums2[k]
+            if not nums2: return nums1[k]
+            i1, i2 = len(nums1) // 2, len(nums2) // 2
+            m1, m2 = nums1[i1], nums2[i2]
+            # 如果两个数组的中位数个数<K，说明第K个数应该出现在更大的元素中
+            # 需要扔掉两个数组前面小的半段（扔掉更小的半段，i2+1个或者i1+1个元素，同时更新k值）
+            if i1 + i2 < k:
+                if m1 > m2:
+                    return findKth(nums1, nums2[i2 + 1:], k - (i2 + 1))
+                else:
+                    return findKth(nums1[i1 + 1:], nums2, k - (i1 + 1))
+            # 如果两个数组的中位数个数>=K，说明第K个数应该出现在更小的元素中
+            # 需要扔掉两个数组后面大的半段（扔掉更大的半段，此时不需要更新k值）
             else:
-                return getKth(arr1, arr2[pb:], pa)
+                if m1 > m2:
+                    return findKth(nums1[:i1], nums2, k)
+                else:
+                    return findKth(nums1, nums2[:i2], k)
 
-        # 忽略奇数 偶数 的区别
-        mid1 = (len(nums1) + len(nums2)) // 2 + 1
-        mid2 = (len(nums1) + len(nums2) - 1) // 2 + 1
-        return (getKth(nums1, nums2, mid1) + getKth(nums1, nums2, mid2)) * 0.5
+        if n % 2 == 1:
+            return findKth(nums1, nums2, n // 2)
+        else:
+            return (findKth(nums1, nums2, n // 2) + findKth(nums1, nums2, n // 2 - 1)) / 2.0
 
 
 # @lc code=end

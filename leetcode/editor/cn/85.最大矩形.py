@@ -35,18 +35,18 @@ class Solution:
     def maximalRectangle(self, matrix: List[List[str]]) -> int:
         if not matrix: return 0
 
+        # 84题的方法
         def largestRectangleArea(heights):
-            res = 0
-            stack = [0]
-            heights.append(0)
-            heights.insert(0, 0)
+            if not heights: return 0
+            stack = [-1]
+            ans = float('-inf')
             for i in range(len(heights)):
-                while heights[i] < heights[stack[-1]]:
-                    res = max(res, heights[stack.pop()] * (i - stack[-1] - 1))
+                while stack[-1] != -1 and heights[stack[-1]] >= heights[i]:
+                    ans = max(ans, heights[stack.pop()] * (i - 1 - stack[-1]))
                 stack.append(i)
-            del heights[0]
-            del heights[-1]
-            return res
+            while stack[-1] != -1:
+                ans = max(ans, heights[stack.pop()] * (len(heights) - 1 - stack[-1]))
+            return ans
 
         height = [0] * len(matrix[0])
         res = 0

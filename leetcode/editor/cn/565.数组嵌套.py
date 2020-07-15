@@ -42,29 +42,33 @@
 # A中的元素大小在[0, N-1]之间。
 #
 #
-# 已访问过的节点是不会出现在其他访问环里面的
 #
+
 
 # @lc code=start
 class Solution:
+    # 本质是在数组中找到一个访问环，最大的访问环。
+    # 注意，已访问过的节点是不会出现在其他访问环里面的
     def arrayNesting(self, nums: List[int]) -> int:
-        d = {}
+        next_step_dict = {}
         for i in range(len(nums)):
-            d[i] = nums[i]
-        count = 0
-        i = 0
+            next_step_dict[i] = nums[i]
+        ans = 0
+        start = 0
         flag = 'visited'
-        while i < len(nums):
-            tmp = i
-            ans = 0
-            while d[tmp] != flag:
-                ans += 1
-                res = d[tmp]
-                d[tmp] = flag
-                tmp = res
-            i += 1
-            count = max(count,ans)
-        return count
+        # 尝试每个节点作为开始点
+        while start < len(nums):
+            curr = start
+            temp_ans = 0
+            # 找到以当前节点tmp为开始点的最大环
+            while next_step_dict[curr] != flag:
+                temp_ans += 1
+                next_step = next_step_dict[curr]
+                next_step_dict[curr] = flag
+                curr = next_step
+            ans = max(ans, temp_ans)
+            start += 1
+        return ans
+
 
 # @lc code=end
-
