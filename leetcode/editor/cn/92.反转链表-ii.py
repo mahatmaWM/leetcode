@@ -23,27 +23,6 @@
 # 输入: 1->2->3->4->5->NULL, m = 2, n = 4
 # 输出: 1->4->3->2->5->NULL
 #
-#
-# 1、找到开始反转的节点m，记录m节点以及前面节点
-# 2、反转m到n之间的节点
-# 3、重新连接链表
-# def reverseBetween(self, head, m, n):
-#     dummy, partial_len = ListNode(0), n - m
-#     dummy.next = head
-#     prev, curr = dummy, dummy.next
-#     # 取出mn之间的结点，并反转
-#     while m > 1:  # pre是开始反转的结点
-#         prev, curr = curr, curr.next
-#         m -= 1
-#     last_unswapped, first_swapped = prev, curr
-
-#     while curr and partial_len >= 0:  # pre是结束反转的结点
-#         curr.next, prev, curr = prev, curr, curr.next
-#         partial_len -= 1
-#     # 重新连接结点
-#     last_unswapped.next, first_swapped.next = prev, curr
-#     return dummy.next
-
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode:
@@ -53,19 +32,44 @@
 
 
 class Solution:
+    # 1、找到开始反转的节点m，记录m节点以及前面节点
+    # 2、反转m到n之间的节点
+    # 3、重新连接链表
+    def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
+        dummy, fanzhuan_len = ListNode(0), n - m
+        dummy.next = head
+
+        pre, curr = dummy, dummy.next
+        # 找到开始反转的结点m（pre是开始反转的结点）
+        while m > 1:
+            pre, curr = curr, curr.next
+            m -= 1
+        last_unswapped, first_swapped = pre, curr
+
+        # 开始反转m到n之间的节点（pre是反转后的头结点，curr是剩余部分的头结点）
+        while curr and fanzhuan_len >= 0:
+            curr.next, pre, curr = pre, curr, curr.next
+            fanzhuan_len -= 1
+        # 重新连接结点
+        last_unswapped.next, first_swapped.next = pre, curr
+        return dummy.next
+
+
+class Solution1:
 
     def reverseBetween(self, head: ListNode, m: int, n: int) -> ListNode:
-
+        # 反转链表前n个位置（返回反转链表的头指针，）
         def reverseN(head, n):
             if n == 1:
-                successor = head.next  # 拿到后继节点
-                return head, successor
-            last, successor = reverseN(head.next, n - 1)
+                houji = head.next  # 拿到后继节点
+                return head, houji
+            last, houji = reverseN(head.next, n - 1)
+            # 下面两行画图才好理解
             head.next.next = head
-            head.next = successor
-            return last, successor
+            head.next = houji
+            return last, houji
 
-        if m == 1:  # 递归终止条件
+        if m == 1:
             res, _ = reverseN(head, n)
             return res
         # 如果不是第一个，那么以下一个为头结点开始递归，直到触发条件

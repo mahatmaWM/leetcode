@@ -28,16 +28,17 @@
 #
 # 注意: 输入数组的长度不会超过 10000。
 #
-# 与496类似，这里出现循环寻找的情况，所以数组我们可能遍历两次。
 
 
 # @lc code=start
 class Solution:
-
+    # 与496类似，这里出现循环寻找的情况，可能遍历两次（把数组长度*2）。
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
-        res = [-1] * len(nums)
+        n = len(nums)
+        res = [-1] * n
         stack = []
-        for i in range(len(nums)) * 2:
+        for i in range(n * 2):
+            if i >= n: i -= n
             while stack and nums[stack[-1]] < nums[i]:
                 res[stack.pop()] = nums[i]
             stack.append(i)

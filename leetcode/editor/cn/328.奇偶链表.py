@@ -48,18 +48,15 @@ class Solution:
 
     def oddEvenList(self, head: ListNode) -> ListNode:
         if not head or not head.next: return head
+        odd_head, even_head = head, head.next
         odd, even = head, head.next
         while even and even.next:
-            tmp = odd.next
-
-            # 断开even
             odd.next = even.next
-            even.next = even.next.next
-            odd.next.next = tmp
-
             odd = odd.next
+            even.next = odd.next
             even = even.next
-        return head
+        odd.next = even_head
+        return odd_head
 
 
 # @lc code=end

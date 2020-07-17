@@ -23,10 +23,6 @@
 # 输出：1->1->2->3->4->4
 #
 #
-## 思路：
-# 遍历两个链表，合并在一起即可。
-# cur、l1、l2三个指针，构造一个dummy的头结点。
-
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode:
@@ -34,8 +30,9 @@
 #         self.val = val
 #         self.next = next
 class Solution:
+    # 思路：遍历两个链表，合并在一起即可。cur、l1、l2三个指针，构造一个dummy的头结点。
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-        dummy = cur = ListNode(-1)
+        dummy = cur = ListNode('#')
         while l1 and l2:
             if l1.val < l2.val:
                 cur.next = l1

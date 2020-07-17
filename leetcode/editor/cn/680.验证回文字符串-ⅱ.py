@@ -43,7 +43,7 @@
 class Solution:
 
     def validPalindrome(self, s: str) -> bool:
-        # 思路：判断回文字符串，使用两个指针，前后各一个。
+        # 思路：判断回文字符串，使用两个指针，前后各一个，使用闭区间[left, right]。
         # 当遇到前后字符不一致的时候，有两种情况，删除前面字符或者删除后面字符。
         # 由于删除一个字符后剩下的仍旧是字符串，可以直接递归处理了，注意最多删除一个字符
         def isPalindrome(s, left, right, cnt):

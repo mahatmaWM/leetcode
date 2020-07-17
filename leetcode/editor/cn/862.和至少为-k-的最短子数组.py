@@ -64,7 +64,6 @@ class Solution:
             pre_sum.append(pre_sum[-1] + a)
         res = len(pre_sum) + 1
 
-        import collections
         dq = collections.deque()
         # 第二步，利用dq来模拟滑动窗口
         for i in range(len(pre_sum)):

@@ -24,23 +24,6 @@
 # 你可以迭代或递归地反转链表。你能否用两种方法解决这道题？
 #
 #
-# def reverseList1(self, head):
-#     """
-#     :type head: ListNode
-#     :rtype: ListNode
-#     """
-#     dummy = ListNode(0)
-#     dummy.next = head
-#     p = head.next
-#     head.next = None
-
-#     while p:
-#         tmp = p
-#         p = p.next
-#         tmp.next = dummy.next
-#         dummy.next = tmp
-#     return dummy.next
-
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode:
@@ -50,10 +33,26 @@
 
 
 class Solution:
+    # 迭代的方式
+    # 开始以单链表的第二个元素为循环变量，用2个变量循环向后操作并设置1个辅助变量tmp，保存数据
+    def reverseList(self, head: ListNode) -> ListNode:
+        if not head or not head.next: return head
+        left, right, tmp = head, head.next, None
+        while right:
+            tmp = right.next
+            right.next = left
+            left = right
+            right = tmp
+        head.next = None
+        return left
 
+
+class Solution1:
+    # 递归的方式
     def reverseList(self, head: ListNode) -> ListNode:
 
         def reverse(node):
+            # 只有一个节点
             if not node.next: return node
             new_head = reverse(node.next)
             # 把node放到已反转的子链表的尾部
@@ -62,4 +61,6 @@ class Solution:
             return new_head
 
         return reverse(head)
+
+
 # @lc code=end

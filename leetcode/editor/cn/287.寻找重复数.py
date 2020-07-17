@@ -42,12 +42,22 @@
 
 # @lc code=start
 class Solution:
-    # 思路：如果可以使用额外空间，那么用hash计数是最简单的，但是这里不能用额外空间，所以只能用比较，而且暴力比较复杂度为O(n2)
-    # 二分查找的思路，已知所有数字的范围是1到n，就可以把left设为1，right设为n，mid设为left和right的中间值。不断二分left&right，逼近目标值重复数。
+    # 先排序再遍历一样，都是NlogN
+    def findDuplicate(self, nums: List[int]) -> int:
+        nums.sort()
+        for i in range(1, len(nums)):
+            if nums[i] == nums[i - 1]: return nums[i]
+
+
+class Solution1:
+    # 思路：如果可以使用额外空间，那么用hash计数是最简单的，但是这里不能用额外空间，所以只能用比较。
+    # 上面是先排序再遍历的方式。
+    #
+    # 下面借鉴二分查找的思路，已知所有数字的范围是1到n，就可以把left设为1，right设为n，mid设为left和right的中间值。
+    # 不断二分left&right，逼近目标值重复数。
     # 每得到一个候选值mid时，用count记录一下有多少个小于等于mid的值。
     # 如果count>mid，代表重复的数字落在mid左侧的区间，更新right；反之就更新right。
     # 这种方法相当于二分猜数字，然后判断该数字是否满足条件。
-    # 跟先排序再遍历一样，都是NlogN
     def findDuplicate(self, nums: List[int]) -> int:
         left, right = 1, len(nums)
         while left < right:

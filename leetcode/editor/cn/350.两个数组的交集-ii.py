@@ -42,19 +42,32 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 思路：考虑到数组中元素可能重复，所以需要记录元素出现次数。
-    # 1、如果数组已经有序，那么就是求有序数组的交集问题，两个指针分别遍历数组即可。
-    # 2、如果nums1比nums2小很多，那么用小的那个来做hash表，遍历长的nums2。
+    # 349一样的思路，选取短的数组作为lookup，遍历长的数组
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        # 1、找到相交的数字
-        inter = set(nums1) & set(nums2)
+        if len(nums1) > len(nums2): return self.intersect(nums2, nums1)
+        lookup = collections.defaultdict(int)
+        for i in nums1:
+            lookup[i] = lookup.get(i, 0) + 1
 
-        # 2、找每个相加数字的最小次数
-        from collections import defaultdict
-        dd1 = defaultdict(int)
-        dd2 = defaultdict(int)
+        ans = list([])
+        for i in nums2:
+            if lookup[i] > 0:
+                ans.append(i)
+                lookup[i] -= 1
+        return ans
+
+
+class Solution1:
+    # 思路：
+    # 1、找到相交的数字，并统计每个相交数字出现的次数
+    # 2、取相交数字的最小次数，输出结果
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        inter = set(nums1) & set(nums2)
+        dd1 = collections.defaultdict(int)
+        dd2 = collections.defaultdict(int)
         for a in nums1:
             if a in inter: dd1[a] += 1
         for b in nums2:
@@ -65,5 +78,5 @@ class Solution:
             res.extend([i] * min(dd1[i], dd2[i]))
         return res
 
-# @lc code=end
 
+# @lc code=end

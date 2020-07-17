@@ -36,21 +36,22 @@ class Solution:
     def partition(self, head: ListNode, x: int) -> ListNode:
         if not head or not head.next: return head
 
-        p = head
-        dummyA = ListNode(0)
-        p1 = dummyA
-        dummyB = ListNode(0)
-        p2 = dummyB
-        while p:
-            if p.val < x:
-                p1.next = p
-                p1 = p1.next
+        dummy_small = ListNode('#')
+        p_small = dummy_small
+        dummy_big = ListNode('#')
+        p_big = dummy_big
+        
+        while head:
+            if head.val < x:
+                p_small.next = head
+                p_small = p_small.next
             else:
-                p2.next = p
-                p2 = p2.next
-            p = p.next
-        p1.next = dummyB.next
-        p2.next = None
-        return dummyA.next
+                p_big.next = head
+                p_big = p_big.next
+            head = head.next
+
+        p_small.next = dummy_big.next
+        p_big.next = None
+        return dummy_small.next
 # @lc code=end
 

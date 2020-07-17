@@ -30,9 +30,6 @@
 # 输入：(7 -> 2 -> 4 -> 3) + (5 -> 6 -> 4)
 # 输出：7 -> 8 -> 0 -> 7
 #
-# 思路与算法
-# 本题的主要难点在于链表中数位的顺序与我们做加法的顺序是相反的，为了逆序处理所有数位，我们可以使用栈：把所有数字压入栈中，再依次取出相加。
-# 计算过程中需要注意进位的情况。
 #
 
 # @lc code=start
@@ -43,21 +40,23 @@
 #         self.next = None
 
 class Solution:
+    # 本题的主要难点在于链表中数位的顺序与我们做加法的顺序是相反的，为了逆序处理所有数位，我们可以使用栈：把所有数字压入栈中，再依次取出相加。
+    # 计算过程中需要注意进位的情况。
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         # 遍历两个链表，入栈
-        s1, s2 = [], []
+        stack1, stack2 = [], []
         while l1:
-            s1.append(l1.val)
+            stack1.append(l1.val)
             l1 = l1.next
         while l2:
-            s2.append(l2.val)
+            stack2.append(l2.val)
             l2 = l2.next
         # 出栈，计算并注意进位符号
         ans = None
         carry = 0
-        while s1 or s2 or carry != 0:
-            a = 0 if not s1 else s1.pop()
-            b = 0 if not s2 else s2.pop()
+        while stack1 or stack2 or carry != 0:
+            a = 0 if not stack1 else stack1.pop()
+            b = 0 if not stack2 else stack2.pop()
             cur = a + b + carry
             carry = cur // 10
             cur %= 10

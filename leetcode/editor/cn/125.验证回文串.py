@@ -34,15 +34,13 @@
 
 # @lc code=start
 class Solution:
-
+    # 前后两个指针向中间逼近
     def isPalindrome(self, s: str) -> bool:
         left, right = 0, len(s) - 1
         while left < right:
-            while not s[left].isalnum():
+            while left < right and not s[left].isalnum():
                 left += 1
-                # 防止一个字母都没有的情况
-                if left == len(s): return True
-            while not s[right].isalnum():
+            while left < right and not s[right].isalnum():
                 right -= 1
             if s[left].lower() != s[right].lower(): return False
             left += 1

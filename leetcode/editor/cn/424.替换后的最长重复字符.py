@@ -43,19 +43,18 @@
 # 将中间的一个'A'替换为'B',字符串变为 "AABBBBA"。
 # 子串 "BBBB" 有最长重复字母, 答案为 4。
 #
-# 满足条件 -> 扩张长度1，不满足条件 -> 滑动
-# 保存滑动窗口内相同字母出现次数的历史最大值，
-# 通过判断窗口宽度(right - left + 1) - maxFreq > K来决定窗口是否做滑动，否则窗口就扩张
-# 这里只需要记录历史最大值的原因是我们只需要最终保证输出的是最大长度，无需缩减窗口大小
 #
 
 # @lc code=start
 class Solution:
+    # 满足条件 -> 扩张长度1，不满足条件 -> 滑动
+    # 保存滑动窗口内相同字母出现次数的历史最大值，
+    # 通过判断窗口宽度(right - left + 1) - maxFreq > K来决定窗口是否做滑动，否则窗口就扩张
+    # 这里只需要记录历史最大值的原因是我们只需要最终保证输出的是最大长度，无需缩减窗口大小
     def characterReplacement(self, s: str, k: int) -> int:
-        from collections import defaultdict
         left = 0
         # window存放窗口中某个字符出现的次数
-        window = defaultdict(int)
+        window = collections.defaultdict(int)
         res = 0
         for right, val in enumerate(s):
             window[val] += 1

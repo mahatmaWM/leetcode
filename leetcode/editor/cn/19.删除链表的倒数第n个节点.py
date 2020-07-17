@@ -41,7 +41,7 @@
 class Solution:
     # 思路：间隔长度为n的前后指针遍历链表即可。
     def removeNthFromEnd(self, head: ListNode, n: int) -> ListNode:
-        dummy = ListNode(0)
+        dummy = ListNode('#')
         dummy.next = head
         p_right = p_left = dummy
 

@@ -60,16 +60,16 @@ class Solution:
             slow.next = None
             return head1, head2
 
-        def reverse(node):
+        def reverseList(node):
             if not node.next: return node
-            new_head = reverse(node.next)
+            new_head = reverseList(node.next)
             # 把node放到已反转的子链表的尾部
             node.next.next = node
             node.next = None
             return new_head
 
         head1, head2 = splitList(head)
-        head2 = reverse(head2)
+        head2 = reverseList(head2)
         # 判断回文
         while head1 and head2.val == head1.val:
             head2, head1 = head2.next, head1.next

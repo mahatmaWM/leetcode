@@ -37,7 +37,6 @@
 # @lc code=start
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        import collections
         ans = collections.defaultdict(list)
         for s in strs:
             ans[tuple(sorted(s))].append(s)

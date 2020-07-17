@@ -37,12 +37,6 @@
 # 你的算法只能使用常数的额外空间。
 # 你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。
 #
-# # 思路一：
-# 用栈，我们把 k 个数压入栈中，然后弹出来的顺序就是翻转的！
-#
-# 这里要注意几个问题：
-# 第一，剩下的链表个数够不够 k 个（因为不够 k 个不用翻转）；
-# 第二，已经翻转的部分要与剩下链表连接起来。
 #
 
 # @lc code=start
@@ -53,19 +47,24 @@
 #         self.next = None
 
 class Solution:
+    # 用栈，我们把 k 个数压入栈中，然后弹出来的顺序就是翻转的！
+    # 这里要注意几个问题：
+    # 第一，剩下的链表个数够不够 k 个（因为不够 k 个不用翻转）；
+    # 第二，已经翻转的部分要与剩下链表连接起来。
     def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
-        dummy = ListNode(0)
+        dummy = ListNode('#')
         p = dummy
         while True:
             # 先找一段K长度的
             count = k
             stack = []
-            tmp = head
-            while count and tmp:
-                stack.append(tmp)
-                tmp = tmp.next
+            curr = head
+            # 注意此while跳出时，curr指向k+1位置
+            while count and curr:
+                stack.append(curr)
+                curr = curr.next
                 count -= 1
-            # 注意,目前tmp所在k+1位置
+
             # 说明剩下的链表不够k个,跳出循环
             if count:
                 p.next = head
@@ -74,9 +73,10 @@ class Solution:
             while stack:
                 p.next = stack.pop()
                 p = p.next
+
             # 与剩下链表连接起来
-            p.next = tmp
-            head = tmp
+            p.next = curr
+            head = curr
 
         return dummy.next
 # @lc code=end

@@ -46,7 +46,7 @@
 
 
 class Solution:
-
+    # 层次访问
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
         if not root: return []
 

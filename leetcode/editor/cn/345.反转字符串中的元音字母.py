@@ -34,15 +34,15 @@
 
 # @lc code=start
 class Solution:
-
+    # 注意这种反转的场景，[left, right]两边闭合的区间会少遍历一次
     def reverseVowels(self, s: str) -> str:
         s = list(s)
         left, right = 0, len(s) - 1
         vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'O', 'E', 'I', 'U']
         while left < right:
-            while s[left] not in vowels and left < right:
+            while left < right and s[left] not in vowels:
                 left += 1
-            while s[right] not in vowels and left < right:
+            while left < right and s[right] not in vowels:
                 right -= 1
             s[left], s[right] = s[right], s[left]
             left += 1

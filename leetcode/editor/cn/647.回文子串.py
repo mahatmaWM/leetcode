@@ -1,3 +1,18 @@
+#
+# @lc app=leetcode.cn id=647 lang=python3
+#
+# [647] 回文子串
+#
+# https://leetcode-cn.com/problems/palindromic-substrings/description/
+#
+# algorithms
+# Medium (61.73%)
+# Likes:    259
+# Dislikes: 0
+# Total Accepted:    29.2K
+# Total Submissions: 47.3K
+# Testcase Example:  '"abc"'
+#
 # 给定一个字符串，你的任务是计算这个字符串中有多少个回文子串。
 #
 # 具有不同开始位置或结束位置的子串，即使是由相同的字符组成，也会被计为是不同的子串。
@@ -23,8 +38,10 @@
 #
 # 输入的字符串长度不会超过1000。
 #
-# Related Topics 字符串 动态规划
-# leetcode submit region begin(Prohibit modification and deletion)
+#
+#
+
+# @lc code=start
 class Solution:
     # 思路见5题，加上一个计数即可。
     def countSubstrings(self, s: str) -> int:
@@ -40,6 +57,5 @@ class Solution:
                     res += 1
         return res
 
-
-# leetcode submit region end(Prohibit modification and deletion)
+# @lc code=end
 

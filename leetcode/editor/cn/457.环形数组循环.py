@@ -61,7 +61,10 @@
 
 # @lc code=start
 class Solution:
-    # 采用两个快慢指针，慢指针一次走一步，快指针一次走两步，如果两者相遇，说明存在环（注意排除死循环的情况）
+    # 选取一个起点，采用两个快慢指针，慢指针一次走一步，快指针一次走两步，
+    # 如果两者相遇，说明存在环（注意排除死循环的情况）
+    # 然后遍历选每一个起点
+    # 这里注意新一次尝试是不会进入之前尝试的点的，所以标记已访问的节点剪枝。
     def circularArrayLoop(self, nums: List[int]) -> bool:
         def nextIndex(i):
             next_step = i + nums[i]
@@ -80,7 +83,7 @@ class Solution:
             # 保证快慢指针始终向同一个方向移动
             while nums[slow] * nums[fast] > 0 and nums[fast] * nums[nextIndex(fast)] > 0:
                 if slow == fast:
-                    # slow == nextIndex(slow)说明进入一个局部圈死循环了
+                    # 进入一个局部圈死循环了
                     if slow == nextIndex(slow):
                         break
                     else:

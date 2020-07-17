@@ -60,15 +60,16 @@
 
 # @lc code=start
 class Solution:
-    # 思路：这种需要在原位操作的，都是left,right 双指针直接遍历数组。
+    # 思路：这种需要在原位操作的，都是left,right双指针直接遍历数组。
     def removeDuplicates(self, nums: List[int]) -> int:
         if not nums: return 0
-
-        left = 0
-        for right in range(1, len(nums)):
-            if nums[right] != nums[left]:
-                left += 1
+        left, right = 1, 1
+        while right < len(nums):
+            if nums[right] == nums[left - 1]:
+                right += 1
+            else:
                 nums[left] = nums[right]
-        return left + 1
+                left += 1
+                right += 1
+        return left
 # @lc code=end
-

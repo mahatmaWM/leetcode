@@ -35,7 +35,7 @@
 
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
-        dummy = ListNode(0)
+        dummy = ListNode('#')
         dummy.next = head
         pre, curr = dummy, head
 

@@ -44,7 +44,6 @@ class Solution:
     def minWindow(self, s: str, t: str) -> str:
         if not t or not s: return ""
         # 记录t中每个字母出现次数
-        import collections
         t_cnt = collections.Counter(t)
         uniq_require = len(t_cnt)
 

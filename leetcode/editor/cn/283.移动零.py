@@ -36,12 +36,14 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        left = 0
-        for right in nums:
-            if right != 0:
-                nums[left] = right
+        left, right = 0, 0
+        while right < len(nums):
+            if nums[right] == 0:
+                right += 1
+            else:
+                nums[left] = nums[right]
                 left += 1
+                right += 1
         for i in range(left, len(nums)):
             nums[i] = 0
 # @lc code=end
-

@@ -67,13 +67,7 @@ class Solution:
             while len(stack) and stack[-1] < i:
                 right_bigger[stack.pop()] = i
             stack.append(i)
-
         for i in nums1:
             ans.append(right_bigger.get(i, -1))
-
         return ans
-
-
-if __name__ == '__main__':
-    print(Solution().nextGreaterElement(nums1=[4, 1, 2], nums2=[1, 3, 4, 2]))
 # @lc code=end

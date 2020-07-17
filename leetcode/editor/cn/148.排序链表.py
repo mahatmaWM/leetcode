@@ -37,8 +37,7 @@
 
 
 class Solution:
-    # 147题用的插入排序，这里用归并方法
-    # 用归并排序的思想，将链表用快慢指针分成两半，然后两半排好序，最后归并。
+    # 147题用的插入排序，这里用归并排序的思想，将链表用快慢指针分成两半，然后两半排好序，最后归并。
     # 注意快慢指针把链表拆成等长两段的做法，设置一个dummy节点。
     def sortList(self, head: ListNode) -> ListNode:
         if not head or not head.next: return head

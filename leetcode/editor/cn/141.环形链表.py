@@ -62,8 +62,7 @@
 #         self.next = None
 
 class Solution:
-    # 思路：判断是否有环使用快慢指针。
-    # 如果有环则一定会相遇；否则快指针会走到最后一个节点出错。
+    # 思路：判断是否有环使用快慢指针。如果有环则一定会相遇；否则快指针会走到最后一个节点出错。
     def hasCycle(self, head: ListNode) -> bool:
         if not head: return False
         slow = head

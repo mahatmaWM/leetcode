@@ -54,13 +54,15 @@
 # 0 <= A[i] <= 10000
 # 0 <= K <= 10000
 #
-# 思路，新得到的B数组，B_min的最大值 = A_min + K，B_max的最小值 = A_max - K
-# 所以得到的新数组B的差值就小为 (A_max - K) - (A_min + K)，当此值小于0的时候，最终结果为0
 #
+
 
 # @lc code=start
 class Solution:
+    # 新得到的B数组中，B_min的最大值 = A_min + K，B_max的最小值 = A_max - K
+    # 所以得到的新数组B的差值就小为 (A_max - K) - (A_min + K)，当此值小于0的时候，最终结果为0
     def smallestRangeI(self, A: List[int], K: int) -> int:
         return max(0, (max(A) - K) - (min(A) + K))
+
 
 # @lc code=end

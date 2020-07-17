@@ -40,7 +40,7 @@
 
 
 class Solution:
-
+    # 递归的版本
     def inorderTraversal(self, root: TreeNode) -> List[int]:
         res = []
 
@@ -53,11 +53,10 @@ class Solution:
         inOrder(root)
         return res
 
-# 非递归版本：
-# 中序的非递归遍历与先序的非递归遍历类似。
-# 先序遍历是先访问节点，然后再将节点入栈，
-# 而中序遍历则是先入栈，然后节点弹出栈后再访问。
 class Solution1(object):
+    # 非递归版本：中序的非递归遍历与先序的非递归遍历类似。
+    # 先序遍历是先访问节点，然后再将节点入栈，
+    # 而中序遍历则是先入栈，然后节点弹出栈后再访问。
     def inorderTraversal(self, root):
         if not root: return []
         res = []

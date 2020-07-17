@@ -54,7 +54,7 @@ class Solution:
 
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         count = collections.Counter(nums)
-        heap = [(-freq, num) for word, freq in count.items()]
+        heap = [(-freq, word) for word, freq in count.items()]
         heapq.heapify(heap)
         return [heapq.heappop(heap)[1] for _ in range(k)]
 

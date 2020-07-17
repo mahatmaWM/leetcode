@@ -35,28 +35,26 @@
 
 
 # @lc code=start
-class Solution1:
-
+class Solution:
+    # 先排序数组，
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
-        res = []
-        length = len(nums)
-
-        for i in range(length):
-            left, right = i + 1, length - 1
+        res = set([])
+        for i in range(len(nums)):
+            left, right = i + 1, len(nums) - 1
             while left < right:
                 sum_3 = nums[i] + nums[left] + nums[right]
                 if sum_3 == 0:
-                    if [nums[i], nums[left], nums[right]] not in res:
-                        res.append([nums[i], nums[left], nums[right]])
+                    if (nums[i], nums[left], nums[right]) not in res:
+                        res.add((nums[i], nums[left], nums[right]))
                     left += 1
                     right -= 1
                 if sum_3 < 0: left += 1
                 if sum_3 > 0: right -= 1
-        return res
+        return [list(item) for item in res]
 
 
-class Solution:
+class Solution1:
 
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         # nums已经被排序

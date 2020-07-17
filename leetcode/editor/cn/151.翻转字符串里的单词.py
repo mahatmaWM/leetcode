@@ -60,12 +60,12 @@
 class Solution:
     # 思路，python的字符串不能原位更改，所以无法O1空间。" ".join(s.split()[::-1])一句即可。
 
-    # 或者模拟整个过程
-    # 1、先翻转整个数组
-    # 2、再翻转单个单词
-    # 3、清除多余空格
+    # 模拟整个过程，先翻转整个数组，再翻转单个单词，最后清除头尾多余的空格
     def reverseWords(self, s: str) -> str:
-        # 翻转list s
+        s = list(s.strip())
+        n = len(s)
+
+        # 翻转list s[i,j]
         def reverse(s, i, j):
             while i < j:
                 s[i], s[j] = s[j], s[i]
@@ -75,6 +75,7 @@ class Solution:
         # 翻转每个单词，用双指针找到一个单词
         def word_reverse(s):
             w_begin, w_end = 0, 0
+            nonlocal n
             while w_begin < n:
                 # 找到一个单词首字母
                 while w_begin < n and s[w_begin] == " ":
@@ -87,18 +88,17 @@ class Solution:
                 w_begin = w_end
 
         def clean_more_space(s):
-            n = len(s)
             left, right = 0, 0
-            for right in range(n):
+            nonlocal n
+            while right < n:
                 if s[right] != ' ' or (s[right] == ' ' and s[right + 1] != ' ' and right + 1 < n):
                     s[left] = s[right]
                     left += 1
+                    right +=1
                 elif s[right] == ' ' and s[right + 1] == ' ' and right + 1 < n:
                     right += 1
             return ''.join(s[0:left])
 
-        s = list(s.strip())
-        n = len(s)
         reverse(s, 0, n - 1)
         word_reverse(s)
         return clean_more_space(s)

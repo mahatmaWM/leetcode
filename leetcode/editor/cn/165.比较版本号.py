@@ -69,10 +69,8 @@
 class Solution:
     # 思路：按照 . 号split，然后每位依次对比。
     def compareVersion(self, version1: str, version2: str) -> int:
-        import itertools
         for x, y in itertools.zip_longest(version1.split("."), version2.split("."), fillvalue=0):
-            if int(x) != int(y):
-                return 1 if int(x) > int(y) else -1
+            if int(x) != int(y): return 1 if int(x) > int(y) else -1
         return 0
 
 

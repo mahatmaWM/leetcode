@@ -59,5 +59,7 @@ class Solution:
             curr = curr.next
             if node.next: heapq.heappush(heap, (node.next.val, node.next))
         return dummy.next
+
+
 # @lc code=end
 

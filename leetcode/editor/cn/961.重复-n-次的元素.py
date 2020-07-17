@@ -54,6 +54,7 @@
 
 # @lc code=start
 class Solution:
+    # 本题只有一个元素重复
     def repeatedNTimes(self, A: List[int]) -> int:
         count_dict = {}
         for each in A:
