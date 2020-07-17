@@ -66,7 +66,6 @@ class Solution:
         row = len(grid)
         col = len(grid[0])
         directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
-        import copy
         res = copy.deepcopy(grid)
 
         def valid(x, y):

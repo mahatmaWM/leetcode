@@ -48,7 +48,6 @@
 class Solution:
 
     def frequencySort(self, s: str) -> str:
-        import collections
         count = collections.Counter(s)
         count_sort = sorted(count.items(), key=lambda pair: pair[1], reverse=True)
         return ''.join([k * v for (k, v) in count_sort])

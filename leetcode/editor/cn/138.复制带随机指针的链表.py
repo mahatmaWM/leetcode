@@ -82,18 +82,21 @@ class Node:
 
 class Solution:
 
-    def __init__(self):
-        self.visitedHash = {}
-
     def copyRandomList(self, head: 'Node') -> 'Node':
-        if not head: return None
-        if head in self.visitedHash: return self.visitedHash[head]
+        visitedHash = {}
 
-        node = Node(head.val, None, None)
-        self.visitedHash[head] = node
-        node.next = self.copyRandomList(head.next)
-        node.random = self.copyRandomList(head.random)
-        return node
+        def helper(head):
+            if not head: return None
+            nonlocal visitedHash
+            if head in visitedHash: return visitedHash[head]
+
+            node = Node(head.val, None, None)
+            visitedHash[head] = node
+            node.next = helper(head.next)
+            node.random = helper(head.random)
+            return node
+
+        return helper(head)
 
 
 # @lc code=end

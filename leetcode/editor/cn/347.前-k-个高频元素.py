@@ -44,7 +44,7 @@
 
 # @lc code=start
 class Solution1:
-    # 注意本题评率相同的元素要么全部包含在结果中，要么都不在。
+    # 注意本题频率相同的元素要么全部包含在结果中，要么都不在。
     # 不会出现部分在部分不在的情况，否则本题解法是不成立的，692题就有breaking tail的情况
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         return [item[0] for item in collections.Counter(nums).most_common(k)]

@@ -55,26 +55,29 @@
 
 
 class Solution:
-
+    # 递归遍历树，保存子树和于hashmap，最后遍历hashmap找出现最大次数的元素和
     def findFrequentTreeSum(self, root: TreeNode) -> List[int]:
         if not root: return []
         hashmap = collections.defaultdict(int)
 
         def helper(node):
             if not node: return 0
-            tmp = helper(node.left) + helper(node.right) + node.val
-            hashmap[tmp] += 1
-            return tmp
+            nonlocal hashmap
+            node_sum = helper(node.left) + helper(node.right) + node.val
+            hashmap[node_sum] += 1
+            return node_sum
 
         helper(root)
-        result, tmp = [], 0
+
+        ans = []
+        max_cnt = 0
         for key, val in hashmap.items():
-            if val == tmp:
-                result.append(key)
-            elif val > tmp:
-                tmp = val
-                result = [key]
-        return result
+            if val == max_cnt:
+                ans.append(key)
+            elif val > max_cnt:
+                max_cnt = val
+                ans = [key]
+        return ans
 
 
 # @lc code=end

@@ -31,20 +31,17 @@
 # 给定数组的长度范围是 [2, 10000]。
 # 给定的数组是无序的。
 #
-# 转化一下题目，暂且将 nums 中的元素变为 [0..N-1]，这样每个元素就和一个数组索引完全对应了，这样方便理解一些。
-# 思路：通过将每个索引对应的元素变成负数，以表示这个索引被对应过一次了
 #
 
 
 # @lc code=start
 class Solution:
-
+    # 转化一下题目，暂且将 nums 中的元素变为 [0..N-1]，这样每个元素就和一个数组索引完全对应了，这样方便理解一些。
+    # 思路：通过将每个索引对应的元素变成负数，以表示这个索引被对应过一次了
     def findErrorNums(self, nums: List[int]) -> List[int]:
-        n = len(nums)
-
-        # 遍历一遍数组，将数值对应的下标变为负数，如果遇到已经为负的元素，说明此元素重复了
+        # 遍历数组，将数值对应的下标变为负数，如果遇到已经为负的元素，说明此元素重复了
         dup = -1
-        for i in range(n):
+        for i in range(len(nums)):
             index = abs(nums[i]) - 1
             if nums[index] < 0:
                 dup = abs(nums[i])
@@ -53,7 +50,7 @@ class Solution:
 
         # 递增下标，找到大于0的那个，说明对应的元素是缺失的
         missing = -1
-        for i in range(n):
+        for i in range(len(nums)):
             if nums[i] > 0: missing = i + 1
         return [dup, missing]
 

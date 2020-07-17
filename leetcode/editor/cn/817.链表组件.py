@@ -65,7 +65,6 @@ class Solution:
     def numComponents(self, head: ListNode, G: List[int]) -> int:
         Gset = set(G)
         cnt = 0
-
         while head:
             if head.val in Gset and (not head.next or head.next.val not in Gset): cnt += 1
             head = head.next

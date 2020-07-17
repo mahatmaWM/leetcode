@@ -42,7 +42,6 @@ class Solution:
     # 2、出现次数为偶数的字母都可以用来构造回文，出现次数为奇数的，可以用其减1的长度来构造回文。
     # 3、最后再添加一个出现次数为奇数的字符。
     def longestPalindrome(self, s: str) -> int:
-        import collections
         s_cnt = collections.Counter(s)
 
         res = 0
