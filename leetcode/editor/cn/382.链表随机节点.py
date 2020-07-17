@@ -33,13 +33,13 @@
 # 思路叫蓄水池抽样算法，主要用来解决如下问题。
 # 给定一个数据流，数据流长度N很大，且N直到处理完所有数据之前都不可知，请问如何在只遍历一遍数据（O(N)）的情况下，能够随机选取出m个不重复的数据。
 
-
 # @lc code=start
 # Definition for singly-linked list.
 # class ListNode:
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
+
 
 class Solution:
 
@@ -50,7 +50,6 @@ class Solution:
         """
         self.head = head
 
-
     def getRandom(self) -> int:
         """
         Returns a random node's value.
@@ -59,16 +58,13 @@ class Solution:
         cur = self.head
         c = 0
         while cur:
-            if not random.randint(0,c):
-                res = cur.val
-            c+=1
+            if not random.randint(0, c): res = cur.val
+            c += 1
             cur = cur.next
         return res
-
 
 
 # Your Solution object will be instantiated and called as such:
 # obj = Solution(head)
 # param_1 = obj.getRandom()
 # @lc code=end
-

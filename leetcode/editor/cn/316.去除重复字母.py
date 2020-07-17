@@ -52,7 +52,6 @@ class Solution:
     #           如果当前字符c小于栈顶，并且栈顶元素有剩余（后面还能再添加进来），栈不为空，则出栈栈顶，标记栈顶不在栈中。重复该操作直到栈顶元素不满足条件或者栈为空。
     #           入栈字符c，并且标记c已经在栈中。
     def removeDuplicateLetters(self, s: str) -> str:
-        import collections
         cnt = collections.Counter(s)
         stack = []
         visited = collections.defaultdict(bool)

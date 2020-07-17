@@ -57,11 +57,11 @@
 
 # @lc code=start
 class Solution:
-
+    # dp[i][j] 代表字符串s[位置i 到 位置j]的最长回文长度
+    # 则考虑状态转移：位置i-1 和 位置j+1 的字符，如果相等，则长度会+2；
+    # 如果不等，则只可能取到其中一个字符
     def longestPalindromeSubseq(self, s: str) -> int:
         n = len(s)
-        # dp[i][j] 代表字符串s[位置i 到 位置j]的最长回文长度
-        # 则考虑状态转移：位置i-1 和 位置j+1 的字符，如果相等，则长度会+2；如果不等，则只可能取到其中一个字符
         dp = [[0] * n for _ in range(n)]
         for i in range(n):
             dp[i][i] = 1

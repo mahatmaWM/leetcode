@@ -35,14 +35,13 @@
 # 输出: 0
 # 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
 #
-# dp[i][0] 第i天手上没有股票
-# dp[i][1] 第i天手上有股票
 #
 #
 
 # @lc code=start
 class Solution:
-
+    # dp[i][0] 第i天手上没有股票
+    # dp[i][1] 第i天手上有股票
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
         if n <= 1: return 0

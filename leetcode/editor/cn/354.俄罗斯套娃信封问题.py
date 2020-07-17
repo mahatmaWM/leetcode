@@ -37,7 +37,6 @@ class Solution:
         envelopes.sort(key=lambda x: (x[0], -x[1]))
 
         def lis(nums):
-            import bisect
             memo = list()
             n = len(nums)
             for i in range(n):

@@ -46,8 +46,7 @@ class Solution:
     # 思路：贪心寻找，当在t中找到了s的第一个元素就开始找第二个。
     # s用队列保存会比较快。
     def isSubsequence(self, s: str, t: str) -> bool:
-        from collections import deque
-        queue = deque(s)
+        queue = collections.deque(s)
         for c in t:
             if not queue: return True
             if c == queue[0]: queue.popleft()

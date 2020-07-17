@@ -77,10 +77,10 @@
 # @lc code=start
 class Solution0:
     # 如果不考虑有正则的情况，仅仅比较两个字符串是否相等，很容易写出递归解法。
-    def __isMatch(self, s, p):
+    def isMatch(self, s, p):
         if not p: return not s
         first = bool(s) and p[0] == s[0]
-        return first and self.isMatch_0(s[1:], p[1:])
+        return first and self.isMatch(s[1:], p[1:])
 
 class Solution:
     # 以下正则递归版本只是在__isMatch基础上改进得到

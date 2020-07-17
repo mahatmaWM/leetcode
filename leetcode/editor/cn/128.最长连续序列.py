@@ -58,7 +58,6 @@ class Solution:
                 union_find[tmp] = next_try
 
         # 父节点出现次数最多的
-        import collections
         dict1 = collections.defaultdict(int)
         res = 0
         for _, v in union_find.items():

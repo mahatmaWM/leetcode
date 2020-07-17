@@ -48,11 +48,10 @@
 
 
 # @lc code=start
-# 思路一：回溯的思路，但是会超时
-# 存在很多子问题，比如下面代码中，如果某一个nums[i]=0，就能一眼看出相同的backtrack函数被多次调用
-# 所以先用备忘录来优化，就得到思路二的动态规划版本
 class Solution1:
-
+    # 思路一：回溯的思路，但是会超时
+    # 存在很多子问题，比如下面代码中，如果某一个nums[i]=0，就能一眼看出相同的backtrack函数被多次调用
+    # 所以先用备忘录来优化，就得到思路二的动态规划版本
     def findTargetSumWays(self, nums: List[int], S: int) -> int:
         res = 0
 
@@ -77,9 +76,8 @@ class Solution1:
         return res
 
 
-# 思路二：使用备忘录来优化，避免递归回溯的过程中重复计算
 class Solution2:
-
+    # 思路二：使用备忘录来优化，避免递归回溯的过程中重复计算
     def findTargetSumWays(self, nums: List[int], S: int) -> int:
         memo = dict()
 
@@ -97,15 +95,12 @@ class Solution2:
         if len(nums) == 0: return 0
         return dp(nums, 0, 0, S)
 
-
-# 思路三，转化原始问题为标准的动态规划问题（0-1背包问题）
-# dp[i][j]表示从前i个物品中挑选元素是否能填满容量为j的背包，
-# 原始的背包问题是 选 或者 不选，而本题的要求是选+ 或者 选-，因此转移方程变为：
-# dp[i][j] = dp[i - 1][j - nums[i]] + dp[i - 1][j + nums[i]]
-# 注意转移方程里面有j-nums[i]这一项，说明下标有可能为负数，最大为-1000，所以第二位统一右移1000
-#
 class Solution:
-
+    # 思路三，转化原始问题为标准的动态规划问题（0-1背包问题）
+    # dp[i][j]表示从前i个物品中挑选元素是否能填满容量为j的背包，
+    # 原始的背包问题是 选 或者 不选，而本题的要求是选+ 或者 选-，因此转移方程变为：
+    # dp[i][j] = dp[i - 1][j - nums[i]] + dp[i - 1][j + nums[i]]
+    # 注意转移方程里面有j-nums[i]这一项，说明下标有可能为负数，最大为-1000，所以第二位统一右移1000
     def findTargetSumWays(self, nums: List[int], S: int) -> int:
         # dp初始状态，使用dp字典来代替dp数组，可以不用去考虑数组边界的问题，会方便很多
         length = len(nums)

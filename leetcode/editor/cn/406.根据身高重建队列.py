@@ -2,18 +2,18 @@
 # 每个人由一个整数对(h, k)表示，其中h是这个人的身高，k是排在这个人前面且身高大于或等于h的人数。
 # 编写一个算法来重建这个队列。
 #
-# 注意： 
+# 注意：
 # 总人数少于1100人。
 #
-# 示例 
+# 示例
 #
-# 
+#
 # 输入:
 # [[7,0], [4,4], [7,1], [5,0], [6,1], [5,2]]
 #
 # 输出:
 # [[5,0], [7,0], [5,2], [6,1], [4,4], [7,1]]
-# 
+#
 # Related Topics 贪心算法
 
 # 贪心思路：高个子先站好位，矮个子插入到K位置上，前面肯定有K个高个子，矮个子再插到前面也满足K的要求
@@ -35,14 +35,6 @@ class Solution:
 
 
 # leetcode submit region end(Prohibit modification and deletion)
-def main():
+if __name__ == "__main__":
     print(Solution().reconstructQueue(
         people=[[7, 0], [4, 4], [7, 1], [5, 0], [6, 1], [5, 2]]))
-
-
-if __name__ == "__main__":
-    import time
-
-    start = time.clock()
-    main()
-    print("%s sec" % (time.clock() - start))

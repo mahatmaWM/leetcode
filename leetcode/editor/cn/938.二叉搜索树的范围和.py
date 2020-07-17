@@ -52,9 +52,10 @@
 
 class Solution:
     def rangeSumBST(self, root: TreeNode, L: int, R: int) -> int:
-        self.res = 0
+        res = 0
 
         def pre_order(node):
+            nonlocal res
             if not node: return None
 
             if node.val > R:
@@ -62,12 +63,12 @@ class Solution:
             elif node.val < L:
                 pre_order(node.right)
             else:
-                self.res += node.val
+                res += node.val
                 pre_order(node.left)
                 pre_order(node.right)
 
         pre_order(root)
-        return self.res
+        return res
 
 # @lc code=end
 

@@ -49,15 +49,11 @@ class Solution:
 
         # 从左往右，使其满足分数大于左边的，糖果一定多一点
         for i in range(1, len(ratings)):
-            if ratings[i] > ratings[i - 1]:
-                left[i] = left[i - 1] + 1
-
+            if ratings[i] > ratings[i - 1]: left[i] = left[i - 1] + 1
         count = left[-1]
-
         # 从右往左，使其满足分数大于右边的，糖果一定多一点
         for i in range(len(ratings) - 2, -1, -1):
-            if ratings[i] > ratings[i + 1]:
-                right[i] = right[i + 1] + 1
+            if ratings[i] > ratings[i + 1]: right[i] = right[i + 1] + 1
             # 同时取左右最大的求和，并且加上最右边的点，既是最后结果
             count += max(left[i], right[i])
         return count

@@ -16,16 +16,15 @@
 # 说明: 你可以假设 n 不小于 2 且不大于 58。
 # Related Topics 数学 动态规划
 
-# 动态规划，自底向上
-# dp[i]表示最大数字i乘积最大化
-# 那么dp[i] = max(dp[i], max(j, dp[j]) * max(i - j) * dp[i - j]) j < i
-# i被拆分为j和i-j两个数字的时候，他们的乘积最大值分为：
-# j     *       (i-j)
-# dp[j] *       dp[i-j]
-
 
 # leetcode submit region begin(Prohibit modification and deletion)
 class Solution:
+    # 动态规划，自底向上
+    # dp[i]表示最大数字i乘积最大化
+    # 那么dp[i] = max(dp[i], max(j, dp[j]) * max(i - j) * dp[i - j]) j < i
+    # i被拆分为j和i-j两个数字的时候，他们的乘积最大值分为：
+    # j     *       (i-j)
+    # dp[j] *       dp[i-j]
     def integerBreak(self, n: int) -> int:
         dp = [1] * (n + 1)
         for i in range(2, n + 1):

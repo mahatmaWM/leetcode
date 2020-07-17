@@ -1,20 +1,35 @@
-# 在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
 #
-# 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。 
+# @lc app=leetcode.cn id=134 lang=python3
 #
-# 如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。 
+# [134] 加油站
 #
-# 说明: 
+# https://leetcode-cn.com/problems/gas-station/description/
 #
-# 
-# 如果题目有解，该答案即为唯一答案。 
-# 输入数组均为非空数组，且长度相同。 
-# 输入数组中的元素均为非负数。 
-# 
+# algorithms
+# Medium (53.13%)
+# Likes:    312
+# Dislikes: 0
+# Total Accepted:    36K
+# Total Submissions: 67.8K
+# Testcase Example:  '[1,2,3,4,5]\n[3,4,5,1,2]'
 #
-# 示例 1: 
+# 在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
 #
-# 输入: 
+# 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+#
+# 如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+#
+# 说明: 
+#
+#
+# 如果题目有解，该答案即为唯一答案。
+# 输入数组均为非空数组，且长度相同。
+# 输入数组中的元素均为非负数。
+#
+#
+# 示例 1:
+#
+# 输入:
 # gas  = [1,2,3,4,5]
 # cost = [3,4,5,1,2]
 #
@@ -29,9 +44,9 @@
 # 开往 3 号加油站，你需要消耗 5 升汽油，正好足够你返回到 3 号加油站。
 # 因此，3 可为起始索引。
 #
-# 示例 2: 
+# 示例 2:
 #
-# 输入: 
+# 输入:
 # gas  = [2,3,4]
 # cost = [3,4,3]
 #
@@ -44,20 +59,15 @@
 # 开往 1 号加油站，此时油箱有 3 - 3 + 3 = 3 升汽油
 # 你无法返回 2 号加油站，因为返程需要消耗 4 升汽油，但是你的油箱只有 3 升汽油。
 # 因此，无论怎样，你都不可能绕环路行驶一周。
-# Related Topics 贪心算法
+#
+#
 
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def canCompleteCircuit(self, gas, cost):
-        """
-        :type gas: List[int]
-        :type cost: List[int]
-        :rtype: int
-        """
-        if sum(gas) < sum(cost):
-            return -1
+# @lc code=start
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        if sum(gas) < sum(cost): return -1
         residue, start = 0, 0
-        # 如果从res出发不能到达i - 1, 那么之前的耗油量必定大于总路程，所以将其剪切
+        # 如果从res出发不能到达 i - 1, 那么之前的耗油量必定大于总路程，所以将其剪切
         # 那后面的耗油量必定小于总路程，解必在后面，出发点直接为i + 1
         for i in range(len(gas)):
             residue = residue + gas[i] - cost[i]
@@ -65,17 +75,5 @@ class Solution(object):
                 residue = 0
                 start = i + 1
         return start
+# @lc code=end
 
-
-# leetcode submit region end(Prohibit modification and deletion)
-def main():
-    print(Solution().canCompleteCircuit(gas=[1, 2, 3, 4, 5],
-                                        cost=[3, 4, 5, 1, 2]))
-
-
-if __name__ == "__main__":
-    import time
-
-    start = time.clock()
-    main()
-    print("%s sec" % (time.clock() - start))

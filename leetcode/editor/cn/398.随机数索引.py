@@ -45,8 +45,8 @@ class Solution:
         res = -1
         for i in range(len(self.nums)):
             if self.nums[i] == target:
-                if random.randint(0, count) < 1:  # 以某一概率(1/count)抽样
-                    res = i
+                # 以某一概率(1/count)抽样
+                if random.randint(0, count) < 1: res = i
                 count += 1
         return res
 

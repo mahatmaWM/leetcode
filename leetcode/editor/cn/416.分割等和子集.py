@@ -31,27 +31,24 @@
 #
 # Related Topics 动态规划
 
-# 转化为0-1背包问题。
-# dp[i][j]表示能否在前i个物品中 选或者不选 可以装满容量j的背包。
-
 # leetcode submit region begin(Prohibit modification and deletion)
 from typing import List
 
 
 class Solution:
+    # 转化为0-1背包问题。
+    # dp[i][j]表示能否在前i个物品中 选或者不选 可以装满容量j的背包。
     def canPartition(self, nums: List[int]) -> bool:
         n = len(nums)
         target = sum(nums)
-        if target % 2 != 0:
-            return False
-        target //= 2
+        if target % 2 != 0: return False
+        target = target // 2
 
         # 初始化，并且把只取一个物品能填的位置 置为True
         dp = [[False] * (target + 1) for _ in range(n)]
         dp[0][0] = True
         for i in range(1, target + 1):
-            if nums[0] == i:
-                dp[0][i] = True
+            if nums[0] == i: dp[0][i] = True
 
         for i in range(1, n):
             for j in range(target + 1):
@@ -75,8 +72,7 @@ class Solution:
         cur = [False] * (target + 1)
         pre[0] = True
         for i in range(1, target + 1):
-            if nums[0] == i:
-                pre[i] = True
+            if nums[0] == i: pre[i] = True
         for i in range(1, n):
             for j in range(target + 1):
                 if j >= nums[i]:
@@ -88,13 +84,5 @@ class Solution:
 
 
 # leetcode submit region end(Prohibit modification and deletion)
-def main():
-    print(Solution().canPartition2(nums=[1, 5, 11, 5]))
-
-
 if __name__ == "__main__":
-    import time
-
-    start = time.clock()
-    main()
-    print("%s sec" % (time.clock() - start))
+    print(Solution().canPartition2(nums=[1, 5, 11, 5]))

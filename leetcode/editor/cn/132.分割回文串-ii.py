@@ -35,8 +35,7 @@ class Solution1:
         if s == s[::-1]: return 0
         ans = float("inf")
         for i in range(1, len(s) + 1):
-            if s[:i] == s[:i][::-1]:
-                ans = min(self.minCut(s[i:]) + 1, ans)
+            if s[:i] == s[:i][::-1]: ans = min(self.minCut(s[i:]) + 1, ans)
         return ans
 
 
