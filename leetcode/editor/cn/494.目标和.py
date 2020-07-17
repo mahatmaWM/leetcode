@@ -54,13 +54,13 @@
 class Solution1:
 
     def findTargetSumWays(self, nums: List[int], S: int) -> int:
-        self.res = 0
+        res = 0
 
         def backtrack(nums, i, cur_sum, target):
-            # 退出情况
+            nonlocal res
+            # 退出
             if i == len(nums):
-                if cur_sum == target:
-                    self.res += 1
+                if cur_sum == target: res += 1
                 return
             # 选择列表
             # 选择 + 号
@@ -74,7 +74,7 @@ class Solution1:
 
         if len(nums) == 0: return 0
         backtrack(nums, 0, 0, S)
-        return self.res
+        return res
 
 
 # 思路二：使用备忘录来优化，避免递归回溯的过程中重复计算
@@ -84,13 +84,12 @@ class Solution2:
         memo = dict()
 
         def dp(nums, i, cur_sum, target):
+            nonlocal memo
             if i == len(nums):
-                if cur_sum == target:
-                    return 1
+                if cur_sum == target: return 1
                 return 0
             key = str(i) + '|' + str(cur_sum)
-            if key in memo:
-                return memo[key]
+            if key in memo: return memo[key]
             res = dp(nums, i + 1, cur_sum + nums[i], target) + dp(nums, i + 1, cur_sum - nums[i], target)
             memo[key] = res
             return res

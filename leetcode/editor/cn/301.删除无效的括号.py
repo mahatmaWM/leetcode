@@ -56,6 +56,7 @@ class Solution:
             return res
 
         def helper(s, left_p, right_p, open, tmp):
+            nonlocal res
             # 当都小于0 都不满足条件
             if left_p < 0 or right_p < 0 or open < 0: return
             # s剩余的括号都不够组成的

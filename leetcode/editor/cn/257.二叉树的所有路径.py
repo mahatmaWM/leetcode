@@ -45,20 +45,21 @@
 class Solution:
 
     def binaryTreePaths(self, root: TreeNode) -> List[str]:
-        self.res = []
+        res = []
 
         def helper(root, path_list):
+            nonlocal res
             if not root: return
             # 选择
             path_list.append(str(root.val))
-            if not root.left and not root.right: self.res.append('->'.join(path_list))
+            if not root.left and not root.right: res.append('->'.join(path_list))
             if root.left: helper(root.left, path_list)
             if root.right: helper(root.right, path_list)
             # 取消选择
             path_list.pop()
 
         helper(root, [])
-        return self.res
+        return res
 
 
 # @lc code=end

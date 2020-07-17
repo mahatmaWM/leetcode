@@ -46,7 +46,7 @@
 
 
 # @lc code=start
-class Solution:
+class Solution1:
 
     def numIslands(self, grid: List[List[str]]) -> int:
 
@@ -76,8 +76,7 @@ class Solution:
             def union(self, p, q):
                 p_root = self.find(p)
                 q_root = self.find(q)
-                if p_root == q_root:
-                    return
+                if p_root == q_root: return
                 # 小树接到大树下面较平衡
                 if self.rank[p_root] > self.rank[q_root]:
                     self.parent[q_root] = p_root
@@ -118,14 +117,22 @@ class Solution:
 
 
 # flood fill方法的深度优先搜索版本
-class Solution1(object):
-    # 方向数组，它表示了相对于当前位置的 4 个方向的横、纵坐标的偏移量，这是一个常见的技巧
-    directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+class Solution:
 
     def numIslands(self, grid):
         m = len(grid)
         if m == 0: return 0
         n = len(grid[0])
+        directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+
+        def dfs(grid, i, j, m, n, marked):
+            marked[i][j] = True
+            nonlocal directions
+            for direction in directions:
+                new_i = i + direction[0]
+                new_j = j + direction[1]
+                if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][new_j] == '1':
+                    dfs(grid, new_i, new_j, m, n, marked)
 
         marked = [[False for _ in range(n)] for _ in range(m)]
         count = 0
@@ -135,21 +142,12 @@ class Solution1(object):
                 # 发现一个新陆地
                 if not marked[i][j] and grid[i][j] == '1':
                     count += 1
-                    self.__dfs(grid, i, j, m, n, marked)
+                    dfs(grid, i, j, m, n, marked)
         return count
-
-    def __dfs(self, grid, i, j, m, n, marked):
-        marked[i][j] = True
-        for direction in self.directions:
-            new_i = i + direction[0]
-            new_j = j + direction[1]
-            if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][new_j] == '1':
-                self.__dfs(grid, new_i, new_j, m, n, marked)
 
 
 # flood fill方法的广度优先搜索版本
 class Solution2:
-    directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
 
     def numIslands(self, grid):
         m = len(grid)
@@ -157,6 +155,8 @@ class Solution2:
         n = len(grid[0])
         marked = [[False for _ in range(n)] for _ in range(m)]
         count = 0
+        directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+
         # 从第 1 行、第 1 格开始，对每一格尝试进行一次 BFS 操作
         for i in range(m):
             for j in range(n):
@@ -174,7 +174,8 @@ class Solution2:
                             new_i = cur_x + direction[0]
                             new_j = cur_y + direction[1]
                             # 如果不越界、没有被访问过、并且还要是陆地，我就继续放入队列，放入队列的同时，要记得标记已经访问过
-                            if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][new_j] == '1':
+                            if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][
+                                    new_j] == '1':
                                 queue.append((new_i, new_j))
                                 #【特别注意】在放入队列以后，要马上标记成已经访问过，语义也是十分清楚的：反正只要进入了队列，你迟早都会遍历到它
                                 # 而不是在出队列的时候再标记

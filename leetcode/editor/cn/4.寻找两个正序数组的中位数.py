@@ -39,6 +39,8 @@
 #
 #
 
+from typing import List
+
 
 # @lc code=start
 class Solution:
@@ -74,3 +76,8 @@ class Solution:
 
 
 # @lc code=end
+
+if __name__ == "__main__":
+    nums1 = list([1, 3])
+    nums2 = list([2])
+    print(Solution().findMedianSortedArrays(nums1, nums2))

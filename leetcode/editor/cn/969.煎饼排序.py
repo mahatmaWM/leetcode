@@ -73,6 +73,4 @@ class Solution:
         return res
 
 
-if __name__ == "__main__":
-    print(Solution().pancakeSort(A=[3, 2, 4, 1]))
 # @lc code=end

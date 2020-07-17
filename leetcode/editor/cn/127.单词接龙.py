@@ -1,21 +1,37 @@
-# 给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord 的最短转换序列的长度。转换需遵循如下规则：
 #
-# 
-# 每次转换只能改变一个字母。 
-# 转换过程中的中间单词必须是字典中的单词。 
-# 
+# @lc app=leetcode.cn id=127 lang=python3
 #
-# 说明: 
+# [127] 单词接龙
 #
-# 
-# 如果不存在这样的转换序列，返回 0。 
-# 所有单词具有相同的长度。 
-# 所有单词只由小写字母组成。 
-# 字典中不存在重复的单词。 
-# 你可以假设 beginWord 和 endWord 是非空的，且二者不相同。 
-# 
+# https://leetcode-cn.com/problems/word-ladder/description/
 #
-# 示例 1: 
+# algorithms
+# Medium (42.46%)
+# Likes:    378
+# Dislikes: 0
+# Total Accepted:    49.7K
+# Total Submissions: 116.1K
+# Testcase Example:  '"hit"\n"cog"\n["hot","dot","dog","lot","log","cog"]'
+#
+# 给定两个单词（beginWord 和 endWord）和一个字典，找到从 beginWord 到 endWord
+# 的最短转换序列的长度。转换需遵循如下规则：
+#
+#
+# 每次转换只能改变一个字母。
+# 转换过程中的中间单词必须是字典中的单词。
+#
+#
+# 说明:
+#
+#
+# 如果不存在这样的转换序列，返回 0。
+# 所有单词具有相同的长度。
+# 所有单词只由小写字母组成。
+# 字典中不存在重复的单词。
+# 你可以假设 beginWord 和 endWord 是非空的，且二者不相同。
+#
+#
+# 示例 1:
 #
 # 输入:
 # beginWord = "hit",
@@ -25,10 +41,10 @@
 # 输出: 5
 #
 # 解释: 一个最短转换序列是 "hit" -> "hot" -> "dot" -> "dog" -> "cog",
-#     返回它的长度 5。
-# 
+# ⁠    返回它的长度 5。
 #
-# 示例 2: 
+#
+# 示例 2:
 #
 # 输入:
 # beginWord = "hit"
@@ -38,23 +54,17 @@
 # 输出: 0
 #
 # 解释: endWord "cog" 不在字典中，所以无法进行转换。
-# Related Topics 广度优先搜索
+#
+#
 
 
-# leetcode submit region begin(Prohibit modification and deletion)
-class Solution(object):
-    def ladderLength(self, beginWord, endWord, wordList):
-        """
-        :type beginWord: str
-        :type endWord: str
-        :type wordList: List[str]
-        :rtype: int
-        """
+# @lc code=start
+class Solution:
+
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         word_set = set(wordList)
-        if endWord not in word_set:
-            return 0
+        if endWord not in word_set: return 0
 
-        import collections
         word_dict = collections.defaultdict(list)
         for word in word_set:
             for index in range(len(word)):
@@ -67,14 +77,12 @@ class Solution(object):
         depth = 1
         while cur_word:
             for word in cur_word:
-                if word == endWord:
-                    return depth
+                if word == endWord: return depth
                 for index in range(len(word)):
                     new_word = word[:index] + "_" + word[index + 1:]
                     if new_word in word_dict:
                         for w in word_dict[new_word]:
-                            if w not in next_word:
-                                next_word.append(w)
+                            if w not in next_word: next_word.append(w)
                         del word_dict[new_word]
             # 如果endWord未出现在当前层的cur_word单词集合中，则深度+1
             depth += 1
@@ -83,16 +91,4 @@ class Solution(object):
         return 0
 
 
-# leetcode submit region end(Prohibit modification and deletion)
-def main():
-    print(Solution().ladderLength(beginWord="hit", endWord="cog",
-                                  wordList=["hot", "dot", "dog", "lot", "log",
-                                            "cog"]))
-
-
-if __name__ == "__main__":
-    import time
-
-    start = time.clock()
-    main()
-    print("%s sec" % (time.clock() - start))
+# @lc code=end

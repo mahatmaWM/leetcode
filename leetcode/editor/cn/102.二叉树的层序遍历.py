@@ -50,10 +50,9 @@ class Solution1:
     # 广度优先遍历是以层为顺序，将某一层上的所有节点都搜索到了之后才向下一层搜索；
     # 使用队列的性质来进行层次访问。
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        res = []
         if not root: return []
 
-        import collections
+        res = []
         queue = collections.deque()
         queue.append(root)
         while queue:

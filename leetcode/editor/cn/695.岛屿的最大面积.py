@@ -56,6 +56,7 @@ class Solution:
         m, n = len(grid), len(grid[0])
 
         def dfs(gird, i, j):
+            nonlocal m,n
             if 0 <= i < m and 0 <= j < n and grid[i][j]:
                 grid[i][j] = 0
                 return 1 + dfs(grid, i + 1, j) + dfs(grid, i - 1, j) + dfs(

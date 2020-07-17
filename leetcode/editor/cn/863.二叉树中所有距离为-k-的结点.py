@@ -66,6 +66,7 @@ class Solution1:
         graph = {}
 
         def buildGraph(root):
+            nonlocal graph
             for i in (root.left, root.right):
                 if i:
                     graph[root.val] = graph.get(root.val, set()) | {i.val}

@@ -42,10 +42,8 @@
 class Solution:
     # 比较直观的做法是采用层次遍历二叉树，然后获取每一层的最右边的节点即可。
     def rightSideView(self, root: TreeNode) -> List[int]:
+        if not root: return []
         retList = []
-        if not root: return retList
-
-        import collections
         queue = collections.deque()
         queue.append(root)
         while queue:

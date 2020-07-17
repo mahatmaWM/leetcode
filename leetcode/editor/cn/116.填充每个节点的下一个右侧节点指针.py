@@ -69,7 +69,6 @@ class Solution:
     # 层次遍历，获得每一层节点的list然后对每一个list的next进行赋值
     def connect(self, root: 'Node') -> 'Node':
         if not root: return None
-        import collections
         queue = collections.deque()
         queue.append(root)
         while queue:

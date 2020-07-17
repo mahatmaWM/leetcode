@@ -64,10 +64,11 @@ class Solution:
             if not node: return True
             val = node.val
             if val <= lower or val >= upper: return False
-            if helper(node.right, val, upper) is False: return False
-            if helper(node.left, lower, val) is False: return False
+            if not helper(node.right, val, upper): return False
+            if not helper(node.left, lower, val): return False
             return True
 
         return helper(root)
+
 
 # @lc code=end

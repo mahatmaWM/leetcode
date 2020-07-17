@@ -66,18 +66,19 @@
 class Solution:
 
     def findBottomLeftValue(self, root: TreeNode) -> int:
-        self.maxdepth, self.res = -1, 0
+        maxdepth, res = -1, 0
 
         def dfs(root, depth):
+            nonlocal maxdepth, res
             if not root: return
-            if depth > self.maxdepth:
-                self.maxdepth = depth
-                self.res = root.val
+            if depth > maxdepth:
+                maxdepth = depth
+                res = root.val
             dfs(root.left, depth + 1)
             dfs(root.right, depth + 1)
 
         dfs(root, 0)
-        return self.res
+        return res
 
 
 # BFS广度循环遍历，时间O(n) 空间O(b)，b为树的宽度

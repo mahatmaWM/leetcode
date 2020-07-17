@@ -95,15 +95,15 @@ class Node:
         self.neighbors = neighbors
 """
 
+
 class Solution:
+
     def cloneGraph(self, node: 'Node') -> 'Node':
         lookup = {}
-        def dfs(node):
-            if not node:
-                return
-            if node in lookup:
-                return lookup[node]
 
+        def dfs(node):
+            if not node: return
+            if node in lookup: return lookup[node]
             clone = Node(node.val, [])
             lookup[node] = clone
             for n in node.neighbors:
@@ -111,15 +111,19 @@ class Solution:
             return clone
 
         return dfs(node)
-    def cloneGraph1(self, node: 'Node') -> 'Node':
-        from collections import deque
+
+
+class Solution1:
+
+    def cloneGraph(self, node: 'Node') -> 'Node':
         lookup = {}
 
         def bfs(node):
+            nonlocal lookup
             if not node: return
             clone = Node(node.val, [])
             lookup[node] = clone
-            queue = deque()
+            queue = collections.deque()
             queue.appendleft(node)
             while queue:
                 tmp = queue.pop()
@@ -132,5 +136,5 @@ class Solution:
 
         return bfs(node)
 
-# @lc code=end
 
+# @lc code=end

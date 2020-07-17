@@ -54,6 +54,7 @@ class Solution:
         memo = [[0] * col for _ in range(row)]
 
         def dfs(i, j):
+            nonlocal memo
             if memo[i][j] != 0: return memo[i][j]
             res = 1
             for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]]:

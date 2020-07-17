@@ -51,7 +51,6 @@ class Solution:
         if not root: return []
 
         res = []
-        import collections
         queue = collections.deque()
         queue.append(root)
         while queue:

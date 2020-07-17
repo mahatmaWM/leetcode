@@ -62,18 +62,19 @@ class Solution:
     # 当访问到某一个节点时，需要把当前得到的数字传递给左右子节点。
     # 直到访问到叶子节点一个数字结束。
     def sumNumbers(self, root: TreeNode) -> int:
-        self.res = 0
+        res = 0
         # 前序遍历二叉树，
         def dfs(node, pre_num):
+            nonlocal res
             if not node: return
             pre_num = pre_num * 10 + node.val
             if not node.left and not node.right:
-                self.res += pre_num
+                res += pre_num
                 return
             dfs(node.left, pre_num)
             dfs(node.right, pre_num)
 
         dfs(root, 0)
-        return self.res
+        return res
 # @lc code=end
 

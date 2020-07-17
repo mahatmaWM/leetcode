@@ -53,8 +53,9 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
-    # 思路：判断p q两节点为根的树是否对称
+    #   判断p q两节点为根的树是否对称
     #   如果都为none，则对称；
     #   如果只有一个节点为none，则不对称；
     #   如果都有val，则val不同的话一定不对称；
@@ -68,7 +69,8 @@ class Solution:
             if not p or not q: return False
             if p.val != q.val: return False
             return check(p.left, q.right) and check(p.right, q.left)
+
         return check(root.left, root.right)
 
-# @lc code=end
 
+# @lc code=end

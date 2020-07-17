@@ -70,6 +70,7 @@
 # 寻找第二个节点：第一个节点找到之后, 后面出现前一个节点大于后一个节点，我们选择后一个节点，这里指节点1;
 #
 
+
 # @lc code=start
 # Definition for a binary tree node.
 # class TreeNode:
@@ -83,22 +84,24 @@ class Solution:
         """
         Do not return anything, modify root in-place instead.
         """
-        self.pre_visit, self.first, self.second = None, None, None
+        pre_visit, first, second = None, None, None
 
         def in_order(node):
             if not node: return
             in_order(node.left)
 
+            nonlocal pre_visit, first, second
             # 当前访问节点node，前一次访问的节点pre-visit
             # 先找到第一次出现逆序的first节点，再找到最后一次逆序的second节点
-            if self.pre_visit and self.pre_visit.val > node.val:
-                if not self.first: self.first = self.pre_visit
-                self.second = node
-            self.pre_visit = node
+            if pre_visit and pre_visit.val > node.val:
+                if not first: first = pre_visit
+                second = node
+            pre_visit = node
 
             in_order(node.right)
 
         in_order(root)
-        self.first.val, self.second.val = self.second.val, self.first.val
+        first.val, second.val = second.val, first.val
+
 
 # @lc code=end

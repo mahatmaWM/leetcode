@@ -65,10 +65,10 @@ class Solution:
     # BFS遍历连通图
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
         # 使用通配符构造邻接表（每个单词的任意子串作为两个节点之间的边）
-        hash = collections.defaultdict(list)
+        hashmap = collections.defaultdict(list)
         for word in wordList:
             for i in range(len(word)):
-                hash[word[:i] + "*" + word[i + 1:]].append(word)
+                hashmap[word[:i] + "*" + word[i + 1:]].append(word)
 
         # 需要访问的路径队列
         queue = [(beginWord, [beginWord])]
@@ -91,7 +91,7 @@ class Solution:
                 for i in range(len(word)):
                     masked_word = word[:i] + "*" + word[i + 1:]
                     # 访问该节点通过这条边能够访问的所有节点
-                    for j in hash[masked_word]:
+                    for j in hashmap[masked_word]:
                         # 因为是求最短路径，所以如果节点已经访问过则不再访问
                         if j not in visited:
                             queue.insert(0, [j, path + [j]])
