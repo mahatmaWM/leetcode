@@ -47,7 +47,6 @@ class Solution:
     # 2、每次优先选择剩余次数最多，且与新字符串末尾字符串不重复的字符，排在末尾。
     # 3、若某次选择无法找出这样的字符，则返回空串。
     def reorganizeString(self, S: str) -> str:
-        import collections
         cnt = collections.Counter(S)
 
         ans = ''

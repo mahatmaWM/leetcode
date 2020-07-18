@@ -32,12 +32,28 @@
 #
 #
 
+
 # @lc code=start
-class Solution:
+class Solution1:
+
     def singleNumber(self, nums: List[int]) -> int:
-        import collections
         count = collections.Counter(nums)
         for k, v in count.items():
             if v == 1: return k
-# @lc code=end
 
+
+class Solution:
+    # 与136题类似，异或 操作可以看成不进位的加法，所以本题对每位看成相加后对3取模
+    def singleNumber(self, nums: List[int]) -> int:
+        if len(nums) == 1: return nums[0]
+        ans = 0
+        for i in range(32):
+            sum = 0
+            for num in nums:
+                sum += (num >> i) & 1
+            ans = ans | ((sum % 3) << i)
+        # Python是动态类型语言，在这种情况下其会将符号位置的1看成了值，而不是当作符号“负数”
+        return ans - 2**32 if ans > 2**31 - 1 else ans
+
+
+# @lc code=end

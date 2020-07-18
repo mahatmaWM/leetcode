@@ -32,13 +32,16 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 利用位运算的异或，相同为0，则所有出现两次的最后被异或为0，剩下只出现一次的数字。
+    # 因为其余每个元素均出现两次。
+    # 所以利用位运算的 异或，相同为0，则所有出现两次的最后被异或为0，剩下只出现一次的数字。
     def singleNumber(self, nums: List[int]) -> int:
         res = 0
         for item in nums:
             res = res ^ item
         return res
-# @lc code=end
 
+
+# @lc code=end

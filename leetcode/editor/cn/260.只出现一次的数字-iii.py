@@ -32,7 +32,6 @@
 # @lc code=start
 class Solution1:
     def singleNumber(self, nums: List[int]) -> List[int]:
-        import collections
         count = collections.Counter(nums)
         res = []
         for num, c in count.items():
@@ -40,8 +39,8 @@ class Solution1:
         return res
 
 class Solution:
-    # 位运算思路：想到这个系列的第一个题（只有一个数字出现一次，其余数字出现两次）。做法是异或操作。
-    # 这个题也是用异或。把所有的数字进行一次异或，得到的是只出现了一次的两个数字的异或。
+    # 位运算思路：想到这个系列的第一个题（只有一个数字出现一次，其余数字出现两次）。
+    # 做法是异或操作，这个题也是用异或。把所有的数字进行一次异或，得到的是只出现了一次的两个数字的异或。
     #
     # 这两个数字不等，因此他们的二进制必定至少1位不同，即异或结果中为1的那位（一个数字的该位为1，另个数字的该位为0）。
     # 找出从右向左的第一个不同的位置（异或值为1的位置），给mask在该位置设置成1，mask的其余位置是0. mask存在的意义在于我们能通过该位置来分辨出两个只出现了一次的数字。
@@ -58,6 +57,7 @@ class Solution:
         xor = 0
         for num in nums:
             xor ^= num
+
         # 从xor中找到第一个为1的bit位，其一定是两个不同的数字做异或得到的
         mask = 1
         while xor & mask == 0:
