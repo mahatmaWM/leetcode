@@ -53,6 +53,7 @@
 class Solution:
     # 二分查找，直接迭代n寻找会超时
     def arrangeCoins(self, n: int) -> int:
+        # [low, high)
         low, high = 0, n + 1
         while low < high:
             mid = low + (high - low) // 2

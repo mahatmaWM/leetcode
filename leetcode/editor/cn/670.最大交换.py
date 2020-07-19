@@ -57,8 +57,7 @@ class Solution:
         next_pos = pos + 1
         if pos < length:
             for i in range(next_pos + 1, length):
-                if num_str[i] >= num_str[next_pos]:
-                    next_pos = i
+                if num_str[i] >= num_str[next_pos]: next_pos = i
             num_str[pos], num_str[next_pos] = num_str[next_pos], num_str[pos]
         return int("".join(num_str))
 

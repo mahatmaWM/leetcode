@@ -53,7 +53,8 @@ class Solution:
             a_beg, a_end = A[i][0], A[i][1]
             b_beg, b_end = B[j][0], B[j][1]
             # 两个区间存在交集
-            if b_end >= a_beg and a_end >= b_beg: res.append([max(a_beg, b_beg), min(a_end, b_end)])
+            if b_end >= a_beg and a_end >= b_beg:
+                res.append([max(a_beg, b_beg), min(a_end, b_end)])
             # 指针前进
             if b_end < a_end:
                 j += 1

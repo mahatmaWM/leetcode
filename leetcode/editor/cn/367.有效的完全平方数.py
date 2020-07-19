@@ -35,6 +35,7 @@
 class Solution:
 
     def isPerfectSquare(self, num: int) -> bool:
+        # [left, right)
         left, right = 1, num + 1
         while left < right:
             mid = left + (right - left) // 2

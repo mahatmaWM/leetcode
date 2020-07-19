@@ -79,7 +79,8 @@ class Solution:
         for i in range(len(s)):
             num += roman_num[s[i]]
             # 比如 CM=900 这种情况，相当于 +100 + 1000，所以应该 -200
-            if i < len(s) - 1 and roman_num[s[i]] < roman_num[s[i + 1]]: num -= 2 * roman_num[s[i]]
+            if i < len(s) - 1 and roman_num[s[i]] < roman_num[s[i + 1]]:
+                num -= 2 * roman_num[s[i]]
         return num
 
 

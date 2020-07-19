@@ -94,8 +94,8 @@ class Solution:
             except:
                 break
         # 如果数字超出范围，返回范围最大值
-        if res < -2147483648: return -2147483648
-        if res > 2147483647: return 2147483647
+        if res < -2**31: return -2**31
+        if res > 2**31: return 2**31
         return res
 # @lc code=end
 

@@ -44,6 +44,8 @@
 
 # @lc code=start
 import heapq
+
+
 class Solution:
     # https://leetcode-cn.com/problems/the-skyline-problem/solution/chu-xue-zhe-bu-yong-dui-yong-zi-dian-de-fang-fa-by/
     # Main idea：线性扫描每一个关键点,判断是左端点还是右端点
@@ -112,12 +114,9 @@ class Solution2:
                 x2 = skyline2[j][0] if j < len(skyline2) else float('inf')
                 # 这里合并的几种情况
                 x, h = 0, 0
-                if x1 < x2:
-                    h1, x, i = skyline1[i][1], x1, i + 1
-                elif x1 > x2:
-                    h2, x, j = skyline2[j][1], x2, j + 1
-                elif x1 == x2:
-                    h1, h2, x, i, j = skyline1[i][1], skyline2[j][1], x1, i + 1, j + 1
+                if x1 < x2: h1, x, i = skyline1[i][1], x1, i + 1
+                elif x1 > x2: h2, x, j = skyline2[j][1], x2, j + 1
+                elif x1 == x2: h1, h2, x, i, j = skyline1[i][1], skyline2[j][1], x1, i + 1, j + 1
                 h = max(h1, h2)
                 if len(res) == 0 or h != res[-1][1]: res.append([x, h])
             return res
