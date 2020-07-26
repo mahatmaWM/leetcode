@@ -53,9 +53,8 @@
 
 
 # @lc code=start
-class Solution1:
-    # 直接模拟
-    # 因为find_max_in_window是线性时间，当窗口长度很大的时候会超时
+class Solution_baoli:
+    # 直接模拟因为find_max_in_window是线性时间，当窗口长度很大的时候会超时
     # 如果这里能logN找到即可解决问题，所以队列里面的元素要有序（这里求最大值，如果有序可以O1时间）
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         # 特殊情况
@@ -65,7 +64,7 @@ class Solution1:
 
         def find_max_in_window(window):
             return max(window)
-
+        import collections
         window = collections.deque()
         max_idx = 0
         for i in range(k):
@@ -79,23 +78,35 @@ class Solution1:
             ans.append(find_max_in_window(window))
         return ans
 
-
 class Solution1:
-    # 思路：见上面暴力方法，只要保证window里面保存的索引对应的nums元素有序，即可O1时间找到，
-    # 但调整这个单调队列，最坏也是O(N)时间，类似java中的TreeSet才是最合适的数据结构，python没有
+    # 思路：见上面暴力方法，只要保证window里面有序，即可O1时间找到
+    # 但是由于SortedList内部的list要维护值移动拷贝（实际上还是很耗时的，不快能过）
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        # 特殊情况
-        n = len(nums)
-        if n * k == 0: return []
+        if len(nums) * k == 0: return []
         if k == 1: return nums
+        from sortedcontainers import SortedList
+        window = SortedList()
+        res = []
+        left = 0
+        for right in range(len(nums)):
+            window.add(nums[right])
+            while len(window) > k:
+                window.remove(nums[left])
+                left += 1
+            if len(window) == k: res.append(window[-1])
+        return res
 
+class Solution:
+    # 队列是最合适的数据结构，但是要想办法维护队列的有序性，所以用单调队列
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        if len(nums) * k == 0: return []
+        if k == 1: return nums
+        import collections
         deq = collections.deque()
 
-        # 把元素的索引index放入队列，并保证队首位置对应的元素为最大元素
+        # 单调队列，索引index放入队列，并保证队首位置对应的元素为最大元素
         def adjust_deq_order(index):
-            # 移除窗口首部
             if deq and deq[0] == index - k: deq.popleft()
-            # 从队尾去掉那些更小的元素的index
             while deq and nums[index] > nums[deq[-1]]:
                 deq.pop()
             deq.append(index)
@@ -107,33 +118,8 @@ class Solution1:
             if nums[i] > nums[max_idx]: max_idx = i
 
         output = [nums[max_idx]]
-        for i in range(k, n):
+        for i in range(k, len(nums)):
             adjust_deq_order(i)
             output.append(nums[deq[0]])
         return output
-
-
-class Solution:
-    # 思路：见上面暴力方法，只要保证window里面有序，即可O1时间找到，
-    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        # 特殊情况
-        n = len(nums)
-        if n * k == 0: return []
-        if k == 1: return nums
-
-        window = []
-        res = []
-        left = 0
-        for right in range(len(nums)):
-            bisect.insort(window, nums[right])
-
-            # 移除left指针元素
-            while len(window) > k:
-                window.pop(bisect.bisect_left(window, nums[left]))
-                left += 1
-
-            if len(window) == k: res.append(window[-1])
-        return res
-
-
 # @lc code=end

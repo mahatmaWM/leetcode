@@ -36,31 +36,31 @@
 class Solution:
 
     def searchRange(self, nums: List[int], target: int) -> List[int]:
-        # 采用[left, right)，这会影响left，right指针移动的方式
+        # [left, right)
         def lower_bound(left, right):
             while left < right:
                 mid = left + (right - left) // 2
+                if nums[mid] == target and (mid == 0 or nums[mid - 1] < target): return mid
+
+                # 因为是找下界，所以相等的时候要往前逼近
                 if nums[mid] >= target:
                     right = mid
                 elif nums[mid] < target:
                     left = mid + 1
-            if left >= len(nums) or nums[left] != target:
-                return -1
-            else:
-                return left
+            return -1
 
-        # 采用[left, right)，这会影响left，right指针移动的方式
+        # [left, right)
         def upper_bound(left, right):
             while left < right:
                 mid = left + (right - left) // 2
-                if nums[mid] > target:
-                    right = mid
-                elif nums[mid] <= target:
+                if nums[mid] == target and (mid == len(nums) - 1 or nums[mid + 1] > target): return mid
+
+                # 因为是找上界，所以相等的时候要往后逼近
+                if nums[mid] <= target:
                     left = mid + 1
-            if left < 0 or nums[left - 1] != target:
-                return -1
-            else:
-                return left - 1
+                elif nums[mid] > target:
+                    right = mid
+            return -1
 
         if not nums: return -1, -1
         left, right = 0, len(nums)

@@ -40,18 +40,15 @@
 
 # @lc code=start
 class Solution1:
-    # 暴力枚举O(N*k)，K太大时会超时
+    # 暴力枚举O(N*k)，窗口k太大时会超时
     def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
         if k < 1 or t < 0: return False
         for i in range(len(nums)):
             j = i + 1
-            while j < len(nums) and j < i + k + 1:
+            while j < len(nums) and j - i <= k:
                 if abs(nums[j] - nums[i]) <= t: return True
                 j += 1
         return False
-
-
-from sortedcontainers import SortedSet
 
 
 class Solution:
@@ -60,23 +57,26 @@ class Solution:
     # 想办法加速元素判断，如果能O(logK)判断元素，平衡树结构合适。
     #
     # java的treeSet数据结构，其floor()方法和ceiling()方法可以在logK时间内找到最靠近的元素
-    # python中没有类似的treeSet数据结构，使用SortedSet替换，用其二分查找最靠近的元素
+    # python中没有类似的treeSet数据结构，使用SortedSet替换，用其二分查找也可在logK时间内找到最靠近的元素
+    # 但是list的移动拷贝还是很费时间
     def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
         if k < 1 or t < 0: return False
-        sort_set = SortedSet([])
-        sort_set.add(nums[0])
+        from sortedcontainers import SortedSet
+        sorted_set = SortedSet([])
+        sorted_set.add(nums[0])
         for i in range(1, len(nums)):
-            insert_index = sort_set.bisect_left(nums[i])
+            insert_index = sorted_set.bisect_left(nums[i])
+            # [l,r)
             # 插入位置分别为最左端、最右端、中间三种情况(但是最右端时涉及到len，也是线性时间)
             if insert_index == 0:
-                if abs(nums[i] - sort_set[insert_index]) <= t: return True
-            elif insert_index == len(sort_set):
-                if abs(nums[i] - sort_set[insert_index - 1]) <= t: return True
+                if abs(nums[i] - sorted_set[insert_index]) <= t: return True
+            elif insert_index == len(sorted_set):
+                if abs(nums[i] - sorted_set[insert_index - 1]) <= t: return True
             else:
-                if abs(nums[i] - sort_set[insert_index - 1]) <= t or abs(nums[i] - sort_set[insert_index]) <= t:
+                if abs(nums[i] - sorted_set[insert_index - 1]) <= t or abs(nums[i] - sorted_set[insert_index]) <= t:
                     return True
-            sort_set.add(nums[i])
-            if i >= k: sort_set.remove(nums[i - k])
+            sorted_set.add(nums[i])
+            if i >= k: sorted_set.remove(nums[i - k])
         return False
 
 

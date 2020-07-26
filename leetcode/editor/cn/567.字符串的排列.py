@@ -52,7 +52,7 @@ class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         l1, l2 = len(s1), len(s2)
         if l1 > l2: return False
-
+        import collections
         c1 = collections.Counter(s1)
         c2 = collections.Counter()
         left = right = 0
