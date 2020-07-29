@@ -61,8 +61,7 @@ class Solution:
         for c in s:
             res[row] += c
             # 换方向
-            if row == 0 or row == numRows - 1:
-                direction = -direction
+            if row == 0 or row == numRows - 1: direction = -direction
             row += direction
         return ''.join(res)
 

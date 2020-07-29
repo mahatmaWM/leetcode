@@ -38,7 +38,7 @@ class Solution:
     # 1　　2　　7　　4　　3　　1
     # 下一个排列为：
     # 1　　3　　1　　2　　4　　7
-    # 观察可以发现，再给出的数组中，2之后的数字都是降序排列的，我们将其反转，得到
+    # 观察可以发现，在给出的数组中，2之后的数字都是降序排列的，我们将其反转，得到
     # 1　　2　　1　　3　　4　　7
     # 然后将1 3 4 7 中第一个比2大的数字3与2交换位置就得到最后结果，和556题一样的方法
     def nextPermutation(self, nums: List[int]) -> None:
@@ -53,16 +53,15 @@ class Solution:
             for k in range(i, (i + j) // 2 + 1):
                 swap(nums, k, i + j - k)
 
-        n = len(nums)
-        i = n - 1
-        # 从后开始遍历数组，找到第一个降序的位置i
+        # 逆序遍历数组，找到第一个降序的位置i
+        i = len(nums) - 1
         while i > 0 and nums[i] <= nums[i - 1]:
             i -= 1
         # 将位置i至n-1的数字反转
-        reverse(nums, i, n - 1)
+        reverse(nums, i, len(nums) - 1)
         # 遍历i到n-1的数字，找到第一个比i-1大的数字，交换彼此即可
         if i > 0:
-            for j in range(i, n):
+            for j in range(i, len(nums)):
                 if nums[j] > nums[i - 1]:
                     swap(nums, i - 1, j)
                     break

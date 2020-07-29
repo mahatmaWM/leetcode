@@ -60,16 +60,16 @@ class Solution:
     # 每次都将遇到的节点压入栈，当左子树遍历完毕后才从栈中弹出最后一个访问的节点，再访问其右子树。
     def preorderTraversal(self, root: TreeNode) -> List[int]:
         if not root: return []
-        stack = []
         res = []
+        stack = []
         node = root
         while node or stack:
-            # 类似递归中 递 的部分，一直处理完左边节点
+            # 一直处理完左边节点
             while node:
                 res.append(node.val)
                 stack.append(node)
                 node = node.left
-            # 回溯，然后指向右孩子
+            # 指向右孩子
             node = stack.pop()
             node = node.right
         return res

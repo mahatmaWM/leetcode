@@ -50,27 +50,66 @@
 #         self.right = None
 
 
+class Solution1:
+    # 如果不限制空间的话，先中序遍历一下，然后对结果nums进行计数统计
+    def findMode(self, root: TreeNode) -> List[int]:
+        if not root: return []
+        nums = []
+
+        def helper(node):
+            nonlocal nums
+            if not node: return
+            helper(node.left)
+            nums.append(node.val)
+            helper(node.right)
+
+        helper(root)
+
+        import collections
+        cnt = collections.Counter(nums).most_common()
+        res = []
+        for k, v in cnt:
+            if v == cnt[0][1]:
+                res.append(k)
+            else:
+                break
+        return res
+
+
 class Solution:
 
     def findMode(self, root: TreeNode) -> List[int]:
-        if not root: return []
-        ans = []
+        pre = None
+        ret = []
+        ret_count, max_count, cur_count = 0, 0, 0
 
-        # 广度遍历取出所有的节点值(没有用到二叉树的性质，肯定还可以优化的)
-        res = []
-        queue = collections.deque()
-        queue.append(root)
-        while queue:
-            for _ in range(len(queue)):
-                node = queue.popleft()
-                res.append(node.val)
-                if node.left: queue.append(node.left)
-                if node.right: queue.append(node.right)
+        def inOrder(root):
+            nonlocal pre, ret_count, cur_count, max_count, ret
+            if not root: return
+            inOrder(root.left)
+            if pre and pre.val == root.val:
+                cur_count += 1
+            else:
+                cur_count = 1
 
-        tmp = collections.Counter(res).most_common()
-        for k, v in tmp:
-            if v == tmp[0][1]: ans.append(k)
-        return ans
+            if cur_count > max_count:
+                max_count = cur_count
+                ret_count = 1
+            elif cur_count == max_count:
+                if len(ret): ret[ret_count] = root.val
+                ret_count += 1
+
+            pre = root
+            inOrder(root.right)
+
+        # 第一次遍历，找出max_count的值，知道了众数出现的次数
+        inOrder(root)
+        pre = None
+        ret = [0] * ret_count
+        ret_count, cur_count = 0, 0
+        # 第二次遍历，把出现次数为max_count的众数放入结果
+        inOrder(root)
+        return ret
 
 
 # @lc code=end

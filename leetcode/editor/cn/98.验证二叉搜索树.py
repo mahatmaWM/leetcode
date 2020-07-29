@@ -59,7 +59,7 @@
 class Solution:
 
     def isValidBST(self, root: TreeNode) -> bool:
-        # 类似前序遍历树
+        # 类似前序遍历树，判断node节点为根的二叉树是否合法
         def helper(node, lower=float('-inf'), upper=float('inf')):
             if not node: return True
             val = node.val

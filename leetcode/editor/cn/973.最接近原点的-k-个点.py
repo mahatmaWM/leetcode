@@ -51,6 +51,10 @@
 #
 
 # @lc code=start
+import heapq
+import math
+
+
 class Solution:
     # 首先把每个元素距离原点的距离和该坐标组成tuple放到list里面，这样构建堆的时候，会按照第一个元素自动排序。
     # 提供了nsmallest方法直接取出最小的K个tuple，然后把坐标返回即可。

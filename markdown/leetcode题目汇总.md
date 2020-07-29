@@ -25,12 +25,7 @@
 
 <!-- /TOC -->
 
-
-
-
-
 ![tu](./images/企业微信截图_dc235320-6756-4f66-8bd7-a92de6db66ae.png)
-
 
 [刷leetcode需要哪些基础](https://www.zhihu.com/question/30737325/answer/524120016)
 
@@ -55,21 +50,21 @@
 
 # 2. Pattern: two points, 双指针类型
 
-    LeetCode-cn经典题目：
-    11题盛水最多的容器
-    27题移除元素
-    16题最接近的三数之和
-    15题三数之和
+LeetCode-cn经典题目：
+11题盛水最多的容器
+27题移除元素
+16题最接近的三数之和
+15题三数之和
 
-    www.educative.io题目
-    Pair with Target Sum (easy)
-    Remove Duplicates (easy)
-    Squaring a Sorted Array (easy)
-    Triplet Sum to Zero (medium)
-    Triplet Sum Close to Target (medium)
-    Triplets with Smaller Sum (medium)
-    Subarrays with Product Less than a Target (medium)
-    Dutch National Flag Problem (medium)
+www.educative.io题目
+Pair with Target Sum (easy)
+Remove Duplicates (easy)
+Squaring a Sorted Array (easy)
+Triplet Sum to Zero (medium)
+Triplet Sum Close to Target (medium)
+Triplets with Smaller Sum (medium)
+Subarrays with Product Less than a Target (medium)
+Dutch National Flag Problem (medium)
 
 # 3. Pattern: Fast & Slow pointers, 快慢指针类型
 

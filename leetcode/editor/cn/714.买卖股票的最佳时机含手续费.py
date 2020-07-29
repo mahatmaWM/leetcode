@@ -44,6 +44,7 @@
 
 # @lc code=start
 class Solution:
+    # 动态规划，dp[i][0&1]代表第i天（从0开始） 持有或者不持有 股票
     def maxProfit(self, prices: List[int], fee: int) -> int:
         n = len(prices)
         if n <= 1: return 0

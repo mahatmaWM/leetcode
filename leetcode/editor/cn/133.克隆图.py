@@ -97,7 +97,7 @@ class Node:
 
 
 class Solution:
-
+    # 图的dfs遍历，递归 或者 使用栈实现
     def cloneGraph(self, node: 'Node') -> 'Node':
         lookup = {}
 
@@ -114,7 +114,7 @@ class Solution:
 
 
 class Solution1:
-
+    # 图的bfs遍历
     def cloneGraph(self, node: 'Node') -> 'Node':
         lookup = {}
 
@@ -123,6 +123,7 @@ class Solution1:
             if not node: return
             clone = Node(node.val, [])
             lookup[node] = clone
+            import collections
             queue = collections.deque()
             queue.appendleft(node)
             while queue:

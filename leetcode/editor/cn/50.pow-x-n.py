@@ -44,6 +44,7 @@
 
 # @lc code=start
 class Solution:
+    # 递归的方式，先不断二倍增，排除最大的，与29题类似
     def myPow(self, x: float, n: int) -> float:
         if n == 0: return 1
         if n < 0:

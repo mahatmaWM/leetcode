@@ -34,6 +34,9 @@
 
 
 # @lc code=start
+from typing import List
+
+
 class Solution:
 
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
@@ -50,6 +53,7 @@ class Solution:
 
         # 递归
         def search(groups):
+            nonlocal nums
             if not nums: return True
             v = nums.pop()
             # 尝试将v放入groups的每一个集合中

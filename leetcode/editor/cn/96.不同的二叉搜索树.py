@@ -46,7 +46,10 @@
 #
 # 进一步思考使用动态规划，基本思路是一致的
 # dp[i] 表示有i个节点的二叉搜索树 有几颗
-class Solution:
+from typing import Collection
+
+
+class Solution1:
     def numTrees(self, n: int) -> int:
         dp = [0 for _ in range(n + 1)]
         dp[0] = dp[1] = 1
@@ -56,18 +59,23 @@ class Solution:
                 dp[i] += dp[j] * dp[i - j - 1]
         return dp[n]
 
-# 全部枚举会超时
-class Solution1:
-
+class Solution:
+    # 递归会超时（加上备忘录优化可以过）
     def numTrees(self, n: int) -> int:
         if n == 0: return 0
+        import collections
+        hash = collections.defaultdict(int)
 
         # 类似后续遍历方式, end取n+1
         def generate(start, end):
+            if (start, end) in hash: return hash[(start, end)]
             res = 0
-            if start == end: return 1
+            if start == end:
+                hash[(start, end)] = 1
+                return 1
             for root in range(start, end):
                 res += generate(start, root) * generate(root + 1, end)
+            hash[(start, end)] = res
             return res
 
         return generate(1, n + 1)

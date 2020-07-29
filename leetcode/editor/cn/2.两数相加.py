@@ -36,7 +36,7 @@
 #         self.next = None
 
 class Solution:
-    # 思路：直接遍历两个链表，注意进位与dummy假节点。
+    # 思路：直接遍历两个链表，注意进位与dummy节点。
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
         carry = 0
         dummy = node = ListNode('#')

@@ -60,6 +60,9 @@
 
 
 # @lc code=start
+import copy
+
+
 class Solution:
     # 注意，此题仅仅对连通边缘染色，而非连通部分全部染色
     def colorBorder(self, grid: List[List[int]], r0: int, c0: int, color: int) -> List[List[int]]:

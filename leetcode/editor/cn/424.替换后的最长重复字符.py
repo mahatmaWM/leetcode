@@ -54,6 +54,7 @@ class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
         left = 0
         # window存放窗口中某个字符出现的次数
+        import collections
         window = collections.defaultdict(int)
         res = 0
         for right, val in enumerate(s):

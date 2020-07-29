@@ -17,7 +17,7 @@
     - [找到最高的一位数](#%E6%89%BE%E5%88%B0%E6%9C%80%E9%AB%98%E7%9A%84%E4%B8%80%E4%BD%8D%E6%95%B0)
     - [反转二进制位](#%E5%8F%8D%E8%BD%AC%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BD%8D)
     - [找到从右边起，第一个为1的位，其余位置0](#%E6%89%BE%E5%88%B0%E4%BB%8E%E5%8F%B3%E8%BE%B9%E8%B5%B7%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%BA1%E7%9A%84%E4%BD%8D%E5%85%B6%E4%BD%99%E4%BD%8D%E7%BD%AE0)
-    - [范围[m,n]之间所有数字与的结果](#%E8%8C%83%E5%9B%B4mn%E4%B9%8B%E9%97%B4%E6%89%80%E6%9C%89%E6%95%B0%E5%AD%97%E4%B8%8E%E7%9A%84%E7%BB%93%E6%9E%9C)
+    - [范围[m, n]之间所有数字与的结果](#%E8%8C%83%E5%9B%B4m-n%E4%B9%8B%E9%97%B4%E6%89%80%E6%9C%89%E6%95%B0%E5%AD%97%E4%B8%8E%E7%9A%84%E7%BB%93%E6%9E%9C)
 
 <!-- /TOC -->
 
@@ -46,8 +46,11 @@
 ```c++
 普通的求余运算为:  n % m，优化之后为n & (m - 1)。
 public static int getMod(int n, int m) {
+
 	return n & (m-1);
+
 }
+
 ```
 
 ## 给定数字的二进制表示中1出现的个数
@@ -70,8 +73,11 @@ public static int count_one(int n) {
 
 ```c++
 public static int resetBit_1(int n, int bit) {
+
     return n |= 1 << bit;
+
 }
+
 ```
 
 ## 将数字n的第bit位 置0
@@ -86,8 +92,11 @@ public static int resetBit_0(int n, int bit) {
 
 ```c++
 public static boolean isBit0(int n, int bit) {
+
     return (n & (1 << bit)) != 0;
+
 }
+
 ```
 
 ## 删除从右边起第一个为1的bit（将该位的1置为0）
@@ -104,11 +113,14 @@ public static int resetLowBit1To0(int n) {
 
 ```c++
 public static boolean isPower(int n) {
+
     if ((n & (n - 1)) == 0)
         return true;
     else
         return false;
+
 }
+
 ```
 
 ## 判断一个数是否是4的幂次方
@@ -125,8 +137,11 @@ public static boolean isPowerOfFour(int n) {
 
 ```c++
 public static int getSum(int a, int b) {
+
     return b == 0 ? a : getSum(a ^ b, (a & b) << 1);
+
 }
+
 ```
 
 ## 计算2个数的差，递归方法
@@ -147,10 +162,11 @@ public static int getSubstract(int a, int b) {
 
 因此 a&b的结果使得所有该进位的位置为1，a^b的结果使得所有该进位的位置0，不该进位的位置为其应该有的数。在进行初步的计算之后，我们需要把该进位的位置加上，因此进位之后，是在其前面的bit位加1，因此，需要将b左移1位，然后与初步计算结果相加，也就是我们递归方法的核心。
 
-说说为什么最后b会变成0： 首先，carry <<1一定会使得carry中多一个0，因为左移之后最右边的位置一定为0，但是其前面可能舍弃了一个1，因此carry<<1使得carry的bit位的0的个数逐渐增加。其次，carry = a & b 这个使得b中的0得以保存，因为0 & 任何数都为0 因此，这两个条件使得最后b一定为0.同理，两个数相减也是一样的道理。首先a^b得到bit位上位数相同的位置全部为0，不同的位置为1，因为0-0=0，1-1=0；其次，~a&b得到需要借位的bit位，因此只有0-1需要借位，1-0不需要借位，因此~a & b刚好符合。
+说说为什么最后b会变成0： 首先，carry <<1一定会使得carry中多一个0，因为左移之后最右边的位置一定为0，但是其前面可能舍弃了一个1，因此carry<<1使得carry的bit位的0的个数逐渐增加。其次，carry = a & b 这个使得b中的0得以保存，因为0 & 任何数都为0 因此，这两个条件使得最后b一定为0. 同理，两个数相减也是一样的道理。首先a^b得到bit位上位数相同的位置全部为0，不同的位置为1，因为0-0=0，1-1=0；其次，~a&b得到需要借位的bit位，因此只有0-1需要借位，1-0不需要借位，因此~a & b刚好符合。
 
 ```c++
 public static int getSum(int a, int b) {
+
     if (a == 0) {
         return b;
     }
@@ -168,8 +184,10 @@ public static int getSum(int a, int b) {
         a = a ^ b;
         b = carry;
     }
+
 return a;
 }
+
 ```
 
 ## 找到丢失的数字,与相同的数异或两次后为0
@@ -193,13 +211,16 @@ public static int missingNumber(int[] nums) {
 
 ```c++
 public static int higestOneBit(int i) {
+
     i |= i >> 1;
     i |= i >> 2;
     i |= i >> 4;
     i |= i >> 8;
     i |= i >> 16;
     return (i + 1) >> 1;
+
 }
+
 ```
 
 ## 反转二进制位
@@ -237,8 +258,8 @@ public static int higestOneBit(int i) {
    }
    return res;
    }
-```
 
+```
 
 ## 找到从右边起，第一个为1的位，其余位置0
 
@@ -250,14 +271,15 @@ public static int getFirstOneFromRight(int n) {
 }
 ```
 
-## 范围[m,n]之间所有数字与的结果
+## 范围[m, n]之间所有数字与的结果
 
 多个数字相与，只要其中有一个数字为0结果就是0，而且，我们知道在数字递增的过程中，低位的数字总是在不断地变化，因此，我们只需要找到m与n相同的高位数字就行。
 
-例如,5,6,7的二进制分别为：101       110       111，全部一样的部分为第三位，都为1，因此最后输出的结果为4。
+例如, 5, 6, 7的二进制分别为：101       110       111，全部一样的部分为第三位，都为1，因此最后输出的结果为4。
 
 ```c++
 public static int rangeBitwiseAnd(int m, int n) {
+
     int i = 0;
     while (m != n) {
         m >>= 1;
@@ -265,6 +287,6 @@ public static int rangeBitwiseAnd(int m, int n) {
         ++i;
     }
     return (m << i);
+
 }
 ```
-

@@ -76,7 +76,6 @@
 
 # @lc code=start
 class Solution:
-    # 思路：
     # 如果只判断有效的话，实现三个函数分别对应三个条件即可：判断行，判断列，判断9宫格。
     # 把要判断的这些位置的数字取出来，然后用set后的长度是否等于原长度就能知道是不是有重复数字了。
     # 题目中已经说了给出的数字只有1~9，所以省掉了很多事。
@@ -87,16 +86,14 @@ class Solution:
             n = len(board)
             for r in range(n):
                 row = [x for x in board[r] if x != '.']
-                if len(set(row)) != len(row):
-                    return False
+                if len(set(row)) != len(row): return False
             return True
 
         def isValidCol(board):
             n = len(board)
             for c in range(n):
                 col = [board[r][c] for r in range(n) if board[r][c] != '.']
-                if len(set(col)) != len(col):
-                    return False
+                if len(set(col)) != len(col): return False
             return True
 
         def isValidNineCell(board):
@@ -107,10 +104,8 @@ class Solution:
                     for i in range(3):
                         for j in range(3):
                             num = board[r + i][c + j]
-                            if num != '.':
-                                cell.append(num)
-                    if len(set(cell)) != len(cell):
-                        return False
+                            if num != '.': cell.append(num)
+                    if len(set(cell)) != len(cell): return False
             return True
 
         return isValidRow(board) and isValidCol(board) and isValidNineCell(board)

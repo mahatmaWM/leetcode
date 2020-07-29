@@ -43,7 +43,7 @@
 
 # @lc code=start
 class Solution:
-    # dp[i][k] 代表将A的前i个数字分成k组得到的最大平均值
+    # 动态规划，dp[i][k] 代表将A的前i个数字分成k组得到的最大平均值
     # 则dp[i][k] = max(dp[i][k], dp[j][k-1]+avg(j+1, i))，其中j可变（从k-1到i）
     def largestSumOfAverages(self, A: List[int], K: int) -> float:
         n = len(A)

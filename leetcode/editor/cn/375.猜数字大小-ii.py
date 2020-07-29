@@ -40,6 +40,9 @@
 
 
 # @lc code=start
+import functools
+
+
 class Solution:
 
     def getMoneyAmount(self, n: int) -> int:

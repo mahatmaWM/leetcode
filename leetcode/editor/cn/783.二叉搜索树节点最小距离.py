@@ -57,19 +57,43 @@
 
 class Solution:
     def minDiffInBST(self, root: TreeNode) -> int:
-        self.res, self.prev = float("inf"), float("-inf")
+        res, prev = float("inf"), float("-inf")
 
         # 二叉搜索树中序遍历是严格有序的，在遍历的过程中记录每次current与previous的差值即可
         def in_order(root):
-            if root is None: return
+            nonlocal res, prev
+            if not root: return
 
             in_order(root.left)
-            self.res = min(self.res, abs(root.val - self.prev))
-            self.prev = root.val
+            res = min(res, abs(root.val - prev))
+            prev = root.val
             in_order(root.right)
             return
 
         in_order(root)
-        return self.res
+        return res
+
+
+class Solution1:
+    # 非递归版本
+    def minDiffInBST(self, root: TreeNode) -> int:
+        res, prev = float("inf"), None
+
+        stack = []
+        node = root
+        while node or stack:
+            # 从根节点开始，一直找左边节点
+            while node:
+                stack.append(node)
+                node = node.left
+            # while结束表示当前节点node为空，即前一个节点没有左子树了
+            node = stack.pop()
+            if not prev:
+                prev = node.val
+            else:
+                res = min(res, abs(node.val - prev))
+                prev = node.val
+            node = node.right
+        return res
 # @lc code=end
 

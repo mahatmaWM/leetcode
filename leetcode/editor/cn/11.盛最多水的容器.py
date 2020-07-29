@@ -36,20 +36,19 @@
 
 # @lc code=start
 class Solution:
-    # 思路：最大面积不仅和高度有关，还和宽度有关。
-    # 双指针，不断增加left&减小right指针。
-    # 每变化一次的时候，更新最大值，如果左边高度小于右边高度，则移动左指针；否则移动右指针
+    # 双指针思路，不断增加left & 减小right指针，每变化一次更新最大值
+    # 如果左边高度小于右边高度，则移动左指针；否则移动右指针
     def maxArea(self, height: List[int]) -> int:
         left, right = 0, len(height) - 1
-        max_water = min(height[left], height[right]) * (right - left)
+        ans = min(height[left], height[right]) * (right - left)
         while left < right:
             cur = min(height[left], height[right]) * (right - left)
-            max_water = max(cur, max_water)
+            ans = max(cur, ans)
             if height[left] < height[right]:
                 left += 1
             else:
                 right -= 1
-        return max_water
+        return ans
 
 
 # @lc code=end

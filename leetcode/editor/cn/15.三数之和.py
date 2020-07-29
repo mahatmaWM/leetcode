@@ -49,8 +49,10 @@ class Solution:
                         res.add((nums[i], nums[left], nums[right]))
                     left += 1
                     right -= 1
-                if sum_3 < 0: left += 1
-                if sum_3 > 0: right -= 1
+                elif sum_3 < 0:
+                    left += 1
+                elif sum_3 > 0:
+                    right -= 1
         return [list(item) for item in res]
 
 

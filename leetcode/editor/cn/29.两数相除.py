@@ -49,11 +49,10 @@
 # @lc code=start
 class Solution:
     # 这道题换句话说，就是除数能减去多少个被除数。
-    # 但是除数如果太小，则容易超时，这是要考虑除数的不断倍增。
+    # 为了防止除数太小超时，这是要考虑除数的不断倍增的方式。
     def divide(self, dividend: int, divisor: int) -> int:
         res = 0
-        # 正数与正数做异或一定是正数，正数与负数做异或一定是负数
-        sign = 1 if dividend ^ divisor >= 0 else -1
+        sign = 1 if dividend * divisor >= 0 else -1
         dividend = abs(dividend)
         divisor = abs(divisor)
         while dividend >= divisor:

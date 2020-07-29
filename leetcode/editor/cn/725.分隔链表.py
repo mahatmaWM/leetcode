@@ -89,6 +89,7 @@ class Solution:
         i = 0
         while root:
             res[i] = root
+            last = None
             # 检查前面的列表是否要多加一个元素
             for _ in range(min_length + (i < carry and carry != 0)):
                 last = root

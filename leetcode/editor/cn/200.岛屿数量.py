@@ -44,8 +44,10 @@
 #
 #
 
-
 # @lc code=start
+import collections
+
+
 class Solution1:
 
     def numIslands(self, grid: List[List[str]]) -> int:
@@ -117,13 +119,14 @@ class Solution1:
 
 
 # flood fill方法的深度优先搜索版本
-class Solution:
+class Solution2:
 
     def numIslands(self, grid):
         m = len(grid)
         if m == 0: return 0
         n = len(grid[0])
         directions = [(-1, 0), (0, -1), (1, 0), (0, 1)]
+        marked = [[False for _ in range(n)] for _ in range(m)]
 
         def dfs(grid, i, j, m, n, marked):
             marked[i][j] = True
@@ -134,7 +137,6 @@ class Solution:
                 if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][new_j] == '1':
                     dfs(grid, new_i, new_j, m, n, marked)
 
-        marked = [[False for _ in range(n)] for _ in range(m)]
         count = 0
         # 从第 1 行、第 1 格开始，对每一格尝试进行一次 DFS 操作
         for i in range(m):
@@ -147,7 +149,7 @@ class Solution:
 
 
 # flood fill方法的广度优先搜索版本
-class Solution2:
+class Solution:
 
     def numIslands(self, grid):
         m = len(grid)
@@ -160,26 +162,22 @@ class Solution2:
         # 从第 1 行、第 1 格开始，对每一格尝试进行一次 BFS 操作
         for i in range(m):
             for j in range(n):
-                # 新陆地
+                # 发现一个新陆地，开始bfs
                 if not marked[i][j] and grid[i][j] == '1':
                     count += 1
-                    queue = deque()
+                    queue = collections.deque()
                     queue.append((i, j))
-
-                    # 这里要标记上已经访问过
                     marked[i][j] = True
                     while queue:
                         cur_x, cur_y = queue.popleft()
-                        for direction in self.directions:
+                        for direction in directions:
                             new_i = cur_x + direction[0]
                             new_j = cur_y + direction[1]
-                            # 如果不越界、没有被访问过、并且还要是陆地，我就继续放入队列，放入队列的同时，要记得标记已经访问过
                             if 0 <= new_i < m and 0 <= new_j < n and not marked[new_i][new_j] and grid[new_i][
                                     new_j] == '1':
                                 queue.append((new_i, new_j))
-                                #【特别注意】在放入队列以后，要马上标记成已经访问过，语义也是十分清楚的：反正只要进入了队列，你迟早都会遍历到它
-                                # 而不是在出队列的时候再标记
-                                #【特别注意】如果是出队列的时候再标记，会造成很多重复的结点进入队列，造成重复的操作，这句话如果你没有写对地方，代码会严重超时的
+                                # 最好是入队的时候就马上标记成已经访问过，而不是在出队列的时候再标记
+                                # 否则for循环中会有很多不必要的重复入队操作
                                 marked[new_i][new_j] = True
         return count
 

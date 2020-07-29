@@ -11,8 +11,7 @@
 # Dislikes: 0
 # Total Accepted:    5.5K
 # Total Submissions: 12.5K
-# Testcase Example:  '["StockSpanner","next","next","next","next","next","next","next"]\n' +
-  '[[],[100],[80],[60],[70],[60],[75],[85]]'
+# Testcase Example:  '["StockSpanner","next","next","next","next","next","next","next"]\n' + '[[],[100],[80],[60],[70],[60],[75],[85]]'
 #
 # 编写一个 StockSpanner 类，它收集某些股票的每日报价，并返回该股票当日价格的跨度。
 #
@@ -55,25 +54,24 @@
 #
 #
 
+
 # @lc code=start
 class StockSpanner:
 
     def __init__(self):
-      self.stack = []
+        self.stack = []
 
     # 单调栈
     def next(self, price: int) -> int:
         span = 1
         while self.stack and price >= self.stack[-1][0]:
-            span +=self.stack[-1][1]
+            span += self.stack[-1][1]
             self.stack.pop()
         self.stack.append((price, span))
         return span
-
 
 
 # Your StockSpanner object will be instantiated and called as such:
 # obj = StockSpanner()
 # param_1 = obj.next(price)
 # @lc code=end
-

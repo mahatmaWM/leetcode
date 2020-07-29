@@ -59,6 +59,9 @@
 
 
 # @lc code=start
+import math
+
+
 class Solution:
     # 枚举出a b c数字的倍数序列，找规律
     def nthUglyNumber(self, n: int, a: int, b: int, c: int) -> int:
@@ -68,6 +71,7 @@ class Solution:
         # 三数最小公倍数=两数最小公倍数与第三个数的最小公倍数
         abc = (ab * c) // math.gcd(ab, c)
         low, high = 1, n * min(a, b, c)
+        # [low, high)
         while low < high:
             mid = low + (high - low) // 2
             k = mid // a + mid // b + mid // c - mid // ab - mid // ac - mid // bc + mid // abc

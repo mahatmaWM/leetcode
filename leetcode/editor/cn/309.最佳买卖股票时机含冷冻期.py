@@ -33,24 +33,26 @@
 
 # @lc code=start
 class Solution:
-
+    # dp[i][j]代表 第i天 不持有或者持有 股票的最大收益
     def maxProfit(self, prices: List[int]) -> int:
         n = len(prices)
         if n <= 1: return 0
-        dp = [[0] * 2 for _ in range(n)]
-        dp[0][0] = 0
-        dp[0][1] = -prices[0]
+        dp = [[0] * 2 for _ in range(n + 1)]
+        dp[1][0] = 0
+        dp[1][1] = -prices[0]
 
         # 不限制交易次数
-        for i in range(1, n):
-            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
-            if i >= 2:
-                dp[i][1] = max(dp[i - 1][1], dp[i - 2][0] - prices[i])
+        for i in range(2, n + 1):
+            # 第i天不持有股票
+            dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i - 1])
+            # 第i天持有股票
+            if i > 2:
+                dp[i][1] = max(dp[i - 1][1], dp[i - 2][0] - prices[i - 1])
             else:
-                dp[i][1] = max(dp[i - 1][1], -prices[i])
+                # 第2天有股票的最大收益
+                dp[i][1] = max(dp[i - 1][1], -prices[i - 1])
         return dp[-1][0]
 
-
+# @lc code=end
 if __name__ == "__main__":
     print(Solution().maxProfit(prices=[1, 2, 4]))
-# @lc code=end

@@ -52,18 +52,43 @@
 #
 #
 
-# @lc code=start
-class Solution:
-    # 思路：标准的动态规划
-    # 因为当前状态只需依赖上一次的状态，dp[i][j]可以做成pre cur两个一维数组做空间优化。
-    def uniquePaths(self, m: int, n: int) -> int:
-        dp = [[0] * m for _ in range(n)]
-        for i in range(n):
-            for j in range(m):
-                if i == 0 and j == 0:
-                    dp[i][j] = 1
-                else:
-                    dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
-        return dp[n - 1][m - 1]
-# @lc code=end
 
+# @lc code=start
+class Solution1:
+    # 标准的动态规划
+    def uniquePaths(self, m: int, n: int) -> int:
+        dp = [[0] * n for _ in range(m)]
+        for row in range(m):
+            dp[row][0] = 1
+        for col in range(n):
+            dp[0][col] = 1
+        for row in range(1, m):
+            for col in range(1, n):
+                dp[row][col] = dp[row - 1][col] + dp[row][col - 1]
+        return dp[-1][-1]
+
+
+class Solution2:
+    # 空间压缩，因为当前位置i仅仅是i-1走过来，或者上一行的i位置走下来
+    # 所以把二维的dp[i][j]可以做成pre cur两个一维数组做空间优化
+    def uniquePaths(self, m: int, n: int) -> int:
+        pre = [1] * n
+        cur = [1] * n
+        for _ in range(1, m):
+            for j in range(1, n):
+                cur[j] = pre[j] + cur[j - 1]
+            pre = cur[:]
+        return pre[-1]
+
+
+class Solution:
+    # 空间压缩，在上面基础上，继续将pre cur两个一维数组变成一个，cur之前保存的相当于就是pre
+    def uniquePaths(self, m: int, n: int) -> int:
+        cur = [1] * n
+        for _ in range(1, m):
+            for j in range(1, n):
+                cur[j] += cur[j - 1]
+        return cur[-1]
+
+
+# @lc code=end

@@ -41,17 +41,18 @@
 class Solution:
     # 前序遍历二叉树，遇到左叶子就计数（问题就变成如何判断左叶子）
     def sumOfLeftLeaves(self, root: TreeNode) -> int:
-        self.res = 0
+        res = 0
 
         def traverse(node):
+            nonlocal res
             if not node: return
             # 判断左叶子
-            if node.left and not node.left.left and not node.left.right: self.res += node.left.val
+            if node.left and not node.left.left and not node.left.right: res += node.left.val
             traverse(node.left)
             traverse(node.right)
 
         traverse(root)
-        return self.res
+        return res
 
 # @lc code=end
 

@@ -43,15 +43,17 @@
 # @lc code=start
 class Solution:
     # 参考560题的思路，整除转化为同余定理处理
+    # 如果A数组，[i,j]的和能被K整除，则位置i的前缀和，位置j的前缀和均能被K整除，这就是同余定理
+    # 这样转化可以减少很多重复计算，直接枚举会超时
     def subarraysDivByK(self, A: List[int], K: int) -> int:
-        # 余数为0的状况，也就是直接被整除的情况，要提前放个1，考虑比如 A = {K}
+        # 余数为0的情况，说明当前的前缀和可以被整除，要提前放个1，比如 A=[K]
         hash = {0: 1}
         pre_sum = 0
         res = 0
         for i in range(len(A)):
             pre_sum += A[i]
-            # 同余定理的运用
             m = pre_sum % K
+            # 取值 + 更新
             res += hash.get(m, 0)
             hash[m] = hash.get(m, 0) + 1
         return res

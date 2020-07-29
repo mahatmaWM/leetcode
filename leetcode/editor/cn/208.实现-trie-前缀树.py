@@ -11,8 +11,7 @@
 # Dislikes: 0
 # Total Accepted:    42K
 # Total Submissions: 62.2K
-# Testcase Example:  '["Trie","insert","search","search","startsWith","insert","search"]\n' +
-  '[[],["apple"],["apple"],["app"],["app"],["app"],["app"]]'
+# Testcase Example:  '["Trie","insert","search","search","startsWith","insert","search"]\n' + '[[],["apple"],["apple"],["app"],["app"],["app"],["app"]]'
 #
 # 实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
 #
@@ -36,6 +35,7 @@
 #
 #
 
+
 # @lc code=start
 class Trie:
     # 嵌套使用dict创建简单的trie树结构。
@@ -45,7 +45,6 @@ class Trie:
         """
         self.lookup = {}
 
-
     def insert(self, word: str) -> None:
         """
         Inserts a word into the trie.
@@ -54,9 +53,8 @@ class Trie:
         for a in word:
             if a not in tree: tree[a] = {}
             tree = tree[a]
-        # 单词结束标志
+        # 单词结束标志（说明当前层有单词结束）
         tree["#"] = "#"
-
 
     def search(self, word: str) -> bool:
         """
@@ -69,7 +67,6 @@ class Trie:
         if "#" in tree: return True
         return False
 
-
     def startsWith(self, prefix: str) -> bool:
         """
         Returns if there is any word in the trie that starts with the given prefix.
@@ -81,11 +78,9 @@ class Trie:
         return True
 
 
-
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
 # obj.insert(word)
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
 # @lc code=end
-

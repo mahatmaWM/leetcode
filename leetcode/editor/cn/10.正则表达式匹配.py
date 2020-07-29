@@ -97,26 +97,26 @@ class Solution:
             return first and self.isMatch(s[1:], p[1:])
 
 class Solution1:
-    # 动态规划版本，在递归树的基础上添加了一个备忘录减少计算
+    # 动态规划版本，在递归的基础上添加了一个备忘录减少计算
     def isMatch(self, s, p):
         S = len(s)
         P = len(p)
         # 存储s[0:i], p[0:j] 是否能匹配 (i, j)
         memo = {}
 
-        def dp(i, j):
+        def helper(i, j):
             if (i, j) in memo: return memo[(i, j)]
             if j == P: return i == S
 
             pre = i < S and p[j] in {s[i], "."}
             if j <= P - 2 and p[j + 1] == "*":
-                tmp = dp(i, j + 2) or (pre and dp(i + 1, j))
+                tmp = helper(i, j + 2) or (pre and helper(i + 1, j))
             else:
-                tmp = pre and dp(i + 1, j + 1)
+                tmp = pre and helper(i + 1, j + 1)
             memo[(i, j)] = tmp
             return tmp
 
-        return dp(0, 0)
+        return helper(0, 0)
 
 
 # @lc code=end

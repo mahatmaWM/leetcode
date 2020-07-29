@@ -39,7 +39,7 @@
 #         self.right = None
 
 
-class Solution1:
+class Solution:
     # 非递归版本：采用两个栈。
     # 处理stack1时按照左孩子、右孩子入栈，同时把根入stack2，注意这里根不用再入栈stack1！！！否则会死循环
     # 而且继续处理stack1的时候，stack2就变成了根、右孩子、左孩子。
@@ -50,8 +50,7 @@ class Solution1:
         stack1 = []
         stack2 = []
 
-        node = root
-        stack1.append(node)
+        stack1.append(root)
         # 这个while循环用户找到后续遍历的逆序，存在stack2中
         while stack1:
             node = stack1.pop()
@@ -64,19 +63,20 @@ class Solution1:
         return res
 
 
-class Solution:
+class Solution1:
 
     def postorderTraversal(self, root: TreeNode) -> List[int]:
-        self.res = []
+        res = []
 
         def postOrder(root):
+            nonlocal res
             if not root: return
             postOrder(root.left)
             postOrder(root.right)
-            self.res.append(root.val)
+            res.append(root.val)
 
         postOrder(root)
-        return self.res
+        return res
 
 
 # @lc code=end

@@ -58,8 +58,10 @@ class Solution:
     # 递归遍历树，保存子树和于hashmap，最后遍历hashmap找出现最大次数的元素和
     def findFrequentTreeSum(self, root: TreeNode) -> List[int]:
         if not root: return []
+        import collections
         hashmap = collections.defaultdict(int)
 
+        # 返回node节点的子树元素和
         def helper(node):
             if not node: return 0
             nonlocal hashmap

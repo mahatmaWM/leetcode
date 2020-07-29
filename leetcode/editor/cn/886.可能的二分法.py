@@ -62,6 +62,9 @@
 
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 图标记两种颜色，bfs&dfs，785题类似，O(V+E)
     def possibleBipartition(self, N: int, dislikes: List[List[int]]) -> bool:

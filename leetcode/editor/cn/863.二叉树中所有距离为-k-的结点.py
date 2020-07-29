@@ -57,12 +57,13 @@
 #         left = None
 #         right = None
 
+import collections
 
-class Solution1:
+
+class Solution:
     # 把二叉树看成图，然后从target节点开始，bfs遍历K步到达的节点
     def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
         if K == 0: return [target.val]
-
         graph = {}
 
         def buildGraph(root):
@@ -76,22 +77,23 @@ class Solution1:
         buildGraph(root)
 
         # 通过bfs找目标
-        q = [(target.val, 0)]
+        dq = collections.deque()
+        dq.append((target.val, 0))
         res = []
         visited = set()
-        while q:
-            node, dist = q.pop(0)
+        while dq:
+            node, dist = dq.popleft()
             if node not in visited:
                 if dist == K:
                     res.append(node)
                 else:
                     visited.add(node)
                     for i in graph.get(node, set()):
-                        q.append((i, dist + 1))
+                        dq.append((i, dist + 1))
         return res
 
 
-class Solution:
+class Solution1:
     # 本题中涉及到二叉树中距离的求解，那么如何在二叉树中求两个节点的距离？
     # 答案是找到两个节点的最近公共祖先，然后分别计算节点与最近公共祖先的高度差，并相加。
     #

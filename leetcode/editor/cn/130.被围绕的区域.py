@@ -53,18 +53,19 @@ class Solution:
         def dfs(board, i, j):
             if i < 0 or j < 0 or i > m - 1 or j > n - 1 or board[i][j] == 'X' or board[i][j] == '#': return
             board[i][j] = '#'
-            dfs(board, i - 1, j)
-            dfs(board, i + 1, j)
-            dfs(board, i, j - 1)
-            dfs(board, i, j + 1)
+            for x, y in [[-1, 0], [1, 0], [0, 1], [0, -1]]:
+                dfs(board, x + i, y + j)
 
+        # 从边界的O开始dfs，把能够走到的地方标记为#
         m = len(board)
         if m < 1: return
         n = len(board[0])
         for i in range(m):
             for j in range(n):
-                is_edge = i == 0 or j == 0 or i == m - 1 or j == n - 1
+                is_edge = (i == 0 or j == 0 or i == m - 1 or j == n - 1)
                 if is_edge and board[i][j] == 'O': dfs(board, i, j)
+
+        # 遍历矩阵，把剩余的O变为X，把#变为O
         for i in range(m):
             for j in range(n):
                 if board[i][j] == 'O': board[i][j] = 'X'

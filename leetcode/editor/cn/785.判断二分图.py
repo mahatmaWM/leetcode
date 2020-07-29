@@ -61,6 +61,9 @@
 #
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 和886题类似，bfs&dfs O(V+E)
     def isBipartite(self, graph: List[List[int]]) -> bool:
@@ -69,13 +72,14 @@ class Solution:
         for i in range(len(graph)):
             if color[i]: continue
             color[i] = 1
-            q = [i]
-            while q:
-                cur = q.pop()
+            dq = collections.deque()
+            dq.append(i)
+            while dq:
+                cur = dq.popleft()
                 for node in graph[cur]:
                     if color[node] == 0:
                         color[node] = -color[cur]
-                        q.append(node)
+                        dq.append(node)
                     elif color[node] + color[cur]:
                         return False
         return True

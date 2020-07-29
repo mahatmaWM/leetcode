@@ -57,17 +57,20 @@
 #
 #
 
-
 # @lc code=start
+import math
+
+
 class Solution:
 
     def minEatingSpeed(self, piles: List[int], H: int) -> int:
+        # 吃香蕉的速度在这个区间[l,r）
         l, r = 1, max(piles) + 1
         while l < r:
             m = l + (r - l) // 2
             h = 0
             for p in piles:
-                h += (p + m - 1) // m
+                h += math.ceil(p / m)
             if h <= H:
                 r = m
             elif h > H:

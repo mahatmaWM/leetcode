@@ -56,24 +56,25 @@ class Solution:
         # 路径：记录在 tmp_list 中
         # 选择列表：start 和 candidates 之间的元素
         # 结束条件：left_sum
-        def backtrack(start, candidates, left_sum, tmp_list):
+        def backtracking(start, candidates, left_sum, tmp_list):
             nonlocal res
             # 终止条件
             if left_sum < 0: return
             if left_sum == 0:
+                import copy
                 res.append(copy.deepcopy(tmp_list))
                 return
 
             for i in range(start, len(candidates)):
-                if left_sum < candidates[i]: continue
+                if left_sum < candidates[i]: break
                 # 选择
                 tmp_list.append(candidates[i])
                 # 因为每个数字都可以使用无数次，所以还可以从当前元素i开始
-                backtrack(i, candidates, left_sum - candidates[i], tmp_list)
+                backtracking(i, candidates, left_sum - candidates[i], tmp_list)
                 # 取消选择
                 tmp_list.pop()
 
-        backtrack(0, candidates, target, [])
+        backtracking(0, candidates, target, [])
         return res
 # @lc code=end
 

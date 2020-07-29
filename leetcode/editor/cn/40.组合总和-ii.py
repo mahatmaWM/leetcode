@@ -61,10 +61,11 @@ class Solution:
             nonlocal res
             if tmp_sum < 0: return
             if tmp_sum == 0:
+                import copy
                 res.append(copy.deepcopy(tmp_list))
                 return
             for i in range(start, len(candidates)):
-                if tmp_sum < candidates[i]: continue
+                if tmp_sum < candidates[i]: break
                 # 前一个相同的元素已经被选中
                 if i > start and candidates[i] == candidates[i - 1]: continue
                 # 选择

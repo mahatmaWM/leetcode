@@ -38,12 +38,13 @@ class Solution:
         dummy = ListNode('#')
         dummy.next = head
         pre, curr = dummy, head
-
-        while curr and curr.next:  # curr=1, curr.next=2
-            pre.next = curr.next  # 0 --> 2
-            curr.next = pre.next.next  # 1 --> 3  # curr.next.next
-            pre.next.next = curr  # 2 --> 1
-            pre, curr = curr, curr.next  # pre = 1, curr= 3
+        # 对 1->2->3->4 而言
+        while curr and curr.next:           # curr=1, curr.next=2
+            # 完成 1 2 的交换
+            pre.next = curr.next            # 0 --> 2
+            curr.next = pre.next.next       # 1 --> 3
+            pre.next.next = curr            # 2 --> 1
+            pre, curr = curr, curr.next     # pre = 1, curr= 3
         return dummy.next
 # @lc code=end
 

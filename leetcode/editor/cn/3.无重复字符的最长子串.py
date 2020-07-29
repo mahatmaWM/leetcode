@@ -41,7 +41,7 @@
 
 # @lc code=start
 class Solution:
-    # 思路：使用left right 双指针模拟滑动窗口
+    # 思路：使用left right双指针
     # 窗口使用set可以快速查找，当right插入滑动窗口时，不断检查window的合法性。
     def lengthOfLongestSubstring(self, s: str) -> int:
         if not s: return 0

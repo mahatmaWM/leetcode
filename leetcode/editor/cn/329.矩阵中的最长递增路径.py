@@ -45,7 +45,7 @@
 
 # @lc code=start
 class Solution:
-    # 思路：使用深度优先dfs，memo[i][j]记录从i j节点能走的最长路径。
+    # 思路：dfs，memo[i][j]记录从i j节点能走的最长路径。
     def longestIncreasingPath(self, matrix: List[List[int]]) -> int:
         if not matrix or not matrix[0]: return 0
         row = len(matrix)

@@ -45,6 +45,10 @@
 
 
 # @lc code=start
+import collections
+import heapq
+
+
 class Solution:
     # 贪心，每次取出剩余数目最多的数（使用priority queue来保存）。
     # 模拟整个过程，注意如果从pq中取出的数字与目前res最后一位相同，则取pq中下一个数字，同时要更新val以及前一个pop入堆。

@@ -59,6 +59,9 @@
 #         self.right = None
 
 
+import collections
+
+
 class Solution:
     # 层次遍历树
     # 如果当前层遇到一个空节点时，下一层 或者 当前层剩余中 还有非None节点，则不满足

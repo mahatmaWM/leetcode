@@ -43,6 +43,7 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
     # 和62题类似的思路。
@@ -53,15 +54,16 @@ class Solution:
         dp = [[0] * m for _ in range(n)]
         dp[0][0] = 1 if obstacleGrid[0][0] == 0 else 0
 
-        for i in range(n):
-            for j in range(m):
-                if obstacleGrid[i][j] == 0:
+        for row in range(n):
+            for col in range(m):
+                if obstacleGrid[row][col] == 0:
                     # 更新下面的方格
-                    if i + 1 < n: dp[i + 1][j] += dp[i][j]
+                    if row + 1 < n: dp[row + 1][col] += dp[row][col]
                     # 更新右边的方格
-                    if j + 1 < m: dp[i][j + 1] += dp[i][j]
+                    if col + 1 < m: dp[row][col + 1] += dp[row][col]
                 else:  # 如果有障碍物，则标记为0
-                    dp[i][j] = 0
-        return dp[n - 1][m - 1]
-# @lc code=end
+                    dp[row][col] = 0
+        return dp[-1][-1]
 
+
+# @lc code=end

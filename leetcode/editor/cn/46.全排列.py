@@ -41,19 +41,20 @@ class Solution:
         # 路径：记录在 tmp_res 中
         # 选择列表：nums 中不存在于 memo 的那些元素
         # 结束条件：nums 中的元素全都在 tmp_res 中出现
-        def backtrack(tmp_res, memo):
+        def backtracking(tmp_res, memo):
             if len(tmp_res) == len(nums):
+                import copy
                 res.append(copy.deepcopy(tmp_res))
                 return
             for i in range(len(nums)):
                 if memo[i]: continue
                 memo[i] = True
                 tmp_res.append(nums[i])
-                backtrack(tmp_res, memo)
+                backtracking(tmp_res, memo)
                 memo[i] = False
                 tmp_res.pop()
 
-        backtrack([], memo)
+        backtracking([], memo)
         return res
 
 

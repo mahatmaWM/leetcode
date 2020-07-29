@@ -47,7 +47,6 @@ class Solution:
         while l < r:
             mid = l + (r - l) // 2
             if nums[mid] == target: return mid
-            # print('l={},mid={},r={}'.format(l, mid, r))
             # 说明右边是升序的
             if nums[mid] < nums[r - 1]:
                 # target在右边，下一次找区间[mid+1, r)，否则找区间[l, mid)

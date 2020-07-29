@@ -41,6 +41,9 @@
 
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 贪心算法
     # 1、将字母按照出现次数从大到小排序。
@@ -52,7 +55,7 @@ class Solution:
         ans = ''
         while cnt:
             stop = True
-            for v, c in cnt.most_common():
+            for v, _ in cnt.most_common():
                 if ans == '' or v != ans[-1]:
                     stop = False
                     ans += v

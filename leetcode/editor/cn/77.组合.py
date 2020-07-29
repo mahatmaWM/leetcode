@@ -40,15 +40,16 @@ class Solution:
         # 路径：记录在 tmp 中
         # 选择列表：start位置 到 n 之间的元素
         # 结束条件：剩余k
-        def backtrack(start, k, tmp):
+        def backtracking(start, k, tmp):
+            import copy
             if k == 0: res.append(copy.deepcopy(tmp))
             # 组合中一个数字只能出现一次，所以从下一位开始选i
             for i in range(start + 1, n + 1):
                 tmp.append(i)
-                backtrack(i, k - 1, tmp)
+                backtracking(i, k - 1, tmp)
                 tmp.pop()
 
-        backtrack(0, k, [])
+        backtracking(0, k, [])
         return res
 
 

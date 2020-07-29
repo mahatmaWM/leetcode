@@ -49,15 +49,17 @@ class Solution:
         }
 
         def backtrack(tmp_res, next_digits):
+            nonlocal output
             if len(next_digits) == 0:
+                import copy
                 output.append(copy.deepcopy(tmp_res))
-            else:
-                for letter in phone[next_digits[0]]:
-                    # 选择
-                    tmp_res = tmp_res + letter
-                    backtrack(tmp_res, next_digits[1:])
-                    # 取消选择
-                    tmp_res = tmp_res[:-1]
+                return
+            for letter in phone[next_digits[0]]:
+                # 选择
+                tmp_res = tmp_res + letter
+                backtrack(tmp_res, next_digits[1:])
+                # 取消选择
+                tmp_res = tmp_res[:-1]
 
         backtrack("", digits)
         return output

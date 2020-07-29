@@ -40,8 +40,8 @@ class Solution:
         def lower_bound(left, right):
             while left < right:
                 mid = left + (right - left) // 2
-                if nums[mid] == target and (mid == 0 or nums[mid - 1] < target): return mid
-
+                if nums[mid] == target and (mid == 0 or nums[mid - 1] < target):
+                    return mid
                 # 因为是找下界，所以相等的时候要往前逼近
                 if nums[mid] >= target:
                     right = mid
@@ -53,8 +53,8 @@ class Solution:
         def upper_bound(left, right):
             while left < right:
                 mid = left + (right - left) // 2
-                if nums[mid] == target and (mid == len(nums) - 1 or nums[mid + 1] > target): return mid
-
+                if nums[mid] == target and (mid == len(nums) - 1 or nums[mid + 1] > target):
+                    return mid
                 # 因为是找上界，所以相等的时候要往后逼近
                 if nums[mid] <= target:
                     left = mid + 1

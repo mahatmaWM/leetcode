@@ -57,16 +57,18 @@
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
 
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        self.result = None
-        # 返回是否找到了p或者q节点
+        result = None
+
+        # 返回是否找到了p或q
         def dfs(node):
-            # 终止递归，到叶子节点或者已经找到时 return
+            nonlocal result
             if not node: return False
             if node == p or node == q:
-                self.result = node
+                result = node
                 return True
 
             left_result = dfs(node.left)
@@ -74,14 +76,14 @@ class Solution:
 
             # 如果左右同时找到，则更新结果
             if left_result and right_result:
-                self.result = node
+                result = node
                 return True
             # 如果只有一个找到，则说明 p q都在一颗子树里面，也代表找到返回TRUE
             elif left_result or right_result:
                 return True
 
         dfs(root)
-        return self.result
+        return result
+
 
 # @lc code=end
-
