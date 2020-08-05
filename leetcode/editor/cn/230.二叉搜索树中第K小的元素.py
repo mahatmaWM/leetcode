@@ -45,7 +45,6 @@
 #
 #
 
-
 # @lc code=start
 # Definition for a binary tree node.
 # class TreeNode:
@@ -53,7 +52,28 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
 class Solution:
+
+    def __init__(self) -> None:
+        self.index = 0
+
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        # 中序递归，注意区分left right正常返回 与 None返回的区别？
+        def helper(node):
+            if not node: return None
+            left_return = helper(node.left)
+            if left_return is not None: return left_return
+            self.index += 1
+            if self.index == k: return node.val
+            right_return = helper(node.right)
+            if right_return is not None: return right_return
+
+        return helper(root)
+
+
+class Solution1:
     # 如果用非递归的中序方式遍历二叉搜索树，那么第 K 次遍历到的数字就为结果。
     def kthSmallest(self, root: TreeNode, k: int) -> int:
         stack = []

@@ -56,6 +56,7 @@
 
 # @lc code=start
 class Solution:
+    # 和 684类似，但是这里是有向图，所以需要先分析节点的入度出度，分情况
     # 1、情况1，多出的边指向某个非root的结点，该结点记为end，它的入度为2，出度不为0，此时答案只可能为指向end的两条边之一，注意这时候答案唯一，删错边可能导致图不联通，无法构成树。
     # 2、情况2，与情况1类似，存在入度为2但出度为0的end结点，此时答案不唯一，删掉指向end的哪条边都能使得图变成树，按照题目要求返回最后环内最后出现的边即可。
     # 3、情况3，多出的边指向root，所有结点的入度都是1，此时答案不唯一，删除环内任意边都可以，按照题目要求返回最后环内最后出现的边即可。
@@ -110,7 +111,7 @@ class Solution:
         # 若有end，则为情况1、2，答案为指向end的两条边之一
         if end != -1:
             is_first = True
-            edge_first, edge_second = list([]), list([])
+            edge_first, edge_second = list(), list()
             for edge in edges:
                 if edge[1] == end:
                     if is_first:

@@ -42,6 +42,9 @@
 
 
 # @lc code=start
+import heapq
+
+
 class Solution1:
     # 时间复杂度：O((k+N)logN)，k最大可以达到 O(N^2)，因此最坏情况下，时间复杂度为O(N^2logN)，超出了时间限制
     def smallestDistancePair(self, nums: List[int], k: int) -> int:

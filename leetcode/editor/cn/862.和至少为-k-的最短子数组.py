@@ -51,11 +51,14 @@
 #
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 思路：本题涉及到求任意i j之间的元素和，需要用到的加速技巧是数组的前缀和，current_sum。
     # 另外有了前缀和，如果采用left right两个指针来模拟变长的滑动窗口，两个for循环复杂度是On2
     #
-    # 一般是用队列来模拟滑动窗口，队尾模拟right指针的入队操作，队首模拟left指针的出队操作。
+    # 用队列来模拟滑动窗口更直观，队尾模拟right指针的入队操作，队首模拟left指针的出队操作。
     # 这里入队的时候是有优化空间的，见代码。
     def shortestSubarray(self, A: List[int], K: int) -> int:
         # 第一步，组织前缀和
@@ -67,10 +70,11 @@ class Solution:
         dq = collections.deque()
         # 第二步，利用dq来模拟滑动窗口
         for i in range(len(pre_sum)):
-            # 这个while是模拟数组中有负数时，其实是可以优化加速的，
-            # 但如果没有负数的场景，这里是没有用的
+            # 这个while是模拟数组中有负数时，因为求最短，所以前面的位置都pop出队列
+            # 直观影响就是最后的结果区间不会包含这个负数
             while dq and pre_sum[i] <= pre_sum[dq[-1]]:
                 dq.pop()
+
             # 这个while就是正常的队列头判断
             while dq and pre_sum[i] - pre_sum[dq[0]] >= K:
                 res = min(res, i - dq[0])

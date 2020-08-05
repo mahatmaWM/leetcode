@@ -113,6 +113,7 @@ class Solution:
                 tree.union(i[0] - 1, i[1] - 1)
             else:
                 answer = i
+                break
 
         return answer
 

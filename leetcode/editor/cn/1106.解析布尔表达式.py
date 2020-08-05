@@ -66,36 +66,40 @@
 
 # @lc code=start
 class Solution:
+    # 和726题类似，有括号的嵌套定义使用递归最合适
+    def __init__(self) -> None:
+        self.l = 0
 
     def parseBoolExpr(self, expression: str) -> bool:
-        s = 0
 
+        # 递归处理一个exp
         def parse(exp):
-            nonlocal s
-            ch = exp[s]
-            if ch == 't':
-                return True
-            if ch == 'f':
-                return False
+            ch = exp[self.l]
+            if ch == 't': return True
+            if ch == 'f': return False
             if ch == '!':
-                s += 1
+                self.l += 2
                 ans = not parse(exp)
-                s += 1
+                self.l += 1
                 return ans
+
             is_and = True if ch == '&' else False
             # is_or = False if ch =='|' else True
             ans = is_and
-            s += 1
-            while s < len(expression):
+            self.l += 2
+            # 处理&|(*,*)的情况，由于括号里面可能有多个exp，所以需要while
+            while self.l < len(exp):
                 if is_and:
                     ans = ans and parse(exp)
                 else:
                     ans = ans or parse(exp)
-                ch = exp[s]
-                if ch == ')':
+
+                self.l += 1
+                ch = exp[self.l]
+                if ch == ',':
+                    self.l += 1
+                elif ch == ')':
                     break
-                else:
-                    s += 1
             return ans
 
         return parse(expression)
@@ -103,4 +107,4 @@ class Solution:
 
 # @lc code=end
 if __name__ == "__main__":
-    print(Solution().parseBoolExpr(expression = '!(f)'))
+    print(Solution().parseBoolExpr(expression='|(f,f,t)'))

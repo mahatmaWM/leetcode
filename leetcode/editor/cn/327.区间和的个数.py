@@ -31,6 +31,9 @@
 # @lc code=start
 
 
+import bisect
+
+
 class Solution1:
     # 首先设计到任务区间和的问题，最好都转化为数组前缀和的表达
     # 然后可以暴力枚举所有的区间和判断，但这样倒数第二个case会超时

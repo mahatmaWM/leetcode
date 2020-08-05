@@ -40,9 +40,12 @@
 #
 #
 
-
 # @lc code=start
-class Solution:
+import bisect
+from typing import List
+
+
+class Solution1:
     # 归并排序的过程中，如果前半个数组的元素大于后半个数组的元素，这种组合叫翻转对，时间复杂度 O(NlogN)
     # 而且归并排序就是不停调整翻转对，使其最终有序
     def reversePairs(self, nums: List[int]) -> int:
@@ -50,7 +53,7 @@ class Solution:
         # 合并两个有序数组，nums[start, mid) nums[mid:end)
         def merge(nums, start, mid, end):
             l, r = start, mid
-            res = []
+            res = list()
             while l < mid and r < end:
                 if nums[l] < nums[r]:
                     res.append(nums[l])
@@ -103,7 +106,7 @@ class BinaryIndexedTree(object):
         return ans
 
 
-class Solution1:
+class Solution2:
 
     def reversePairs(self, nums: List[int]) -> int:
         arr = sorted(set(nums))
@@ -112,11 +115,27 @@ class Solution1:
         btree = BinaryIndexedTree(n1 + 1)
         ans = 0
         for i, v in enumerate(reversed(nums)):
-            index = bisect_left(arr, v)
+            index = bisect.bisect_left(arr, v)
             ans += btree.get_sum(index)
-            index = bisect_left(arr, v * 2)
+            index = bisect.bisect_left(arr, v * 2)
             btree.update(index + 1, 1)
         return ans
 
 
+class Solution:
+    # 直接遍历，对于已经遍历过的元素有序拍好并二分找翻转对
+    def reversePairs(self, nums: List[int]) -> int:
+        ans = 0
+        arr = list()
+        for v in nums:
+            index = bisect.bisect_right(arr, v * 2)
+            # 默认是在升序数组二分，所以这里要计算后面的长度
+            ans += (len(arr) - index)
+            bisect.insort_right(arr, v)
+        return ans
+
+
 # @lc code=end
+
+if __name__ == "__main__":
+    print(Solution().reversePairs(nums=[1, 3, 2, 3, 1]))
