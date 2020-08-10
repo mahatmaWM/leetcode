@@ -61,11 +61,12 @@ class Solution:
         stack = []
         node = root
         while node or stack:
-            # 从根节点开始，一直找左边节点
+            # 一直找左边的节点
             while node:
                 stack.append(node)
                 node = node.left
-            # while结束表示当前节点node为空，即前一个节点没有左子树了
+
+            # 没有左边节点了
             node = stack.pop()
             res.append(node.val)
             node = node.right

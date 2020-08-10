@@ -62,13 +62,15 @@
 
 
 class Solution:
-    # 后序遍历二叉树，注意：如果有右孩子，则必须打印左孩子信息（不管是否为()符号）
+    # 后序遍历二叉树
     def tree2str(self, t: TreeNode) -> str:
-        if t is None: return ''
+        if not t: return ''
 
         res = ''
         left = self.tree2str(t.left)
         right = self.tree2str(t.right)
+
+        # 注意：如果有右孩子，则必须打印左孩子信息（不管是否为()符号）
         if left or right: res += "(%s)" % left
         if right: res += "(%s)" % right
         return str(t.val) + res

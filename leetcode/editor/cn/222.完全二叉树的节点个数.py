@@ -43,7 +43,7 @@
 #         self.right = None
 
 
-class Solution:
+class Solution1:
 
     def countNodes(self, root: TreeNode) -> int:
 
@@ -52,6 +52,45 @@ class Solution:
             return 1 + dfs(node.right) + dfs(node.left)
 
         return dfs(root)
+
+class Solution:
+
+    def countNodes(self, root: TreeNode) -> int:
+        if not root: return 0
+
+        def compute_depth(node):
+            d = 0
+            while node.left:
+                node = node.left
+                d += 1
+            return d
+        def exists(idx, d, node):
+            """
+            Last level nodes are enumerated from 0 to 2**d - 1 (left -> right).
+            Return True if last level node idx exists.
+            Binary search with O(d) complexity.
+            """
+            left, right = 0, 2**d - 1
+            for _ in range(d):
+                pivot = left + (right - left) // 2
+                if idx <= pivot:
+                    node = node.left
+                    right = pivot
+                else:
+                    node = node.right
+                    left = pivot + 1
+            return node is not None
+
+        d = compute_depth(root)
+        if d == 0: return 1
+        left, right = 1, 2**d - 1
+        while left <= right:
+            pivot = left + (right - left) // 2
+            if exists(pivot, d, root):
+                left = pivot + 1
+            else:
+                right = pivot - 1
+        return (2**d - 1) + left
 
 
 # @lc code=end

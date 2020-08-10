@@ -64,6 +64,7 @@ class Solution:
     # 把二叉树看成图，然后从target节点开始，bfs遍历K步到达的节点
     def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
         if K == 0: return [target.val]
+
         graph = {}
 
         def buildGraph(root):
@@ -100,12 +101,14 @@ class Solution1:
     # 那么为了获取所有节点到目标节点的距离，需要获取目标节点与所有节点的最近公共祖先。
     #
     # 首先考虑目标节点的祖先，目标节点的祖先即从根节点到目标节点这一路径, 路径上每个节点都是目标节点的祖先（包括节点自身）。
-    # 目标节点到其的距离为i，那么其他节点到当前祖先节点的距离（高度）应为K-i，由此容易计算出所有满足题意的节点。
+    #
+    # 目标节点到某一个祖先的距离为i，那么其他节点到当前祖先节点的距离（高度）应为K-i，由此容易计算出所有满足题意的节点。
     def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
         path = []
         result = []
 
         # 递归回溯，寻找root节点到目标target之间的路径，这条路径上的每个点都可以作为target的祖先
+        # 并且记录目标节点在当前节点的 左孩子，还是右孩子
         def find_path(node, dire):
             if not node: return False
             # 当前节点加入路径
@@ -120,8 +123,8 @@ class Solution1:
                 if dis_to_root == goal: nodes.append(root.val)
                 if dis_to_root < goal:
                     # 关于方向的说明，此前已经求出了到达目标节点的路径与方向，观察题例
-                    # 如果target=5，那么对于祖先节点5（自身）来说，可能的节点存在于自身两个方向；
-                    # 对于祖先节点3来说，目标节点在其左子树，那么左子树中可能的点已经由下层的节点计算，自身只需要计算右子树即可
+                    # 如果target=5，那么对于祖先节点5自身来说，可能的节点存在于自身两个方向；
+                    # 对于祖先节点3来说，目标节点在其左子树，自身只需要计算右子树即可
                     if dire == 'l':
                         find_root_with_distance(root.right, 'a', dis_to_root + 1, goal, nodes)
                     elif dire == 'r':

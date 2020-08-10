@@ -43,16 +43,17 @@
 class Solution1:
 
     def preorderTraversal(self, root: TreeNode) -> List[int]:
-        self.res = []
+        res = []
 
         def preOrder(node):
+            nonlocal res
             if not node: return
-            self.res.append(node.val)
+            res.append(node.val)
             preOrder(node.left)
             preOrder(node.right)
 
         preOrder(root)
-        return self.res
+        return res
 
 
 class Solution:

@@ -72,6 +72,9 @@ class Node:
         self.next = next
 """
 
+import collections
+
+
 class Solution:
     # 层次遍历，获得每一层节点的list然后对每一个list的next进行赋值
     def connect(self, root: 'Node') -> 'Node':

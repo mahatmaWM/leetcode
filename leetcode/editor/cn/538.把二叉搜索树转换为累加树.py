@@ -50,15 +50,16 @@
 class Solution:
 
     def convertBST(self, root: TreeNode) -> TreeNode:
-        self.sum = 0
+        sum = 0
 
         # 二叉搜索树的特性，对于节点node，大于它的节点一定在右边
         # 所以需要 右中左 的遍历方式，用一个变量记录累加和。
         def inorder(node):
+            nonlocal sum
             if not node: return
             inorder(node.right)
-            self.sum += node.val
-            node.val = self.sum
+            sum += node.val
+            node.val = sum
             inorder(node.left)
 
         inorder(root)

@@ -54,6 +54,7 @@
 class Solution:
     # 路径不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）
     def pathSum(self, root: TreeNode, sum: int) -> int:
+        if not root: return 0
 
         # 从node节点开始的，和为sum的路径数目
         def dfs(node, sum):
@@ -64,7 +65,6 @@ class Solution:
             ans += dfs(node.right, sum - node.val)
             return ans
 
-        if not root: return 0
         # 以root为开始节点的路径数目 + 左右子树开始的路径数目
         return dfs(root, sum) + self.pathSum(root.left, sum) + self.pathSum(root.right, sum)
 

@@ -82,12 +82,13 @@ class Solution1:
         stack = []
         node = root
         while node or stack:
-            # 从根节点开始，一直找左边节点
+            # 从node节点一直找左边节点
             while node:
                 stack.append(node)
                 node = node.left
-            # while结束表示当前节点node为空，即前一个节点没有左子树了
+            # 没有左子树了
             node = stack.pop()
+            # 处理pop出来的node节点
             if not prev:
                 prev = node.val
             else:

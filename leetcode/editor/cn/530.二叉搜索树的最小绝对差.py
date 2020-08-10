@@ -58,20 +58,20 @@
 class Solution:
 
     def getMinimumDifference(self, root: TreeNode) -> int:
-        self.res, self.prev = float("inf"), float("-inf")
+        res, prev = float("inf"), float("-inf")
 
         # 二叉搜索树中序遍历是严格有序的，在遍历的过程中记录每次current与previous的差值即可
         def in_order(root):
-            if root is None: return
-
+            nonlocal res, prev
+            if not root: return
             in_order(root.left)
-            self.res = min(self.res, abs(root.val - self.prev))
-            self.prev = root.val
+            res = min(res, abs(root.val - prev))
+            prev = root.val
             in_order(root.right)
             return
 
         in_order(root)
-        return self.res
+        return res
 
 
 # @lc code=end

@@ -63,7 +63,7 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         result = None
 
-        # 返回是否找到了p或q
+        # 返回是否找到了 p 或者 q
         def dfs(node):
             nonlocal result
             if not node: return False

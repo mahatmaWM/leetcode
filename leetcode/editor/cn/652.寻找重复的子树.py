@@ -52,6 +52,9 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+import collections
+
+
 class Solution:
 
     def findDuplicateSubtrees(self, root: TreeNode) -> List[TreeNode]:

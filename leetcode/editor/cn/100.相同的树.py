@@ -61,14 +61,14 @@
 
 
 class Solution:
-    # 1、返回条件，两个节点都为none，则返回真，否则返回假。
-    # 2、如果当前两个节点的值相同，则依次对比左孩子和右孩子。
+    # 1、两个节点都为none，则返回真。
+    # 2、一个为none一个不为none，则返回假
+    # 3、两个节点的值相同，且左孩子和右孩子 也要相同。
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
         # 类似先序遍历树，依次对比两个节点
         if not p and not q: return True
         if (not p and q) or (p and not q): return False
-        if p.val != q.val: return False
-        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
 
 # @lc code=end

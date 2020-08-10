@@ -70,16 +70,19 @@ class Solution:
                 cur = cur.next
             else:
                 # 当前cur节点需要插入到前面有序链表中
-                # 1、断开cur节点
-                temp = cur
+                # 1、取出cur节点
+                insert_node = cur
                 cur = cur.next
                 pre.next = cur
+
                 # 2、把cur插入到前面有序链表中
                 q = dummy
-                while q.next and q.next.val < temp.val:
+                while q.next and q.next.val < insert_node.val:
                     q = q.next
-                temp.next = q.next
-                q.next = temp
+
+                # 3、插入q节点之后
+                insert_node.next = q.next
+                q.next = insert_node
         return dummy.next
 
 

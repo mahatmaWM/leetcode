@@ -58,20 +58,17 @@
 
 
 class Solution:
-
+    # 利用二叉搜索树性质
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         if not root: return None
         if p and q:
-            a = min(p.val, q.val)
-            b = max(p.val, q.val)
-            if a == root.val or b == root.val: return root
-            if a < root.val < b: return root
-            if a == b: return p
+            min_item = min(p.val, q.val)
+            max_item = max(p.val, q.val)
 
-            if b < root.val:
-                return self.lowestCommonAncestor(root.left, p, q)
-            elif a > root.val:
-                return self.lowestCommonAncestor(root.right, p, q)
+            if min_item == root.val or max_item == root.val or min_item < root.val < max_item: return root
+            if min_item == max_item: return p
+            if max_item < root.val: return self.lowestCommonAncestor(root.left, p, q)
+            if min_item > root.val: return self.lowestCommonAncestor(root.right, p, q)
 
 
 # @lc code=end

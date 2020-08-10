@@ -40,9 +40,6 @@
 #
 # 输出: 42
 #
-# 思路：
-# 对于node节点，其最大和路径是 左子树贡献自己的最大路径，右子树贡献自己的最大路径，结合node节点组成一条更大和的路径。
-# 但是要注意左右子树贡献的路径可能和为0，这时需要舍弃特殊处理。
 
 # @lc code=start
 # Definition for a binary tree node.
@@ -53,10 +50,12 @@
 #         self.right = None
 
 class Solution:
+    # 对于node节点，其最大和路径是 左子树贡献自己的最大路径，右子树贡献自己的最大路径，结合node节点组成一条更大和的路径。
+    # 但是要注意左右子树贡献的路径可能和为0，这时需要舍弃特殊处理。
     def maxPathSum(self, root: TreeNode) -> int:
         max_sum = float('-inf')
 
-        # 返回node节点所能贡献的最大路径和（node节点到叶子节点）
+        # 返回node节点所能贡献的最大路径和
         def dfs(node):
             nonlocal max_sum
             if not node: return 0

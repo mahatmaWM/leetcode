@@ -57,18 +57,19 @@
 
 class Solution:
     def findTilt(self, root: TreeNode) -> int:
-        self.res = 0
+        res = 0
 
         # 返回的子树和
         def dfs(node):
+            nonlocal res
             if not node: return 0
             left = dfs(node.left)
             right = dfs(node.right)
-            self.res += abs(left - right)
+            res += abs(left - right)
             return node.val + left + right
 
         dfs(root)
-        return self.res
+        return res
 
 
 # @lc code=end

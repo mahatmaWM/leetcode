@@ -42,7 +42,7 @@
 #         self.right = None
 
 class Solution:
-    # 和最大深度一样，后续遍历树
+    # 和104题最大深度一样
     def minDepth(self, root: TreeNode) -> int:
         if not root: return 0
         if not root.left: return 1 + self.minDepth(root.right)

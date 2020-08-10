@@ -67,23 +67,22 @@
 
 
 class Solution:
-    # 最长路径只有可能是两种情况：
+    # 最长路径可能是两种情况：
     # 1、节点node往一个分支走到某一个位置的一条路径。
     # 2、节点node两边可走，最长路径等于两边之和。
     def longestUnivaluePath(self, root: TreeNode) -> int:
-        # 后序遍历二叉树
-        # 返回node节点为根的最长路径 和 val值往下走的最大长度
-        def dfs(node, val):
+        if not root: return 0
+
+        # 返回经过node节点的最长路径 和 val值往下走的最大长度
+        def helper(node, val):
             if not node: return 0, 0
-            left_max_path, left_max_val = dfs(node.left, node.val)
-            right_max_path, right_max_val = dfs(node.right, node.val)
+            left_max_path, left_max_val = helper(node.left, node.val)
+            right_max_path, right_max_val = helper(node.right, node.val)
 
             curr_max_path = max(left_max_path, right_max_path, left_max_val + right_max_val)
-            if node.val != val: return curr_max_path, 0
-            return curr_max_path, max(left_max_val, right_max_val) + 1
+            return curr_max_path, max(left_max_val, right_max_val) + 1 if node.val == val else 0
 
-        if not root: return 0
-        return dfs(root, root.val)[0]
+        return helper(root, root.val)[0]
 
 
 # @lc code=end

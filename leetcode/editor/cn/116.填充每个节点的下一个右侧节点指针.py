@@ -64,6 +64,9 @@ class Node:
 """
 
 
+import collections
+
+
 class Solution:
     # 完美二叉树
     # 层次遍历，获得每一层节点的list然后对每一个list的next进行赋值

@@ -59,16 +59,17 @@ class Solution:
     # 思路：根据定义，根节点的值肯定是二叉树中最小的值，剩下的只需要找到左右子树中比跟节点大的最小值就可以了。
     # 这里先序遍历二叉树，对于当前节点，如果大于整颗树的root节点值大，则存起来。
     def findSecondMinimumValue(self, root: TreeNode) -> int:
-        res = [float('inf')]
+        res = float('inf')
 
         def traverse(node):
+            nonlocal res
             if not node: return
-            if root.val < node.val < res[0]: res[0] = node.val
+            if root.val < node.val < res: res = node.val
             traverse(node.left)
             traverse(node.right)
 
         traverse(root)
-        return -1 if res[0] == float('inf') else res[0]
+        return -1 if res == float('inf') else res
 
 
 # @lc code=end

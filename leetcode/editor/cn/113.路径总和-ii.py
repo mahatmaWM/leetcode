@@ -49,9 +49,9 @@
 
 class Solution:
     def pathSum(self, root: TreeNode, num: int) -> List[List[int]]:
-        res = []
-        if not root: return res
+        if not root: return []
 
+        res = []
         def dfs(node, target, path):
             if not node: return
             if sum(path) == target and not node.left and not node.right:

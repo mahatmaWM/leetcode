@@ -59,8 +59,7 @@
 #         self.right = None
 
 class Solution:
-    # 当访问到某一个节点时，需要把当前得到的数字传递给左右子节点。
-    # 直到访问到叶子节点一个数字结束。
+    # 当访问到某一个节点时，需要把当前得到的数字传递给左右子节点。直到访问到叶子节点一个数字结束。
     def sumNumbers(self, root: TreeNode) -> int:
         res = 0
         # 前序遍历二叉树，

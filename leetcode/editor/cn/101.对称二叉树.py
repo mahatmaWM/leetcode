@@ -55,20 +55,14 @@
 
 
 class Solution:
-    #   判断p q两节点为根的树是否对称
-    #   如果都为none，则对称；
-    #   如果只有一个节点为none，则不对称；
-    #   如果都有val，则val不同的话一定不对称；
-    #   val相同，则比较p的左孩子与q的右孩子&p的右孩子和q的左孩子
+    # 类似100题
     def isSymmetric(self, root: TreeNode) -> bool:
         if not root: return True
 
-        # 类似先序遍历树，依次对比对称位置的两个节点
         def check(p, q):
             if not p and not q: return True
             if not p or not q: return False
-            if p.val != q.val: return False
-            return check(p.left, q.right) and check(p.right, q.left)
+            return p.val == q.val and check(p.left, q.right) and check(p.right, q.left)
 
         return check(root.left, root.right)
 
