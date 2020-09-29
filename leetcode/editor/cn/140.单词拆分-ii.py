@@ -61,6 +61,9 @@
 #
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 递归 + 备忘录
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:

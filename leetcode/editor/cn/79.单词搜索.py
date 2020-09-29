@@ -45,42 +45,28 @@
 #
 #
 
+
 # @lc code=start
 class Solution:
-    # 暴力搜索，找表格的每一个位置，是单词的第一个字母则开始dfs回溯搜索
+    # 搜索，尝试表格的每一个位置为起点dfs递归搜索
+    # 注意这里不能往回走，需要记录走过的节点（本题采用原位标注#表示走过的节点，完后再复原）
     def exist(self, board: List[List[str]], word: str) -> bool:
-        def dfs(x, y, word):
-            if len(word) == 0: return True
-            # up
-            if x > 0 and board[x - 1][y] == word[0]:
-                tmp = board[x][y]
-                board[x][y] = '#'
-                if dfs(x - 1, y, word[1:]): return True
-                board[x][y] = tmp
-            # down
-            if x < len(board) - 1 and board[x + 1][y] == word[0]:
-                tmp = board[x][y]
-                board[x][y] = '#'
-                if dfs(x + 1, y, word[1:]): return True
-                board[x][y] = tmp
-            # left
-            if y > 0 and board[x][y - 1] == word[0]:
-                tmp = board[x][y]
-                board[x][y] = '#'
-                if dfs(x, y - 1, word[1:]): return True
-                board[x][y] = tmp
-            # right
-            if y < len(board[0]) - 1 and board[x][y + 1] == word[0]:
-                tmp = board[x][y]
-                board[x][y] = '#'
-                if dfs(x, y + 1, word[1:]): return True
-                board[x][y] = tmp
-            return False
+
+        def dfs(x, y, d, word):
+            # 走出边界 或者 当前不等的剪枝
+            if x < 0 or x == len(board) or y < 0 or y == len(board[0]) or word[d] != board[x][y]: return False
+            if d == len(word) - 1: return True
+            tmp = board[x][y]
+            board[x][y] = '#'
+            found = dfs(x, y - 1, d + 1, word) or dfs(x, y + 1, d + 1, word) or dfs(x + 1, y, d + 1, word) or dfs(
+                x - 1, y, d + 1, word)
+            board[x][y] = tmp
+            return found
 
         for i in range(len(board)):
             for j in range(len(board[0])):
-                if board[i][j] == word[0]:
-                    if dfs(i, j, word[1:]): return True
+                if dfs(i, j, 0, word): return True
         return False
-# @lc code=end
 
+
+# @lc code=end

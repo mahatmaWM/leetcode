@@ -34,6 +34,9 @@
 
 
 # @lc code=left
+import heapq
+
+
 class Solution1:
     # 直接统计出现次数
     def majorityElement(self, nums: List[int]) -> int:

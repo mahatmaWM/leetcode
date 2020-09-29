@@ -59,6 +59,7 @@ class Solution1:
 
 
 class Solution:
+    # 类似桶排序的思路，对于长度为n的数组，我们有n个桶，num[i]这个元素应该放到num[i]-1这个位置的桶。
     # nums[nums[i] - 1] != nums[i]，这一步是关键，代表当前数字nums[i]应该放在nums[i]-1的位置
     # 按照这个思想，数组[3,1,4,-1]可以变成[1,-1,3,4]，遍历这个数组，发现第一个 i+1 != nums[i]的i+1即是结果。
     def firstMissingPositive(self, nums: List[int]) -> int:

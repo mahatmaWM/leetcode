@@ -30,6 +30,9 @@
 #
 
 # @lc code=start
+import bisect
+
+
 class Solution:
     # 双指针left, right
     # 移动right累加total, 当total >= s时, 右移left找出最短的sub array, 跳出内层循环后right继续往右走, 直到刷完nums

@@ -38,6 +38,9 @@
 
 
 # @lc code=start
+import collections
+
+
 class Solution:
 
     def containsDuplicate(self, nums: List[int]) -> bool:

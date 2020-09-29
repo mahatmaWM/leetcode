@@ -47,6 +47,9 @@
 
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 有向无环 DAG图才有拓扑排序。常用的方法：
     # 1、从 DAG 图中选择一个 没有前驱（入度为0）的顶点并输出。

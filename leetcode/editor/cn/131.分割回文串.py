@@ -29,6 +29,9 @@
 #
 
 # @lc code=start
+import copy
+
+
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         if len(s) == 0: return []

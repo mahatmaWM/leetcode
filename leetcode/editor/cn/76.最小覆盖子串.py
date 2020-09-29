@@ -32,6 +32,9 @@
 
 
 # @lc code=start
+import collections
+
+
 class Solution:
     # 思路，滑动窗口
     # 1、初始left指针和right指针都指向S的第一个元素。
