@@ -70,8 +70,10 @@ class Solution:
             if not root: return 0
             return 1 + max(helper(root.left), helper(root.right))
 
-        if abs(helper(root.left) - helper(root.right)) > 1: return False
-        return self.isBalanced(root.left) and self.isBalanced(root.right)
+        if abs(helper(root.left) - helper(root.right)) > 1:
+            return False
+        else:
+            return self.isBalanced(root.left) and self.isBalanced(root.right)
 
 
 # @lc code=end

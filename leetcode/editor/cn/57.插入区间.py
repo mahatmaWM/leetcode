@@ -43,6 +43,7 @@ class Solution:
                 insert_index = i
                 break
         intervals.insert(insert_index, newInterval)
+
         res = []
         curr = intervals[0]
         for i in range(1, len(intervals)):

@@ -53,9 +53,11 @@ class Solution:
     # 这里只需要记录历史最大值的原因是我们只需要最终保证输出的是最大长度，无需缩减窗口大小
     def characterReplacement(self, s: str, k: int) -> int:
         left = 0
+
         # window存放窗口中某个字符出现的次数
         import collections
         window = collections.defaultdict(int)
+
         res = 0
         for right, val in enumerate(s):
             window[val] += 1

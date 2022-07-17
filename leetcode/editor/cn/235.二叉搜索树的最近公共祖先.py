@@ -62,13 +62,12 @@ class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
         if not root: return None
         if p and q:
-            min_item = min(p.val, q.val)
-            max_item = max(p.val, q.val)
+            small = min(p.val, q.val)
+            big = max(p.val, q.val)
 
-            if min_item == root.val or max_item == root.val or min_item < root.val < max_item: return root
-            if min_item == max_item: return p
-            if max_item < root.val: return self.lowestCommonAncestor(root.left, p, q)
-            if min_item > root.val: return self.lowestCommonAncestor(root.right, p, q)
+            if small <= root.val <= big: return root
+            if big < root.val: return self.lowestCommonAncestor(root.left, p, q)
+            if small > root.val: return self.lowestCommonAncestor(root.right, p, q)
 
 
 # @lc code=end

@@ -49,7 +49,9 @@ class Solution:
             left, right = i + 1, len(nums) - 1
             while left < right:
                 sum_3 = nums[i] + nums[left] + nums[right]
-                if abs(sum_3 - target) < abs(res - target): res = sum_3
+                if abs(sum_3 - target) < abs(res - target):
+                    res = sum_3
+
                 if sum_3 == target:
                     return sum_3
                 elif sum_3 < target:

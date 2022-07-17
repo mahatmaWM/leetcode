@@ -42,11 +42,24 @@
 #         self.right = None
 
 class Solution:
-    # 和104题最大深度一样
+    # 和104题最大深度类似，
+    # 最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
     def minDepth(self, root: TreeNode) -> int:
-        if not root: return 0
-        if not root.left: return 1 + self.minDepth(root.right)
-        if not root.right: return 1 + self.minDepth(root.left)
-        return 1 + min(self.minDepth(root.left), self.minDepth(root.right))
-# @lc code=end
+        # 中序遍历二叉树，
+        # 如果当前节点没有左孩子，那么最小深度就是右子树最小深度+1
+        # 否则就是左子树最小深度+1
+        # 最后返回左右最新深度+1
 
+        def helper(node):
+            if not node: return 0
+
+            if node.left and not node.right:
+                return 1 + helper(node.left)
+            elif node.right and not node.left:
+                return 1 + helper(node.right)
+            else:
+                return 1 + min(helper(node.left), helper(node.right))
+
+        return helper(root)
+
+# @lc code=end

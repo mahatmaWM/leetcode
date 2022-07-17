@@ -52,6 +52,7 @@ class Solution:
         if not root: return []
 
         res = []
+        # dfs遍历的过程将路径记录下即可
         def dfs(node, target, path):
             if not node: return
             if sum(path) == target and not node.left and not node.right:

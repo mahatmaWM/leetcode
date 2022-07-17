@@ -54,28 +54,28 @@ class Solution:
         candidates.sort()
         res = []
 
-        # 路径：记录在 tmp_list 中
+        # 路径：记录在 tmp_path 中
         # 选择列表：start 和 candidates 之间的元素
         # 结束条件：left_sum
-        def backtrack(start, candidates, tmp_sum, tmp_list):
+        def backtrack(candidates, tmp_path, start, tmp_sum):
             nonlocal res
             if tmp_sum < 0: return
             if tmp_sum == 0:
                 import copy
-                res.append(copy.deepcopy(tmp_list))
+                res.append(copy.deepcopy(tmp_path))
                 return
             for i in range(start, len(candidates)):
                 if tmp_sum < candidates[i]: break
                 # 前一个相同的元素已经被选中
                 if i > start and candidates[i] == candidates[i - 1]: continue
                 # 选择
-                tmp_list.append(candidates[i])
+                tmp_path.append(candidates[i])
                 # 因为每个数字不能重复使用，所以从下一个元素开始
-                backtrack(i + 1, candidates, tmp_sum - candidates[i], tmp_list)
+                backtrack(candidates, tmp_path, i + 1, tmp_sum - candidates[i])
                 # 取消选择
-                tmp_list.pop()
+                tmp_path.pop()
 
-        backtrack(0, candidates, target, [])
+        backtrack(candidates, [], 0, target)
         return res
 # @lc code=end
 

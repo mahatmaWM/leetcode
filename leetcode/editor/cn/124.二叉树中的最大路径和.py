@@ -50,18 +50,19 @@
 #         self.right = None
 
 class Solution:
-    # 对于node节点，其最大和路径是 左子树贡献自己的最大路径，右子树贡献自己的最大路径，结合node节点组成一条更大和的路径。
-    # 但是要注意左右子树贡献的路径可能和为0，这时需要舍弃特殊处理。
+
     def maxPathSum(self, root: TreeNode) -> int:
         max_sum = float('-inf')
 
-        # 返回node节点所能贡献的最大路径和
+        # 对于node节点，其左右子树分别贡献自己的最大值，则node节点相对于上一级的最大贡献为node.val+max(left, right)
+        # 但是要注意左右子树贡献的路径可能和为0，这时需要舍弃特殊处理。
         def dfs(node):
             nonlocal max_sum
             if not node: return 0
             # 注意node节点的左右孩子有可能会贡献一个负值，这时需要置为0
             left_gain = max(dfs(node.left), 0)
             right_gain = max(dfs(node.right), 0)
+            # 在dfs遍历的过程中，更新最后结果
             max_sum = max(max_sum, node.val + left_gain + right_gain)
             return node.val + max(left_gain, right_gain)
 

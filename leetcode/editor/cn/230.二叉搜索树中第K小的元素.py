@@ -60,7 +60,7 @@ class Solution:
         self.index = 0
 
     def kthSmallest(self, root: TreeNode, k: int) -> int:
-        # 中序递归，注意区分left right正常返回 与 None返回的区别？
+        # 中序递归，注意区分left right找到目标的返回 与 叶子节点None返回的区别？
         def helper(node):
             if not node: return None
             left_return = helper(node.left)

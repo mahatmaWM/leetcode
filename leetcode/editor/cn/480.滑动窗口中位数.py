@@ -70,7 +70,8 @@ class Solution:
                 window.pop(bisect.bisect_left(window, nums[left]))
                 left += 1
             # 注意，长度为k的Windows，求其中位数的方法 (window[k//2]+window[(k-1)//2])/2.0，可以不用考虑 奇数&偶数 个数
-            if len(window) == k: res.append((window[k // 2] + window[(k - 1) // 2]) / 2.0)
+            if len(window) == k:
+                res.append((window[k // 2] + window[(k - 1) // 2]) / 2.0)
         return res
 
 

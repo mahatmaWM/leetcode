@@ -47,6 +47,23 @@ class Solution:
     def binaryTreePaths(self, root: TreeNode) -> List[str]:
         res = []
 
+        def helper(node, path_list):
+            nonlocal res
+            if not node: return
+
+            if not node.left and not node.right: res.append('->'.join(path_list + [str(node.val)]))
+            if node.left: helper(node.left, path_list + [str(node.val)])
+            if node.right: helper(node.right, path_list + [str(node.val)])
+
+        helper(root, [])
+        return res
+
+
+class Solution1:
+
+    def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        res = []
+
         def helper(root, path_list):
             nonlocal res
             if not root: return
@@ -63,6 +80,4 @@ class Solution:
 
         helper(root, [])
         return res
-
-
 # @lc code=end

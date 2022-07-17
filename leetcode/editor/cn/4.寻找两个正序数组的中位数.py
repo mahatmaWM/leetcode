@@ -39,16 +39,13 @@
 #
 #
 
-from typing import List
-
-
 # @lc code=start
 class Solution:
 
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
         n = len(nums1) + len(nums2)
 
-        # 找到两个升序数组的第K个元素（K从0开始计数）
+        # 递归找到两个升序数组的第K个元素（K从0开始计数）
         def findKth(nums1, nums2, k):
             if not nums1: return nums2[k]
             if not nums2: return nums1[k]
@@ -76,8 +73,3 @@ class Solution:
 
 
 # @lc code=end
-
-if __name__ == "__main__":
-    nums1 = list([1, 3])
-    nums2 = list([2])
-    print(Solution().findMedianSortedArrays(nums1, nums2))

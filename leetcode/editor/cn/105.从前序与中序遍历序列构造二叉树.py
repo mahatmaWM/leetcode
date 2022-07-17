@@ -49,19 +49,10 @@ class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
         if not preorder: return None
 
-        # 先找到root节点 和 左右子树的范围，然后类似前序遍历的方式构造树
+        i = inorder.index(preorder[0])
         root = TreeNode(preorder[0])
-
-        left_inorder = inorder[: inorder.index(root.val)]
-        right_inorder = inorder[inorder.index(root.val) + 1:]
-
-        l_left = len(left_inorder)
-        left_preorder = preorder[1:l_left + 1]
-        right_preorder = preorder[l_left + 1:]
-
-        root.left = self.buildTree(left_preorder, left_inorder)
-        root.right = self.buildTree(right_preorder, right_inorder)
-
+        root.left = self.buildTree(preorder[1:i+1], inorder[:i])
+        root.right = self.buildTree(preorder[i+1:], inorder[i+1:])
         return root
 # @lc code=end
 

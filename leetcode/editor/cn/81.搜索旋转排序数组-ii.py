@@ -46,10 +46,13 @@ class Solution:
     def search(self, nums: List[int], target: int) -> bool:
         if len(nums) == 0: return False
 
+        # 使用左闭右开[l, r)
         l, r = 0, len(nums)
         while l < r:
             mid = l + (r - l) // 2
-            if nums[mid] == target: return True
+            if nums[mid] == target:
+                return True
+
             # 说明右边是升序的
             if nums[mid] < nums[r - 1]:
                 if nums[mid] < target <= nums[r - 1]:

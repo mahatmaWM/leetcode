@@ -41,17 +41,10 @@
 
 
 # @lc code=start
-class Solution1:
-    # 先排序再遍历一样，都是NlogN
-    def findDuplicate(self, nums: List[int]) -> int:
-        nums.sort()
-        for i in range(1, len(nums)):
-            if nums[i] == nums[i - 1]: return nums[i]
-
 
 class Solution:
     # 思路：如果可以使用额外空间，那么用hash计数是最简单的，但是这里不能用额外空间，所以只能用比较。
-    # 上面是先排序再遍历的方式。
+    # 同时又不能修改数组，所以也不能先排序再遍历。
     #
     # 下面借鉴二分查找的思路，已知所有数字的范围是1到n，就可以把left设为1，right设为n，mid设为left和right的中间值。
     # 不断二分left&right，逼近目标值重复数。
@@ -64,7 +57,8 @@ class Solution:
         left, right = 1, len(nums)
         while left < right:
             mid = left + (right - left) // 2
-            # 遍历记录 <= mid的数字，如果小于等于mid本身，说明重复数字一定出现在[mid+1 right]的区间
+            # 遍历记录 <= mid的数字，
+            # 如果小于等于mid本身，说明重复数字一定出现在[mid+1 right]的区间
             count = 0
             for num in nums:
                 if num <= mid: count += 1

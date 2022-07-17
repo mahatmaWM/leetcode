@@ -66,9 +66,12 @@ class Solution:
     # 3、两个节点的值相同，且左孩子和右孩子 也要相同。
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
         # 类似先序遍历树，依次对比两个节点
-        if not p and not q: return True
-        if (not p and q) or (p and not q): return False
-        return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        if not p and not q:
+            return True
+        elif (not p and q) or (p and not q):
+            return False
+        else:
+            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
 
 # @lc code=end

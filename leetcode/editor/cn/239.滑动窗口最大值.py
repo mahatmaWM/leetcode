@@ -106,7 +106,8 @@ class Solution:
 
         # 单调队列，索引index放入队列，并保证队首位置对应的元素为最大元素
         def adjust_deq_order(index):
-            if deq and deq[0] == index - k: deq.popleft()
+            if deq and deq[0] == index - k:
+                deq.popleft()
             while deq and nums[index] > nums[deq[-1]]:
                 deq.pop()
             deq.append(index)
@@ -115,9 +116,10 @@ class Solution:
         max_idx = 0
         for i in range(k):
             adjust_deq_order(i)
-            if nums[i] > nums[max_idx]: max_idx = i
-
+            if nums[i] > nums[max_idx]:
+                max_idx = i
         output = [nums[max_idx]]
+
         for i in range(k, len(nums)):
             adjust_deq_order(i)
             output.append(nums[deq[0]])

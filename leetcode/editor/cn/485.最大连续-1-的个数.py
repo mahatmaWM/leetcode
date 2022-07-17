@@ -35,15 +35,14 @@
 # @lc code=start
 class Solution:
     def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
-        curr_ans = 0
-        ans = 0
+        res, curr = 0, 0
         for i in nums:
             if i == 1:
-                curr_ans += 1
-                ans = max(ans, curr_ans)
+                curr += 1
+                res = max(res, curr)
             else:
-                curr_ans = 0
-        return ans
+                curr = 0
+        return res
 
 # @lc code=end
 

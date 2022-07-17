@@ -51,6 +51,7 @@
 # @lc code=start
 class Solution:
     # 模拟过程，每次取最大的两个元素操作，利用堆
+    # 也可以排序后，取出最大的两个元素碰撞，然后使用bisect二分查找的方式插入剩余有序数组
     def lastStoneWeight(self, stones: List[int]) -> int:
         # python只有最小堆，所以每个石头的重量取负号存入
         stones = [-x for x in stones]
@@ -60,6 +61,5 @@ class Solution:
             x, y = -heapq.heappop(stones), -heapq.heappop(stones)
             heapq.heappush(stones, -abs(x - y))
         return -stones[0]
-
 
 # @lc code=end

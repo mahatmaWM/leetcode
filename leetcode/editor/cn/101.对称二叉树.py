@@ -58,11 +58,14 @@ class Solution:
     # 类似100题
     def isSymmetric(self, root: TreeNode) -> bool:
         if not root: return True
-
+        # 检查检查p，q两个节点对应的子树是否是否对称
         def check(p, q):
-            if not p and not q: return True
-            if not p or not q: return False
-            return p.val == q.val and check(p.left, q.right) and check(p.right, q.left)
+            if not p and not q:
+                return True
+            elif (not p and q) or (p and not q):
+                return False
+            else:
+                return p.val == q.val and check(p.left, q.right) and check(p.right, q.left)
 
         return check(root.left, root.right)
 

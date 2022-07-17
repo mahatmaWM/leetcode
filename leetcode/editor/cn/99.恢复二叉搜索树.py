@@ -60,14 +60,6 @@
 # 使用 O(n) 空间复杂度的解法很容易实现。
 # 你能想出一个只使用常数空间的解决方案吗？
 #
-# # 思路:
-# 这道题难点,是找到那两个交换节点,把它交换过来就行了.如何找到这两个点呢？
-# 这里我们二叉树搜索树的中序遍历(中序遍历遍历元素是递增的)
-# 如上图示例1所示, 中序遍历顺序是 3 2 1，我们只要找到节点3和节点1交换顺序即可!
-#
-# 这里我们有个规律发现这两个节点:
-# 寻找第一个节点：第一个按照中序遍历时候前一个节点大于后一个节点,我们选取前一个节点,这里指节点3;
-# 寻找第二个节点：第一个节点找到之后, 后面出现前一个节点大于后一个节点，我们选择后一个节点，这里指节点1;
 #
 
 
@@ -79,7 +71,12 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-
+# 思路：
+# 二叉树搜索树的中序遍历(中序遍历遍历元素是递增的)
+# 这道题难点是如何找到这两个点呢？
+# 如上图示例1所示, 中序遍历顺序是 3 2 1，我们只要找到节点3和节点1交换顺序即可!
+# 寻找第一个节点：中序遍历时，第一次出现前一个节点大于后一个节点，我们选取前一个节点作为first，这里指节点3
+# 寻找第二个节点：找到第一个节点后，最后一次出现前一个节点大于后一个节点时，我们选择后一个节点作为second，这里指节点1
     def recoverTree(self, root: TreeNode) -> None:
         """
         Do not return anything, modify root in-place instead.
@@ -91,10 +88,11 @@ class Solution:
             in_order(node.left)
 
             nonlocal pre_visit, first, second
-            # 当前访问节点node，前一次访问的节点pre-visit
+            # 当前访问节点node，前一次访问的节点pre_visit
             # 先找到第一次出现逆序的first节点，再找到最后一次逆序的second节点
             if pre_visit and pre_visit.val > node.val:
-                if not first: first = pre_visit
+                if not first:
+                    first = pre_visit
                 second = node
             pre_visit = node
 

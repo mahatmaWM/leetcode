@@ -39,14 +39,17 @@ class Solution:
         r_len = len(grid)
         c_len = len(grid[0])
         dp = [[0] * c_len for i in range(r_len)]
-        for i in range(r_len):
-            for j in range(c_len):
-                if i == j == 0:
-                    dp[i][j] = grid[i][j]
-                else:
-                    y = 2147483647 if i - 1 < 0 else dp[i - 1][j]
-                    x = 2147483647 if j - 1 < 0 else dp[i][j - 1]
-                    dp[i][j] = grid[i][j] + min(x, y)
+
+        # 初始化边界
+        dp[0][0] = grid[0][0]
+        for i in range(1, r_len):
+            dp[i][0] = grid[i][0] + dp[i - 1][0]
+        for j in range(1, c_len):
+            dp[0][j] = grid[0][j] + dp[0][j - 1]
+
+        for i in range(1, r_len):
+            for j in range(1, c_len):
+                dp[i][j] = grid[i][j] + min(dp[i - 1][j], dp[i][j - 1])
         return dp[-1][-1]
 
 

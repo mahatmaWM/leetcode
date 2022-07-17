@@ -45,8 +45,8 @@
 # @lc code=start
 class Solution:
     # 思路，使用二分查找：对比每次中点元素和其右侧元素值的大小：
-    # （1）若中点元素值大于右侧元素值，则说明该中点元素位于峰的右侧，将right = mid
-    # （2）若中点元素值小于右侧元素值，则说明该中点元素位于峰的左侧，将left = mid + 1
+    # （1）若中点元素值大于右侧相邻元素值，则说明峰在左边找，将right = mid
+    # （2）若中点元素值小于右侧相邻元素值，则说明峰在右边找，将left = mid + 1
     # 2、当left == right时，打破循环，此时left和right同时指向峰值处
     def findPeakElement(self, nums: List[int]) -> int:
         nums = [float('-inf')] + nums + [float('inf')]

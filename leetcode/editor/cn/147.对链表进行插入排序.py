@@ -70,6 +70,7 @@ class Solution:
                 cur = cur.next
             else:
                 # 当前cur节点需要插入到前面有序链表中
+
                 # 1、取出cur节点
                 insert_node = cur
                 cur = cur.next

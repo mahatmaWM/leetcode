@@ -33,7 +33,7 @@
 #
 
 # @lc code=start
-class Solution:
+class Solution1:
     # 求第K个最大元素有几种方法。
     # 1.排序算法，复杂度就是对应的排序算法复杂度。比如快速排序也就O(NlogN)
     # 2.python中默认小顶堆，建立K个尺寸的小顶堆，然后遍历数组中后面的所有数，当前数大于堆顶元素则替换当前堆顶元素，维护堆的特性（logk的复杂度），这样遍历完数组，堆中的元素就是前K个最大元素。
@@ -46,5 +46,34 @@ class Solution:
         for i in range(k, len(nums)):
             if nums[i] > heap[0]: heapq.heappushpop(heap, nums[i])
         return heap[0]
-# @lc code=end
 
+class Solution:
+    # 利用快排切分数组的思想
+    # 找一个pivot，左边的值都大于pivot，右边的值都小于等于pivot，pivot的位置为x
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        # [left, right]
+        def partition(array, left, right):
+            # 选最左为哨兵，就先从右遍历；相反也可以
+            key = array[left]
+            while left < right:
+                while left < right and array[right] <= key:
+                    right -= 1
+                array[left] = array[right]
+                while left < right and array[left] > key:
+                    left += 1
+                array[right] = array[left]
+            array[left] = key
+            return left
+
+        # x下标从0开始
+        x = partition(nums, 0, len(nums) - 1)
+        if x == k - 1:
+            return nums[x]
+        elif x < k - 1:
+            return self.findKthLargest(nums[x + 1:], k - x - 1)
+        else:
+            return self.findKthLargest(nums[:x], k)
+
+
+
+# @lc code=end

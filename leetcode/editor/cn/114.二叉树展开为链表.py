@@ -50,28 +50,27 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    # 解题思路: 递归操作
-    # 1、把左子树转换成链表, 返回头结点l
-    # 2、把右子树转换成链表, 返回头结点r
-    # 3、把l接到root的右子树.左子树置为None
-    # 4、从root开始遍历到链表尾部,把r接到链表尾部
-    # 5、返回root节点
+
     def flatten(self, root: TreeNode) -> None:
         """
         Do not return anything, modify root in-place instead.
         """
         if not root: return None
+        # 把左子树，右子树转换成链表, 返回头结点l，r
         l = self.flatten(root.left)
         r = self.flatten(root.right)
 
+        # 把l接到root的右子树.左子树置为None
         root.right = l
         root.left = None
 
+        # 从root开始遍历到链表尾部,把r接到链表尾部
         tmp = root
         while tmp.right:
             tmp = tmp.right
         tmp.right = r
 
+        # 返回root节点
         return root
 
 
