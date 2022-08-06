@@ -56,7 +56,7 @@ class Solution:
     # 每次计算的时候，选取删除，插入，交换中的最小值。
     def minDistance(self, word1: str, word2: str) -> int:
         m, n = len(word1), len(word2)
-        if word1 == word2 or m == n == 0: return 0
+        if m == n == 0: return 0
         dp = [[0] * (n + 1) for _ in range(m + 1)]
         # 第一列和第一行的初始化
         for i in range(m + 1):
@@ -73,7 +73,7 @@ class Solution:
                     insert = dp[i][j - 1]
                     swap = dp[i - 1][j - 1]
                     dp[i][j] = min(delete, insert, swap) + 1
-        return dp[i][j]
+        return dp[m][n]
 
 
 # @lc code=end

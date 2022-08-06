@@ -48,20 +48,28 @@
 #         self.right = None
 
 class Solution:
+
     def pathSum(self, root: TreeNode, num: int) -> List[List[int]]:
         if not root: return []
-
+        import copy
         res = []
-        # dfs遍历的过程将路径记录下即可
-        def dfs(node, target, path):
-            if not node: return
-            if sum(path) == target and not node.left and not node.right:
-                res.append(path)
-                return
-            if node.left: dfs(node.left, target, path + [node.left.val])
-            if node.right: dfs(node.right, target, path + [node.right.val])
 
-        dfs(root, num, [root.val])
+        # 遍历的过程将路径记录下即可
+        def helper(node, curr_path):
+            nonlocal num
+            if not node: return
+            if not node.left and not node.right and sum(curr_path) + node.val == num:
+                curr_path.append(node.val)
+                res.append(copy.deepcopy(curr_path))
+                curr_path.pop()
+                return
+            curr_path.append(node.val)
+            if node.left:
+                helper(node.left, curr_path)
+            if node.right:
+                helper(node.right, curr_path)
+            curr_path.pop()
+
+        helper(root, [])
         return res
 # @lc code=end
-

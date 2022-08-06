@@ -28,7 +28,8 @@
 
 
 # @lc code=start
-class Solution:
+
+class Solution1:
     # 思路：很有技巧的题目。
     # 1、从后向前遍历数组，找到第一个降序的位置i，把i位置后面的数字翻转。
     # 2、这个数字i和后面第一个比它大的位置j交换即可。
@@ -66,5 +67,35 @@ class Solution:
                     swap(nums, i - 1, j)
                     break
 
+
+class Solution:
+    # 思路：很有技巧的题目。
+    # 1、从后向前遍历数组，找到第一个降序的位置i，然后在找i位置后面的刚刚比i位置数字大一点的数字。
+    # 2、这个数字i和后面第一个比它大的位置j交换即可。
+    # 3、后续的数字再升序排列
+    # 和556题一样的方法
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        # 逆序遍历数组，找到第一个降序的位置i
+        i = len(nums) - 1
+        while i >= 0 and nums[i] <= nums[i - 1]:
+            i -= 1
+
+        if i == 0:
+            nums.sort()
+        else:
+            first = i - 1
+            j = first + 1
+            second_item = nums[j]
+            second_index = j
+            while j < len(nums):
+                if nums[j] > nums[first] and nums[j] < second_item:
+                    second_item = nums[j]
+                    second_index = j
+                j += 1
+            nums[first], nums[second_index] = nums[second_index], nums[first]
+            sorted(nums[first + 1:])
 
 # @lc code=end

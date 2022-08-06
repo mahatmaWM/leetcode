@@ -48,8 +48,8 @@ class Solution:
 
         window = set()
         max_len, cur_len = 0, 0
-        left = 0
-        for right in range(0, len(s)):
+        left, right = 0, 0
+        while right < len(s):
             # 检查window的合法性
             while s[right] in window:
                 window.remove(s[left])
@@ -57,8 +57,8 @@ class Solution:
                 cur_len -= 1
 
             window.add(s[right])
+            right += 1
             cur_len += 1
             max_len = max(max_len, cur_len)
         return max_len
 # @lc code=end
-

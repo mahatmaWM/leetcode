@@ -34,13 +34,12 @@
 # @lc code=start
 class Solution:
     # 动态规划，dp[i]表示对数字i拆分，能得到的最大乘积
-    # 那么对j < i，dp[i] = max(dp[i], max(j, dp[j]) * max(i - j) * dp[i - j])
+    # 那么对j < i，可以拆成j与i-j两个数字，dp[j]*dp[i-j]两个可以继续拆分，j*dp[i-j] 三种情况
     def integerBreak(self, n: int) -> int:
         dp = [1] * (n + 1)
-        for i in range(2, n + 1):
+        for i in range(3, n + 1):
             for j in range(1, i):
-                dp[i] = max(dp[i], max(j, dp[j]) * max(i - j, dp[i - j]))
+                dp[i] = max(dp[i], max(dp[j] * dp[i - j], j * (i - j), j * dp[i - j]))
         return dp[-1]
 
 # @lc code=end
-

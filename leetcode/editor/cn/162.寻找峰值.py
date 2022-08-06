@@ -49,8 +49,9 @@ class Solution:
     # （2）若中点元素值小于右侧相邻元素值，则说明峰在右边找，将left = mid + 1
     # 2、当left == right时，打破循环，此时left和right同时指向峰值处
     def findPeakElement(self, nums: List[int]) -> int:
-        nums = [float('-inf')] + nums + [float('inf')]
-        left, right = 1, len(nums) - 2
+        nums = [float('-inf')] + nums + [float('-inf')]
+        # 取真实数组的left和right，[left, right)
+        left, right = 1, len(nums)-1
         while left < right:
             mid = left + (right - left) // 2
             # print('left={},mid={},right={}'.format(left, mid, right))
@@ -59,6 +60,5 @@ class Solution:
             elif nums[mid] <= nums[mid + 1]:
                 left = mid + 1
         return left - 1
-
 
 # @lc code=end

@@ -32,6 +32,7 @@ class Solution:
     # IP的格式每位是在0~255之间,注意不能出现以0开头的两位以上数字,比如012,08...这种不合法, *.0.* 或者 *.12.* 这种IP才合法
     def restoreIpAddresses(self, s: str) -> List[str]:
         res = []
+        import copy
         # start 字符串的开始位置
         # tmp_res 临时结果
         # k 共4个IP地址，还是多少个？

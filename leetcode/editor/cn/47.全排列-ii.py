@@ -41,13 +41,16 @@ class Solution:
         # 结束条件：nums 中的元素全都在 tmp_res 中出现
         def backtrack(tmp_res, memo):
             if len(tmp_res) == len(nums):
-                res.append(tmp_res[:])
+                import copy
+                res.append(copy.deepcopy(tmp_res))
                 return
             for i in range(len(nums)):
                 if memo[i]: continue
 
                 # 有重复元素时的剪枝条件：元素相等时，前一个已被用则当前的就不用
-                if i > 0 and nums[i] == nums[i - 1] and memo[i - 1]: continue
+                if i > 0 and nums[i] == nums[i - 1] and memo[i - 1]:
+                    continue
+
                 memo[i] = True
                 tmp_res.append(nums[i])
                 backtrack(tmp_res, memo)

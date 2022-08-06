@@ -61,6 +61,13 @@ class Solution:
         for i in range(32):
             ans += (n >> i) & 1
         return ans
+    def hammingWeight1(self, n: int) -> int:
+        ans = 0
+        while n>0:
+            if n%2==1:
+                ans=+1
+            n=n/2
+        return ans
 
 # @lc code=end
 

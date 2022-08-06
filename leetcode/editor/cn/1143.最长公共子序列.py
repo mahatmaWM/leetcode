@@ -64,12 +64,34 @@ class Solution:
         n = len(text2)
         dp = [[0] * (n + 1) for _ in range(m + 1)]
 
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if text1[i - 1] == text2[j - 1]:
-                    dp[i][j] = 1 + dp[i - 1][j - 1]
+        # dp[i][j]代表text1的i位置，和 text2的j位置 为止，的最长公共子序列
+        for i in range(m):
+            for j in range(n):
+                if text1[i] == text2[j]:
+                    dp[i+1][j+1] = 1 + dp[i][j]
                 else:
-                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+                    dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j])
         return dp[m][n]
+
+# 最长公共子串
+# def find_lcsubstr(text1, text2):
+#     m = len(text1)
+#     n = len(text2)
+#     tail_index = 0
+#     mmax = 0  #最长匹配的长度
+#     dp = [[0] * (n + 1) for _ in range(m + 1)]
+#     for i in range(m):
+#         for j in range(n):
+#             if text1[i] == text2[j]:
+#                 dp[i + 1][j + 1] = dp[i][j] + 1
+#                 if dp[i + 1][j + 1] > mmax:
+#                     mmax = dp[i + 1][j + 1]
+#                     tail_index = i + 1
+#     return text1[tail_index - mmax:tail_index], mmax
+
+
+# print(find_lcsubstr('abdfgc', 'abdfg'))
+
+
 # @lc code=end
 

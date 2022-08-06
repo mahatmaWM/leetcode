@@ -51,7 +51,7 @@ class Solution1:
         return False
 
 
-class Solution:
+class Solution2:
     # 与219题的区别，nums[i] 和 nums[j]不再是相等，而是差值小于等于t
     # 所以219题用hash O(1)时间判断元素的思路不能用，上面在窗口内判断元素是线性时间，所以会超时
     # 想办法加速元素判断，如果能O(logK)判断元素，平衡树结构合适。
@@ -77,6 +77,29 @@ class Solution:
                     return True
             sorted_set.add(nums[i])
             if i >= k: sorted_set.remove(nums[i - k])
+        return False
+
+
+
+class Solution:
+
+    def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
+        if k < 1 or t < 0: return False
+        import collections
+        window = collections.OrderedDict()
+        for n in nums:
+            # 如果窗口超标了，就把开头的元素pop出来
+            if len(window) > k:
+                window.popitem(False)
+
+            bucket = n if not t else n // t
+            # 这里非常巧妙将nums [i] 和 nums [j] 的差的绝对值小于等于 t
+            # abs(num[i]-num[j])<=t变成 abs(num[i]/t-num[j]/t)<=1
+            # 这样变化下面就只需要找这三个数字就可以了
+            for m in (window.get(bucket - 1), window.get(bucket), window.get(bucket + 1)):
+                if m is not None and abs(n - m) <= t:
+                    return True
+            window[bucket] = n
         return False
 
 

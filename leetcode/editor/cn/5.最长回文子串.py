@@ -46,7 +46,7 @@ class Solution:
         lmax = 1
         res = s[0]
         for end in range(1, n):
-            for start in range(end):
+            for start in range(end-1,-1,-1):
                 # 只有两个字符时 或者 根据之前的回文串继续延伸得到更长回文
                 if s[start] == s[end] and (end - start <= 2 or mem[start + 1][end - 1]):
                     mem[start][end] = True
@@ -55,6 +55,8 @@ class Solution:
                         lmax = cur_len
                         res = s[start:end + 1]
         return res
+
+
 
 
 # @lc code=end

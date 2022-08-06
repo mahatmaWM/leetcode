@@ -60,14 +60,22 @@
 class Solution:
     # 利用二叉搜索树性质
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if not root: return None
-        if p and q:
-            small = min(p.val, q.val)
-            big = max(p.val, q.val)
 
-            if small <= root.val <= big: return root
-            if big < root.val: return self.lowestCommonAncestor(root.left, p, q)
-            if small > root.val: return self.lowestCommonAncestor(root.right, p, q)
+        def helper(node, p, q):
+            if not node:
+                return None
+            if p and q:
+                small, big = min(p.val, q.val), max(p.val, q.val)
+                if small <= node.val <= big:
+                    return node
+                if big < node.val:
+                    return helper(node.left, p, q)
+                if small > node.val:
+                    return helper(node.right, p, q)
+
+        return helper(root, p, q)
+
+
 
 
 # @lc code=end

@@ -47,7 +47,8 @@ class Solution:
                 res.append(copy.deepcopy(tmp_res))
                 return
             for i in range(len(nums)):
-                if memo[i]: continue
+                if memo[i]:
+                    continue
                 memo[i] = True
                 tmp_res.append(nums[i])
                 backtracking(tmp_res, memo)

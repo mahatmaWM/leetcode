@@ -46,25 +46,28 @@
 
 # @lc code=start
 class Solution:
-    # 思路：找到i比i-1严格小的个数count，并记录i的位置。
-    #
-    # 如果个数为0，返回true；如果个数大于1，返回false；
-    # 如果个数等于1，则再次判断，这时需要判断位置i位置什么位置：
-    #   如果位于头尾，则只需要改位置i本身即可，返回true。
-    #   如果位于中间，则比较是否i+1大于等于i-1
-    def checkPossibility(self, nums: List[int]) -> bool:
-        if len(nums) <= 2: return True
+    # 4，2，3
+    # -1，4，2，3
+    # 2，3，3，2，4
+    # 当我们发现当前的数字i小于前面的数字i-1产生冲突后，
+    # 有时候需要修改前面i-1较大的数字，有时候却要修改当前i数字为更小的
+    # 那么有什么内在规律吗？是有的，判断修改哪个数字其实跟再前面i-2数的大小有关系，
+    # 首先如果再前面的数不存在，我们直接修改前面i-1的数字为当前的数字即可。
+    # 而当再前面的数字存在，并且小于当前数时，我们还是需要修改前面的数字；
+    # 如果再前面的数大于当前数，我们需要修改当前数为前面的数
 
-        count = 0
-        result = []
+
+    def checkPossibility(self, nums: List[int]) -> bool:
+        count = 1
         for i in range(1, len(nums)):
             if nums[i] < nums[i - 1]:
-                count += 1
-                result.append(i)
-        if count == 0: return True
-        if count > 1: return False
-        i = result[0]
-        if i == 1 or i == len(nums) - 1 or nums[i + 1] >= nums[i - 1] or nums[i - 2] <= nums[i]: return True
-        return False
-# @lc code=end
+                if count == 0: return False
+                if i == 1 or nums[i] >= nums[i - 2]:
+                    nums[i - 1] = nums[i]
+                else:
+                    nums[i] = nums[i - 1]
+                count -= 1
+        return True
 
+
+# @lc code=end

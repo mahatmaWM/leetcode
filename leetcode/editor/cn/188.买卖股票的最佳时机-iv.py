@@ -51,6 +51,7 @@ class Solution:
             dp[0][j][0] = 0
             dp[0][j][1] = -prices[0]
 
+        # 第i天j次交易后手上是否有股票
         for i in range(1, n):
             for j in range(k, 0, -1):
                 # 不持有股票的状态
@@ -63,6 +64,7 @@ class Solution:
         n = len(prices)
         if n <= 1: return 0
         dp = [[0] * 2 for _ in range(n)]
+        # dp[i][0]代表第i天手上没有股票，dp[i][1]代表第i天手上有股票
         dp[0][0] = 0
         dp[0][1] = -prices[0]
 

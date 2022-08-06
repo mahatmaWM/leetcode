@@ -65,13 +65,16 @@ class Solution:
     # 2、一个为none一个不为none，则返回假
     # 3、两个节点的值相同，且左孩子和右孩子 也要相同。
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-        # 类似先序遍历树，依次对比两个节点
-        if not p and not q:
-            return True
-        elif (not p and q) or (p and not q):
-            return False
-        else:
-            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+        def helper(p, q):
+            if not p and not q:
+                return True
+            elif (not p and q) or (p and not q):
+                return False
+            else:
+                return p.val == q.val and helper(p.left, q.left) and helper(p.right, q.right)
+
+        return helper(p, q)
 
 
 # @lc code=end
